@@ -1,0 +1,112 @@
+@include set (
+    (
+        base: (
+            _container-width: 1400px,
+            title-link: (
+                link: (
+                    margin-bottom: .2rem,
+                    font-weight: 600,
+                    letter-spacing: -.025em,
+                    color: $dark-color
+                ),
+                icon: (
+                    display: inline-block,
+                    margin-bottom: .1rem
+                )
+            )
+        ),
+        header: (
+            top: (
+                margin:-.1rem 0 .1rem,
+                background: $dark-color,
+                color: #BFBFBF,
+                text-transform:capitalize,
+                icon: (
+                    margin-right:.8rem
+                )
+            ),
+            middle: (
+                margin:-.2rem 0 -.1rem,
+                background: $dark-color,
+                color: #fff,
+                border-top:1px solid #393939,
+                padding:3.2rem 0 3.3rem
+            ),
+            bottom: (
+                background: $dark-color,
+                color:#fff,
+                border-top:1px solid #393939,
+            ),
+            search: (
+                _border-color: #fff,
+                expanded: (
+                    width: 69.4rem
+                )
+            ),
+            cart: (
+                count: (
+                    background: $primary-color
+                )
+            ),
+            category: (
+                toggle: (
+                    padding: 1.8rem 1.8rem 1.8rem 2rem
+                )
+            )
+        ),
+        menu: (
+            active: (
+                color: #fff
+            ),
+        ),
+        category-menu: (
+            padding: 1rem 0 0.8rem,
+            ancestor: (
+                _split-line: 1px solid #e1e1e1
+            )
+        ),
+        product: (
+            rating: (
+                _star-color: $body-color
+            ),
+            body: (
+                padding: 1.7rem 1rem 0
+            )
+        ),
+        product-single: (
+            ratings: (
+                margin-bottom: 1.8rem,
+                _star-color: $body-color,
+                font-size: 1.3rem
+            ),
+            old-price: (
+                margin-right: 1rem,
+                font-size: 1.8rem,
+                color: $light-color
+            )
+        ),
+        footer: (
+            background: #222,
+            top: (
+                padding: 5.6rem 0 1rem,
+                color:$light-color,
+                border-top: 1px solid #e5e5e5,
+                widget: (
+                    margin-bottom:3.7rem
+                )                
+            ),
+            bottom: (
+                padding: 3rem 0,
+                color: $body-color
+            ),
+            about: (
+                call: (
+                    margin-bottom: .8rem
+                ),
+                logo: (
+                    margin-bottom: 1.1rem
+                )
+            )
+        )
+    )
+)

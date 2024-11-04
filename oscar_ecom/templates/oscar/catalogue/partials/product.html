@@ -1,0 +1,88 @@
+{% load display_tags %}
+{% load i18n %}
+{% load image_tags %}
+{% load reviews_tags %}
+{% load static %}
+{% load basket_tags %}
+
+{% block product %}
+    <div class="product-wrap">
+        <div class="product text-center">
+            <!-- Product Image -->
+            {% block product_image %}
+            <figure class="product-media">
+                {% with image=product.primary_image %}
+                    {% oscar_thumbnail image.original "x155" upscale=False as thumb %}
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
+                    </a>
+                {% endwith %}
+                <div class="product-action-horizontal">
+                    
+                    {% include "oscar/catalogue/partials/add_to_basket_form_compact.html" %}
+                    {% include "oscar/catalogue/partials/add_to_wishlist.html" %}
+                    <!-- <a href="#" class="btn-product-icon btn-wishlist w-icon-heart" title="Wishlist"></a> -->
+                    <a href="#" class="btn-product-icon btn-compare w-icon-compare" title="Compare"></a>
+                    <a href="#" class="btn-product-icon btn-quickview w-icon-search" title="Quick View"></a>
+                </div>
+            </figure>
+            {% endblock %}
+            
+            <!-- Product Details -->
+            <div class="product-details">
+                <!-- Product Category -->
+                {% block product_category %}
+                <div class="product-category">
+                    {% for category in product.categories.all %}
+                        <a href="{{ category.get_absolute_url }}" class="category-link">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+                {% endblock %}
+                
+                <!-- Product Title -->
+                {% block product_title %}
+                <h3 class="product-name mt-3">
+                    <a href="{{ product.get_absolute_url }}" title="{{ product.get_title }}">
+                        {{ product.get_title|truncatewords:4 }}
+                    </a>
+                </h3>
+                {% endblock %}
+                
+                <!-- Product Review -->
+                {% block product_review %}
+                {% iffeature "reviews" %}
+                <div class="ratings-container">
+                    <div class="ratings-full">
+                        <!-- Check if the product has a rating, else set width to 0% -->
+                        <span class="ratings" style="width: {% if product.rating %}{% widthratio product.rating 5 100 %}{% else %}0{% endif %}%;"></span>
+                        <span class="tooltiptext tooltip-top">
+                            {% if product.rating %}
+                                {{ product.rating|floatformat:2 }} out of 5
+                            {% else %}
+                                No rating available
+                            {% endif %}
+                        </span>
+                    </div>
+                    <a href="{{ product.get_absolute_url }}#reviews" class="rating-reviews">({{ product.reviews.count }} reviews)</a>
+                </div>
+                                
+                {% endiffeature %}
+                {% endblock %}
+                
+                <!-- Product Price -->
+                {% block product_price %}
+                <div class="product-pa-wrapper">
+                    <div class="product-price">
+                        <span class="price-value">{% include "oscar/catalogue/partials/stock_record.html" %}</span>
+                        
+                    </div>
+                </div>
+                {% endblock %}
+                
+                <!-- Product Quantity (hidden field for demo) -->
+                <input type="hidden" class="quantity" id="product-quantity" value="1">
+                
+            </div>
+        </div>
+    </div>
+{% endblock %}

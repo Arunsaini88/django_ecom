@@ -1,0 +1,129 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+{% load i18n %}
+
+
+{% block title %}
+    {% trans 'Home' %} | {{ block.super }}
+{% endblock %}
+    {% block styles %}
+        {% include "custome_temps/homepage_detail/vender_font.html"%}
+        {% include "custome_temps/homepage_detail/home_css.html"%}
+    {% endblock %}
+    
+    {% block layout %}
+
+        {% include "custome_temps/homepage_detail/home_header.html"%}
+   
+        <!-- Start of Main-->
+        <main class="main">
+            {% block content_wrapper %}
+            
+                {% block banner %}
+                {% include "custome_temps/homepage_detail/intro_section.html"%}
+                {% endblock %}
+                <!-- End of .intro-section -->
+
+                {% block content %}
+                <div class="container">
+                    {% include "custome_temps/homepage_detail/home_icon_box.html"%}
+                    <!-- End of Iocn Box Wrapper -->
+
+                    <!-- End of Deals Wrapper -->
+                    
+                    {% include "custome_temps/homepage_detail/category_banner.html"%}
+                    <!-- End of Category Banner Wrapper -->
+
+                    {% include "custome_temps/homepage_detail/top_brands.html"%}
+
+                    {% include "custome_temps/homepage_detail/tab_category.html"%}
+
+
+                    <div class="sale-banner banner br-sm appear-animate">
+                        <div class="banner-content">
+                            <h4
+                                class="content-left banner-subtitle text-uppercase mb-8 mb-md-0 mr-0 mr-md-4 text-secondary ls-25">
+                                <span class="text-dark font-weight-bold lh-1 ls-normal">Up
+                                    <br>To</span>70% Sale!</h4>
+                            <div class="content-right">
+                                <h3 class="banner-title text-uppercase font-weight-normal mb-4 mb-md-0 ls-25 text-white">
+                                    <span>Pay Only For
+                                        <strong class="mr-10 pr-lg-10">Your Lovling Electronics</strong>
+                                        Pay Only For
+                                        <strong class="mr-10 pr-lg-10">Your Lovling Electronics</strong>
+                                        Pay Only For
+                                        <strong class="mr-10 pr-lg-10">Your Lovling Electronics</strong>
+                                    </span>
+                                </h3>
+                                <a href="#" class="btn btn-white btn-rounded">Shop Now
+                                    <i class="w-icon-long-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Sale Banner -->
+
+                    {% include "custome_temps/homepage_detail/product_wrapper.html" %}
+
+                    {% include "custome_temps/homepage_detail/category_wrapper.html" %}
+
+                    {% include "custome_temps/homepage_detail/product_wrapper_2.html" %}
+
+                    <div class="banner br-sm banner-electronics appear-animate" style="background-image: url({% static 'assets/images/demos/demo2/banners/3.jpg' %});
+                        background-color: #333;">
+                        <div class="banner-content mr-10 pr-1">
+                            <div class="banner-price-info text-white font-weight-normal ls-25">
+                                Save Big on <span class="font-weight-bolder text-secondary text-uppercase">50% Off</span>
+                            </div>
+                            <h3 class="banner-title text-white mb-0 ls-25">Cameras and Leans Sale</h3>
+                        </div>
+                        <a href="shop-banner-sidebar.html" class="btn btn-white btn-rounded btn-icon-right mt-1">Shop Now<i
+                                class="w-icon-long-arrow-right"></i></a>
+                    </div>
+                    <!-- End of Banner -->
+
+                    {% include "custome_temps/homepage_detail/top_rated_product.html" %}
+
+                    {% include "custome_temps/homepage_detail/recent_view.html"%}
+
+                    {% include "custome_temps/homepage_detail/our_client.html"%}
+
+                    {% include "custome_temps/homepage_detail/home_blog.html"%}
+
+                {% endblock %}
+            </div>
+            {% endblock %}
+        </main>
+        <!-- End of Main -->
+
+        {% include "oscar/partials/footer.html"%}
+   {% endblock %}
+    <!-- End of Page-wrapper-->
+{% block scripts %}
+    <!-- Start of Sticky Footer -->
+    {% include "custome_temps/homepage_detail/sticky_footer.html"%}
+    <!-- End of Sticky Footer -->
+
+    <!-- Start of Scroll Top -->
+    {% include "custome_temps/homepage_detail/scroll_top.html"%}
+    <!-- End of Scroll Top -->
+
+    <!-- Start of Mobile Menu -->
+    {% include "custome_temps/homepage_detail/mobile_menu.html"%}
+    <!-- End of Mobile Menu -->
+
+    <!-- Start of Newsletter popup -->
+    
+    {% include "custome_temps/homepage_detail/news_letter_popup.html"%}
+    <!-- End of Newsletter popup -->
+
+    <!-- Start of Quick View -->
+    {% include "custome_temps/homepage_detail/quick_view.html"%}
+    <!-- End of Quick view -->
+
+    <!-- Plugin JS File -->
+    {% include "custome_temps/homepage_detail/plugin_JS.html"%}
+
+  
+
+{% endblock %}

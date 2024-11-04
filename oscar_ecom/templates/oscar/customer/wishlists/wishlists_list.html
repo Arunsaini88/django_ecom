@@ -1,0 +1,96 @@
+{% extends "oscar/customer/baseaccountpage.html" %}
+{% load i18n %}
+
+
+{% block page_header %}
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title mb-0">Wishlist</h1>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block tabcontent %}
+
+
+<div class="tab-vertical row gutter-lg">
+    <ul class="nav nav-tabs mb-6" role="tablist">
+        {% include 'oscar/customer/partials/standard_tabs.html' %}
+    </ul>
+    {% if wishlists %}
+    <div class="tab-content mb-6">
+            <h3 class="wishlist-title">My wishlist</h3>
+            
+            <table class="shop-table wishlist-table">
+                <tbody>
+                    <tr>
+                        <th class="product-name">{% trans 'Name' %}</th>
+                     
+                        <th>{% trans 'Number of products' %}</th>
+                        <th class="wishlist-action">{% trans 'Action' %}</th>
+                    </tr>
+                    {% for wishlist in wishlists %}
+                        <tr>
+                            <td class="product-name"><a href="{% url 'customer:wishlists-detail' key=wishlist.key %}">{{ wishlist.name }}</a></td>
+                            
+                            <td>{{ wishlist.lines.count }}</td>
+                            <td class="wishlist-action">
+
+                                <div class="btn-group-address">
+                                    <a href="{% url 'customer:wishlists-detail' key=wishlist.key %}"
+                                    class="btn btn-quickview btn-outline btn-default btn-rounded btn-sm mb-2 mb-lg-0">{% trans 'View' %}</a>
+                                    <div class="dropdown">
+                                        <button class="dropbtn btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                                            ▼
+                                        </button>
+                                        <div class="dropdown-content">
+                                            <a href="{% url 'customer:wishlists-update' key=wishlist.key %}" class="dropdown-item">
+                                                {% trans 'Wish list settings' %}
+                                            </a>
+                                            {% if wishlist.is_shareable %}
+                                            <a href="{{ wishlist.get_shared_url }}" class="dropdown-item clipboard-item">
+                                                {% trans 'Copy sharing link' %}
+                                            </a>
+                                            {% endif %}
+                                            <a href="{% url 'customer:wishlists-delete' key=wishlist.key %}" class="dropdown-item">
+                                                {% trans 'Delete' %}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    
+            {% include "oscar/partials/pagination.html" %}
+      
+    {% else %}
+        <p>
+            {% trans "You don't have any wish lists yet." %}
+        </p>
+    {% endif %}
+
+    <p>
+        <a href="{% url 'customer:wishlists-create' %}" class="btn btn-primary">{% trans 'Create a new wish list' %}</a>
+    </p>
+</div>
+    <div class="social-links">
+        <label>Share On:</label>
+        <div class="social-icons social-no-color border-thin">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="social-icon social-facebook w-icon-facebook"></a>
+            <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}" class="social-icon social-twitter w-icon-twitter"></a>
+            <a href="https://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri }}" class="social-icon social-pinterest w-icon-pinterest"></a>
+            <a href="mailto:?subject=Check%20this%20out&body={{ request.build_absolute_uri }}" class="social-icon social-email far fa-envelope"></a>
+            <a href="https://api.whatsapp.com/send?text={{ request.build_absolute_uri }}" class="social-icon social-whatsapp fab fa-whatsapp"></a>
+        </div>
+    </div>
+</div>
+{% endblock tabcontent %}
+
+{% block onbodyload %}
+    {{ block.super }}
+    oscar.customer.wishlists.init();
+{% endblock %}

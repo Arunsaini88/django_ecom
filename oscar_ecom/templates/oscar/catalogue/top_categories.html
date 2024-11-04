@@ -1,0 +1,17 @@
+{% load static %}
+{% load image_tags %}
+
+{% for category in categories %}
+<div class="swiper-slide category category-classic category-absolute overlay-zoom br-xs">
+    <figure class="product-image">
+        <img src="{{ category.image.url }}"
+            data-zoom-image="{{ category.image.url }}"
+            alt="Product Image" width="800"
+            height="900">
+    </figure>
+    <div class="category-content">
+        <h4 class="category-name">{{ category.name }}</h4>
+        <a href="{{ category.get_absolute_url }}" class="btn btn-primary btn-link btn-underline">Shop Now</a>
+    </div>
+</div>
+{% endfor %}

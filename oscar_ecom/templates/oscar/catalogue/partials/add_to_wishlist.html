@@ -1,0 +1,35 @@
+{% load i18n %}
+{% load wishlist_tags %}
+
+{% include "custome_temps/wishlist/wishlists_css.html"%}
+
+<a href="#" class="btn-product-icon w-icon-heart" title="Wishlist" onclick="toggleWishlistPopup(event, 'wishlist-popup-{{ product.id }}')"></a>
+
+<div id="wishlist-popup-{{ product.id }}" class="wishlist-popup" style="display: none;">
+    {% if user.is_authenticated %}
+        {% with wishlists=user.wishlists.all %}
+            {% wishlists_containing_product wishlists product as product_wishlists %}
+            {% if wishlists %}
+                {% for wishlist in wishlists %}
+                    {% if wishlist not in product_wishlists %}
+                        <a href="{% url 'customer:wishlists-add-product' key=wishlist.key product_pk=product.pk %}" class="dropdown-item">
+                            {% blocktrans with name=wishlist.name %}Add to '{{ name }}' wishlist{% endblocktrans %}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+                <a href="{% url 'customer:wishlists-create-with-product' product_pk=product.pk %}" class="dropdown-item">
+                    {% trans 'Create a new wishlist' %}
+                </a>
+            {% else %}
+                <form id="add_to_wishlist_form" action="{% url 'customer:wishlists-add-product' product_pk=product.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="dropdown-item">{% trans "Add to default wishlist" %}</button>
+                </form>
+            {% endif %}
+        {% endwith %}
+    {% else %}
+        <span class="dropdown-item">{% trans 'Please login' %}</span>
+    {% endif %}
+</div>
+
+{% include "custome_temps/wishlist/wishlists_js.html" %}

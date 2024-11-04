@@ -1,0 +1,168 @@
+{% extends "oscar/customer/baseaccountpage.html" %}
+{% load image_tags %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load purchase_info_tags %}
+{% load currency_filters %}
+{% load static %}
+    <!-- Start of Page Header -->
+        {% block page_header %}
+            <div class="page-header">
+                <div class="container">
+                    <h1 class="page-title mb-0">Wishlist</h1>
+                </div>
+            </div>
+        {% endblock %}
+
+        {% block breadcrumbs %}
+        
+            <div class="container">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{ homepage_url }}">{% trans 'Home' %}</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'customer:summary' %}">{% trans 'Account' %}</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'customer:wishlists-list' %}">{% trans 'Wish Lists' %}</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {{ wishlist.name }}
+                    </li>
+                </ul>
+            </div>
+           
+        {% endblock %}
+
+         <!-- Start of PageContent -->
+         <div class="page-content">
+            <div class="container">
+                <h3 class="wishlist-title">My wishlist</h3>
+
+                {% block tabcontent %}
+                    {% if form.total_form_count %}
+                        <form method="post">
+                            {{ form.management_form }}
+                            {% csrf_token %}
+                                <table class="shop-table wishlist-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="product-name"><span>{% trans "Product" %}</span></th>
+                                            <th></th>
+                                            <th class="product-price"><span>{% trans "Price" %}</span></th>
+                                            <th class="product-stock-status"><span>{% trans "Stock Status" %}</span></th>
+                                            <th class="wishlist-action">{% trans "Actions" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for subform in form %}
+                                        {% with line=subform.instance product=subform.instance.product %}
+                                            <tr>
+                                                <td class="product-thumbnail">
+                                                    <div class="p-relative">
+                                                        {% if product %}
+                                                            {% with image=product.primary_image %}
+                                                                {% oscar_thumbnail image.original "100x100" upscale=False as thumb %}
+                                                                {% if product.is_public %}
+                                                                <a href="{{ product.get_absolute_url }}">
+                                                                    <figure>
+                                                                        <img src="{{ thumb.url }}" alt="{{ product.get_title }}" width="300"
+                                                                            height="338">
+                                                                    </figure>
+                                                                </a>
+                                                                <a href="{% url 'customer:wishlists-remove-product' key=wishlist.key line_pk=line.pk %}" class="btn btn-close">
+                                                                    <i class="fas fa-times"></i>
+                                                                </a>
+                                                                {% else %}
+                                                                    <img class="img-thumbnail" src="{{ thumb.url }}" alt="{{ product.get_title }}" />
+                                                                {% endif %}
+                                                            {% endwith %}
+                                                        {% endif %}
+                                                    </div>
+                                                </td>
+                                                <td class="product-name">
+                                                    {% if product and product.is_public %}
+                                                    <a href="{{ line.product.get_absolute_url }}">{{ line.get_title }}</a>
+                                                    {% else %}
+                                                        <em>{{ line.get_title }} ({% trans 'Not available anymore' %})</em>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="product-price">
+                                                    {% purchase_info_for_product request product as session %}
+                                                    {% if session.price.exists %}
+                                                        {% if session.price.excl_tax == 0 %}
+                                                            <p class="price_color" style="font-weight: bold;">{% trans "Free" %}</p>
+                                                        {% elif session.price.is_tax_known %}
+                                                            <p class="price_color" style="font-weight: bold;">{{ session.price.incl_tax|currency:session.price.currency }}</p>
+                                                        {% else %}
+                                                            <p class="price_color" style="font-weight: bold;">{{ session.price.excl_tax|currency:session.price.currency }}</p>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <p class="price_color" style="font-weight: bold;">&nbsp;</p>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="product-stock-status">
+                                                    <span class="wishlist-in-stock">
+                                                        {% if session.price.exists %}
+                                                            <p class="{{ session.availability.code }} availability">
+                                                                {% if session.availability.is_available_to_buy %}
+                                                                    <i class="fas fa-check-circle"></i>
+                                                                {% else %}
+                                                                    <i class="fas fa-ban"></i>
+                                                                {% endif %}
+                                                                {% if verbose %}
+                                                                    {{ session.availability.message }}
+                                                                {% else %}
+                                                                    {{ session.availability.short_message }}
+                                                                {% endif %}
+                                                            </p>
+                                                            {% else %}
+                                                                <i class="fas fa-ban"></i>
+                                                                {% trans 'Unavailable' %}
+                                                            {% endif %}
+                                                    </span>
+                                                </td>
+                                                <td class="wishlist-action">
+                                                    <div class="d-lg-flex">
+                                                        <a href="#"
+                                                            class="btn btn-quickview btn-outline btn-default btn-rounded btn-sm mb-2 mb-lg-0">Quick
+                                                            View</a>
+                                                        <a href="#" class="btn btn-dark btn-rounded btn-sm ml-lg-2 btn-cart" title="Add to cart" 
+                                                            data-product-pk="{{ product.pk }}"  data-url="{% url 'basket:add' pk=product.pk %}">Add to
+                                                            cart</a>                                                            
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endwith %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                         </form>
+                    {% else %}
+                    {% trans "Your wish list is empty." %}
+                {% endif %}
+        
+                <div class="social-links">
+                    <label>Share On:</label>
+                    <div class="social-icons social-no-color border-thin">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="social-icon social-facebook w-icon-facebook" target="_blank"></a>
+                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}" class="social-icon social-twitter w-icon-twitter" target="_blank"></a>
+                        <a href="https://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri }}" class="social-icon social-pinterest w-icon-pinterest" target="_blank"></a>
+                        <a href="mailto:?subject=Check%20this%20out&body={{ request.build_absolute_uri }}" class="social-icon social-email far fa-envelope"></a>
+                        <a href="https://api.whatsapp.com/send?text={{ request.build_absolute_uri }}" class="social-icon social-whatsapp fab fa-whatsapp" target="_blank"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% endblock tabcontent %}
+
+
+
+        {% block extrascripts %}
+            {{ block.super }}
+            {% include "custome_temps/shop_content/add_to_cart_js.html"%}
+            {% include "custome_temps/wishlist/quick_view.html"%}
+        {% endblock %}

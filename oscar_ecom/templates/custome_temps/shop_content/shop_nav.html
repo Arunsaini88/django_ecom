@@ -1,0 +1,57 @@
+{% load static %}
+{% load i18n %}
+
+<nav class="toolbox sticky-toolbox sticky-content fix-top">
+    <div class="toolbox-left">
+
+        <div class="toolbox-item toolbox-sort select-box text-dark">
+            <label>Sort By :</label>
+            <select name="orderby" class="form-control" id="sort-by">
+                <option value="relevancy" {% if request.GET.sort_by == "relevancy" %}selected{% endif %}>Default sorting</option>
+                <option value="title-asc" {% if request.GET.sort_by == "title-asc" %}selected{% endif %}>Sort by popularity</option>
+                <option value="rating" {% if request.GET.sort_by == "rating" %}selected{% endif %}>Sort by average rating</option>
+                <option value="newest" {% if request.GET.sort_by == "newest" %}selected{% endif %}>Sort by latest</option>
+                <option value="price-desc" {% if request.GET.sort_by == "price-desc" %}selected{% endif %}>Sort by price: high to low</option>
+                <option value="price-asc" {% if request.GET.sort_by == "price-asc" %}selected{% endif %}>Sort by price: low to high</option>
+            </select>
+        </div>
+    </div>
+    <div class="toolbox-right">
+
+
+        <form action="{{ request.get_full_path }}" method="GET">
+
+            <div class="toolbox-item toolbox-show select-box">
+                <select name="products_per_page" class="form-control" onchange="this.form.submit()">
+                    <option value="9" {% if request.GET.products_per_page == '9' %} selected {% endif %}>Show 9</option>
+                    <option value="12" {% if request.GET.products_per_page == '12' %} selected {% endif %}>Show 12</option>
+                    <option value="24" {% if request.GET.products_per_page == '24' %} selected {% endif %}>Show 24</option>
+                    <option value="36" {% if request.GET.products_per_page == '36' %} selected {% endif %}>Show 36</option>
+                </select>
+            </div>
+
+        </form>
+        
+        <div class="toolbox-item toolbox-layout">
+            <a href="shop-infinite-scroll.html" class="icon-mode-grid btn-layout active">
+                <i class="w-icon-grid"></i>
+            </a>
+            <a href="shop-list.html" class="icon-mode-list btn-layout">
+                <i class="w-icon-list"></i>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const sortSelect = document.getElementById('sort-by');
+
+    sortSelect.addEventListener('change', function() {
+        const selectedOption = this.value;
+        const url = new URL(window.location.href);
+        url.searchParams.set('sort_by', selectedOption);
+        window.location.href = url.toString();
+    });
+});
+</script>

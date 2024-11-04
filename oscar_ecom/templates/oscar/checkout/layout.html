@@ -1,0 +1,78 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+{% load category_tags %}
+
+{% block styles %}
+    {% include "custome_temps/checkout/font_style.html"%}
+{% endblock %}
+
+{% block layout %}
+
+    <header class="header header-border">
+        {# Top-horizontal bar with account, notifictions, dashboard links #}
+        {% block nav_account %} {% include "oscar/partials/nav_accounts.html" %} {% endblock %}
+
+        {# Site logo/title, mini-basket, browse dropdown and searchbox #}
+        <div class="header-middle">
+            <div class="container">
+                {% block barnd %} {% include "oscar/partials/brand.html" %}{% endblock %}
+                {# Mini-basket wrapped in a block so some templates can now display it #}
+                {% block mini_basket %}{% include "oscar/partials/mini_basket.html" %}{% endblock %}
+            </div>
+        </div>
+        <div class="header-bottom sticky-content fix-top sticky-header">
+            <div class="container">
+                {% block navigation %}
+                    {% include "oscar/partials/nav_primary.html" %}
+                {% endblock %}
+            </div>
+        </div>
+    </header>
+    <!-- /header -->
+    <main class="main checkout order">
+    {% block checkout_nav %}{% endblock %}
+
+    <div class="container page">
+       <div class="container">
+            {% include 'oscar/partials/alert_messages.html' %}
+
+            {% block login_coupon %} {% endblock %}
+
+            <!-- <div class="sub-header">
+                <h1>{% block checkout_title %}{% endblock %}</h1>
+            </div> -->
+
+            <!-- The main nav on checkout pages contain links to modal flatpages -->
+            {% block modal %}
+                {% load flatpages %}
+                {% get_flatpages '/order/' as flatpages %}
+                {% for page in flatpages %}
+                <div id="{{ page.title|slugify }}" class="modal hide fade">
+                    <div class="modal-header">
+                        <a class="close" data-dismiss="modal">×</a>
+                        <h3>{{ page.title }}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="large-content">
+                            {{ page.content|safe }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endblock %}
+
+            {% block content %}{% endblock %}
+
+        </div><!-- /page_inner -->
+    </div>
+    {% include "oscar/partials/footer.html" %}
+</main>
+{% endblock %}
+
+{% block scripts %}
+    {% include "custome_temps/checkout/plugin_js.html"%}
+{% endblock %}
+
+
+
+

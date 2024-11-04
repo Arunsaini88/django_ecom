@@ -1,0 +1,110 @@
+{% load static %}
+
+<h2 class="title text-left mb-5 pt-1 appear-animate">From Our Blog</h2>
+<div class="swiper-container swiper-theme post-wrapper mb-10 mb-lg-5 appear-animate"
+    data-swiper-options="{
+    'spaceBetween': 20,
+    'slidesPerView': 1,
+    'breakpoints': {
+        '576': {
+            'slidesPerView': 2
+        },
+        '768': {
+            'slidesPerView': 3
+        },
+        '992': {
+            'slidesPerView': 4
+        }
+    }
+}">
+    <div class="swiper-wrapper row cols-lg-4 cols-md-3 cols-sm-2 cols-1">
+        <div class="swiper-slide post">
+            <figure class="post-media br-sm">
+                <a href="post-single.html">
+                    <img src="{% static 'assets/images/demos/demo2/blog/1.jpg' %}" alt="Post" width="620" height="398"
+                        style="background-color: #898078;">
+                </a>
+                <div class="post-calendar">
+                    <span class="post-day">05</span>
+                    <span class="post-month">Mar</span>
+                </div>
+            </figure>
+            <div class="post-details">
+                <h4 class="post-title"><a href="post-single.html">We want to be different, and Fashion
+                        gives
+                        me that outlet to do</a></h4>
+                <div class="post-content">
+                    <p>Lorem ipsum dolor sit amet conse ctetur adip.</p>
+                </div>
+                <a href="post-single.html" class="btn btn-link btn-dark btn-underline">Read More<i
+                        class="w-icon-long-arrow-right"></i></a>
+            </div>
+        </div>
+        <div class="swiper-slide post">
+            <figure class="post-media br-sm">
+                <a href="post-single.html">
+                    <img src="{% static 'assets/images/demos/demo2/blog/2.jpg' %}" alt="Post" width="620" height="398"
+                        style="background-color: #EDEFEE;">
+                </a>
+                <div class="post-calendar">
+                    <span class="post-day">14</span>
+                    <span class="post-month">Mar</span>
+                </div>
+            </figure>
+            <div class="post-details">
+                <h4 class="post-title"><a href="post-single.html">Explore Fashion For Women In</a></h4>
+                <div class="post-content">
+                    <p>Lorem ipsum dolor sit amet conse ctetur adip
+                        isic ing elit, sed do eiusmod.</p>
+                </div>
+                <a href="post-single.html" class="btn btn-link btn-dark btn-underline">Read More<i
+                        class="w-icon-long-arrow-right"></i></a>
+            </div>
+        </div>
+        <div class="swiper-slide post">
+            <figure class="post-media br-sm">
+                <a href="post-single.html">
+                    <img src="{% static 'assets/images/demos/demo2/blog/3.jpg' %}" alt="Post" width="620" height="398"
+                        style="background-color: #A1A09E;">
+                </a>
+                <div class="post-calendar">
+                    <span class="post-day">25</span>
+                    <span class="post-month">Mar</span>
+                </div>
+            </figure>
+            <div class="post-details">
+                <h4 class="post-title"><a href="post-single.html">Fashion tells about who you are from
+                        external point of view</a></h4>
+                <div class="post-content">
+                    <p>Lorem ipsum dolor sit amet conse ctetur adip.</p>
+                </div>
+                <a href="post-single.html" class="btn btn-link btn-dark btn-underline">Read More<i
+                        class="w-icon-long-arrow-right"></i></a>
+            </div>
+        </div>
+        <div class="swiper-slide post">
+            <figure class="post-media br-sm">
+                <a href="post-single.html">
+                    <img src="{% static 'assets/images/demos/demo2/blog/4.jpg' %}" alt="Post" width="620" height="398"
+                        style="background-color: #EDF1F2;">
+                </a>
+                <div class="post-calendar">
+                    <span class="post-day">16</span>
+                    <span class="post-month">Mar</span>
+                </div>
+            </figure>
+            <div class="post-details">
+                <h4 class="post-title"><a href="post-single.html">Just found the ultimate denim
+                        dresses</a>
+                </h4>
+                <div class="post-content">
+                    <p>Lorem ipsum dolor sit amet conse ctetur adip
+                        isic ing elit, sed do eiusmod.</p>
+                </div>
+                <a href="post-single.html" class="btn btn-link btn-dark btn-underline">Read More<i
+                        class="w-icon-long-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="swiper-pagination"></div>
+</div>

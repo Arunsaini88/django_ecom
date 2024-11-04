@@ -1,0 +1,111 @@
+@include set (
+    (
+        base: (
+            _container-width: 1580px,
+            title-link: (
+                link: (
+                    color: $dark-color
+                )
+            )
+        ),
+        header: (
+            top: (
+                text-transform:none,
+                icon: (
+                    font-size:1.6rem,
+                    margin-right:.5rem
+                )
+            ),
+            middle: (
+                border: none,
+                padding: 3.2rem 0 2.7rem 0,
+                margin-left: -.2rem
+            ),
+            cart: (
+                label: (
+                    font-size:1.2rem,
+                    letter-spacing:0
+                )
+            ),
+            call: (
+                margin-right:5rem,
+                icon: (
+                    font-size:3.1rem,
+                    margin-top:.1rem
+                )
+            ),
+            search: (
+                expanded:(
+                    width:74.7rem
+                ),
+                btn:(
+                    width:4.5rem
+                )
+            )
+        ),
+        category-menu: (
+            ancestor: (
+                padding:1.5rem .8rem 1.1rem 1.1rem,
+                font-size:1.5rem,
+                font-weight:400,
+                color:#333,
+                letter-spacing:0
+            ),
+            icon: (
+                font-size:2.2rem,
+                margin:0 1.7rem .2rem 0
+            )
+        ),
+        menu: (
+            ancestor: (
+                font-size:1.5rem,
+                font-weight:400,
+                color: $dark-color,
+                letter-spacing:0
+            )
+        ),
+        product: (
+            name: (
+                margin-bottom:.8rem
+            ),
+            rating: (
+                margin-right:-.1rem
+            ),
+        ),
+        post: (
+            title: (
+                margin-bottom:1.3rem,
+                font-size:1.5rem,
+                letter-spacing:-.025em,
+                overflow: hidden,
+                white-space: nowrap,
+                text-overflow: ellipsis
+            ),
+            body: (
+                padding-top:1.3rem
+            ),
+            btn: (
+                font-weight:400
+            ),
+            info: (
+                font-weight:400
+            )
+        ),
+        footer:(
+            top: (
+                padding:6rem 0 1.8rem,
+                widget: (
+                    margin-bottom:1rem,
+                )
+            ), 
+            bottom: (
+                padding:3rem 0 2.9rem 0
+            ),
+            about: (
+                logo: (
+                    margin:-.2rem 0 2rem 0
+                )
+            )
+        )
+    )
+)

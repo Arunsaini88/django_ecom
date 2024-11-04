@@ -1,0 +1,139 @@
+{% load static %}
+{% load i18n %}
+
+
+{% load display_tags %}
+{% load image_tags %}
+{% load reviews_tags %}
+
+{% load currency_filters %}
+{% load purchase_info_tags %}
+
+{% load category_tags %}
+
+
+<div class="banner-product-wrapper appear-animate row mb-8">
+    <div class="col-xl-5col col-md-4 mb-4">
+        <div class="categories h-100">
+            <h2 class="title text-left">{% trans "Top Categories" %}</h2>
+            <ul class="list-style-none mb-4">
+                {% top_categories_with_products as top_categories %}
+                {% for category in top_categories %}
+                    <li><a href="{{ category.category.get_absolute_url }}">{{ category.category.name }}</a></li>
+                {% empty %}
+                    <li>No top categories available</li>
+                {% endfor %}
+            </ul>
+            <a href="{{ top_categories.0.category.get_absolute_url }}"
+                class="btn btn-dark btn-link btn-underline btn-icon-right font-weight-bolder text-capitalize ls-50">
+                Browse All<i class="w-icon-long-arrow-right"></i></a>
+        </div>
+    </div>
+    <div class="col-xl-5col4 col-md-8 mb-4">
+        <div class="banner br-sm mb-4" style="background-image: url({% static 'assets/images/demos/demo2/banners/1.jpg' %});
+            background-color: #EEF0EF;">
+            <div class="banner-content d-block d-lg-flex align-items-center">
+                <div class="content-left mr-auto">
+                    <h5 class="banner-subtitle font-weight-normal text-capitalize text-dark ls-25 mb-0">
+                        {% trans "Flash Sale" %} <strong class="text-uppercase text-secondary">50% Off</strong>
+                    </h5>
+                    <h3 class="banner-title text-capitalize ls-25">{% trans 'Fashion Figure Skate Sale' %}</h3>
+                    <p class="text-dark">Only until the end of this week.</p>
+                </div>
+                <a href="{{ product.get_absolute_url }}" class="content-left btn btn-dark btn btn-outline 
+                    btn-rounded btn-icon-right mt-4 mt-lg-0">{% trans "Shop Now" %}<i
+                        class="w-icon-long-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <!-- End of Banner -->
+        <div class="swiper-container swiper-theme" data-swiper-options="{
+            'spaceBetween': 20,
+            'slidesPerView': 2,
+            'breakpoints': {
+                '576': {
+                    'slidesPerView': 3
+                },
+                '768': {
+                    'slidesPerView': 2
+                },
+                '992': {
+                    'slidesPerView': 3
+                },
+                '1200': {
+                    'slidesPerView': 4
+                }
+            }
+        }">
+            <div class="swiper-wrapper row cols-xl-4 cols-lg-3">
+                {% top_categories_with_products as top_categories %}
+                {% for category in top_categories %}
+
+                    {% for product in category.products %}
+                        <div class="swiper-slide product-wrap">
+                            <div class="product text-center">
+                                <figure class="product-media">
+                                    {% with image=product.primary_image %}
+                                        {% oscar_thumbnail image.original "x180" upscale=False as thumb %}
+                                        <a href="{{ product.get_absolute_url }}">
+                                            <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
+                                        </a>
+                                    {% endwith %}
+                                    <div class="product-action-vertical">
+                                        {% include "oscar/catalogue/partials/add_to_basket_form_compact.html" %}
+                                        <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                            title="Add to wishlist"></a>
+                                        <a href="#" class="btn-product-icon btn-quickview w-icon-search"
+                                            title="Quickview"></a>
+                                        <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                                            title="Add to Compare"></a>
+                                    </div>
+                                </figure>
+                                <div class="product-details">
+                                    <h4 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h4>
+
+                                        {% iffeature "reviews" %}
+                                        <div class="ratings-container">
+                                            <div class="ratings-full">
+                                                <!-- Check if the product has a rating, else set width to 0% -->
+                                                <span class="ratings" style="width: {% if product.rating %}{% widthratio product.rating 5 100 %}{% else %}0{% endif %}%;"></span>
+                                                <span class="tooltiptext tooltip-top">
+                                                    {% if product.rating %}
+                                                        {{ product.rating|floatformat:2 }} out of 5
+                                                    {% else %}
+                                                        No rating available
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                            <a href="{{ product.get_absolute_url }}#reviews" class="rating-reviews">({{ product.reviews.count }} reviews)</a>
+                                        </div>
+                                        {% endiffeature %}
+
+                                        {% purchase_info_for_product request product as session %}
+                                        
+                                            <div class="product-price">
+                                        {% if session.price.exists %}
+                                            {% if session.price.excl_tax == 0 %}
+                                                <ins class="new-price">{% trans "Free" %}</ins>
+                                            {% elif session.price.is_tax_known %}
+                                                <ins class="new-price">{{ session.price.incl_tax|currency:session.price.currency }}</ins>
+                                            {% else %}
+                                                <ins class="new-price">{{ session.price.excl_tax|currency:session.price.currency }}</ins>
+                                            {% endif %}
+                                        {% else %}
+                                            <ins class="new-price">&nbsp;</ins>
+                                        {% endif %}
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <!-- End of Swiper -->
+    </div>
+</div>
+

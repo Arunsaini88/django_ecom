@@ -1,0 +1,576 @@
+{% load i18n %}
+
+{% load product_tags %}
+{% load display_tags %}
+{% load image_tags %}
+{% load reviews_tags %}
+
+{% load currency_filters %}
+{% load purchase_info_tags %}
+
+{% load static %}
+
+
+<div class="tab tab-with-title tab-nav-boxed appear-animate">
+    <h2 class="title">{% trans "Richesm Products" %}</h2>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" href="#tab-1">{% trans "New Arrivals" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#tab-2">{% trans "Best Seller" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#tab-3">{% trans "Most Popular" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link view-all-link" href="{% url 'catalogue:index' %}">{% trans "View All" %}</a>
+        </li>
+    </ul>
+</div>
+<!-- End of Tab Title-->
+<div class="tab-content appear-animate">
+
+    {% newest_products 7 as products %}
+    <div class="tab-pane active" id="tab-1">
+        <div class="row grid-type products">
+
+            {% for product in products %}
+            {% if forloop.first %}
+
+            <div class="product-wrap lg-item">
+                <div class="product text-center">
+                    <figure class="product-media">
+                        <a href="{{ product.get_absolute_url }}">
+                            {% with image=product.primary_image %}
+                            {% oscar_thumbnail image.original "300x338" upscale=False as thumb %}
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
+                            </a>
+                            {% endwith %}
+                        </a>
+                        <div class="product-action-vertical">
+                            {% include "oscar/catalogue/partials/add_to_basket_form_compact.html" %}
+
+                            <!-- <a href="#" class="btn-product-icon btn-cart w-icon-cart"
+                                title="Add to cart"></a> -->
+                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                title="Add to wishlist"></a>
+                            <a href="#" class="btn-product-icon btn-quickview w-icon-search"
+                                title="Quickview"></a>
+                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                                title="Add to Compare"></a>
+                        </div>
+                        <div class="product-label-group">
+                            <label class="product-label label-discount">-15%</label>
+                        </div>
+                    </figure>
+                    <div class="product-details">
+                        <h4 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h4>
+                        {% iffeature "reviews" %}
+                        <div class="ratings-container">
+                            <div class="ratings-full">
+                                <!-- Check if the product has a rating, else set width to 0% -->
+                                <span class="ratings" style="width: {% if product.rating %}{% widthratio product.rating 5 100 %}{% else %}0{% endif %}%;"></span>
+                                <span class="tooltiptext tooltip-top">
+                                    {% if product.rating %}
+                                        {{ product.rating|floatformat:2 }} out of 5
+                                    {% else %}
+                                        No rating available
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <a href="{{ product.get_absolute_url }}#reviews" class="rating-reviews">({{ product.reviews.count }} reviews)</a>
+                        </div>
+                        {% endiffeature %}
+                        {% purchase_info_for_product request product as session %}
+                                        
+                        <div class="product-price">
+                        {% if session.price.exists %}
+                            {% if session.price.excl_tax == 0 %}
+                                <ins class="new-price">{% trans "Free" %}</ins>
+                            {% elif session.price.is_tax_known %}
+                                <ins class="new-price">{{ session.price.incl_tax|currency:session.price.currency }}</ins>
+                            {% else %}
+                                <ins class="new-price">{{ session.price.excl_tax|currency:session.price.currency }}</ins>
+                            {% endif %}
+                        {% else %}
+                            <ins class="new-price">&nbsp;</ins>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="product-wrap sm-item">
+                <div class="product text-center">
+                    <figure class="product-media">
+                        <a href="{{ product.get_absolute_url }}">
+                            {% with image=product.primary_image %}
+                            {% oscar_thumbnail image.original "x155" upscale=False as thumb %}
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
+                            </a>
+                            {% endwith %}
+                        </a>
+                        <div class="product-action-vertical">
+                            {% include "oscar/catalogue/partials/add_to_basket_form_compact.html" %}
+
+                            <!-- <a href="#" class="btn-product-icon btn-cart w-icon-cart"
+                                title="Add to cart"></a> -->
+                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                title="Add to wishlist"></a>
+                            <a href="#" class="btn-product-icon btn-quickview w-icon-search"
+                                title="Quickview"></a>
+                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                                title="Add to Compare"></a>
+                        </div>
+                        <div class="product-label-group">
+                            <label class="product-label label-new">New</label>
+                        </div>
+                    </figure>
+                    <div class="product-details">
+                        <h4 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h4>
+                        {% iffeature "reviews" %}
+                        <div class="ratings-container">
+                            <div class="ratings-full">
+                                <!-- Check if the product has a rating, else set width to 0% -->
+                                <span class="ratings" style="width: {% if product.rating %}{% widthratio product.rating 5 100 %}{% else %}0{% endif %}%;"></span>
+                                <span class="tooltiptext tooltip-top">
+                                    {% if product.rating %}
+                                        {{ product.rating|floatformat:2 }} out of 5
+                                    {% else %}
+                                        No rating available
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <a href="{{ product.get_absolute_url }}#reviews" class="rating-reviews">({{ product.reviews.count }} reviews)</a>
+                        </div>
+                        {% endiffeature %}
+                        {% purchase_info_for_product request product as session %}
+                                        
+                        <div class="product-price">
+                        {% if session.price.exists %}
+                            {% if session.price.excl_tax == 0 %}
+                                <ins class="new-price">{% trans "Free" %}</ins>
+                            {% elif session.price.is_tax_known %}
+                                <ins class="new-price">{{ session.price.incl_tax|currency:session.price.currency }}</ins>
+                            {% else %}
+                                <ins class="new-price">{{ session.price.excl_tax|currency:session.price.currency }}</ins>
+                            {% endif %}
+                        {% else %}
+                            <ins class="new-price">&nbsp;</ins>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    {% best_selling_products 7 as products %}
+    <div class="tab-pane" id="tab-2">
+        <div class="row grid-type products">
+            {% for product in products %}
+            {% if forloop.first %}
+
+            <div class="product-wrap lg-item">
+                <div class="product text-center">
+                    <figure class="product-media">
+                        <a href="product-default.html">
+                            {% with image=product.primary_image %}
+                            {% oscar_thumbnail image.original "x155" upscale=False as thumb %}
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
+                            </a>
+                            {% endwith %}
+                        </a>
+                        <div class="product-action-vertical">
+                            {% include "oscar/catalogue/partials/add_to_basket_form_compact.html" %}
+
+                            <!-- <a href="#" class="btn-product-icon btn-cart w-icon-cart"
+                                title="Add to cart"></a> -->
+                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                title="Add to wishlist"></a>
+                            <a href="#" class="btn-product-icon btn-quickview w-icon-search"
+                                title="Quickview"></a>
+                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                                title="Add to Compare"></a>
+                        </div>
+                    </figure>
+                    <div class="product-details">
+                        <h4 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h4>
+                        {% iffeature "reviews" %}
+                        <div class="ratings-container">
+                            <div class="ratings-full">
+                                <!-- Check if the product has a rating, else set width to 0% -->
+                                <span class="ratings" style="width: {% if product.rating %}{% widthratio product.rating 5 100 %}{% else %}0{% endif %}%;"></span>
+                                <span class="tooltiptext tooltip-top">
+                                    {% if product.rating %}
+                                        {{ product.rating|floatformat:2 }} out of 5
+                                    {% else %}
+                                        No rating available
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <a href="{{ product.get_absolute_url }}#reviews" class="rating-reviews">({{ product.reviews.count }} reviews)</a>
+                        </div>
+                        {% endiffeature %}
+                        {% purchase_info_for_product request product as session %}
+                                        
+                        <div class="product-price">
+                        {% if session.price.exists %}
+                            {% if session.price.excl_tax == 0 %}
+                                <ins class="new-price">{% trans "Free" %}</ins>
+                            {% elif session.price.is_tax_known %}
+                                <ins class="new-price">{{ session.price.incl_tax|currency:session.price.currency }}</ins>
+                            {% else %}
+                                <ins class="new-price">{{ session.price.excl_tax|currency:session.price.currency }}</ins>
+                            {% endif %}
+                        {% else %}
+                            <ins class="new-price">&nbsp;</ins>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="product-wrap sm-item">
+                <div class="product text-center">
+                    <figure class="product-media">
+                        <a href="product-default.html">
+                            {% with image=product.primary_image %}
+                            {% oscar_thumbnail image.original "x155" upscale=False as thumb %}
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{{ product.primary_image.original.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
+                            </a>
+                            {% endwith %}
+                        </a>
+                        <div class="product-action-vertical">
+                            {% include "oscar/catalogue/partials/add_to_basket_form_compact.html" %}
+
+                            <!-- <a href="#" class="btn-product-icon btn-cart w-icon-cart"
+                                title="Add to cart"></a> -->
+                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                title="Add to wishlist"></a>
+                            <a href="#" class="btn-product-icon btn-quickview w-icon-search"
+                                title="Quickview"></a>
+                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                                title="Add to Compare"></a>
+                        </div>
+                    </figure>
+                    <div class="product-details">
+                        <h4 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h4>
+                            {% iffeature "reviews" %}
+                            <div class="ratings-container">
+                                <div class="ratings-full">
+                                    <!-- Check if the product has a rating, else set width to 0% -->
+                                    <span class="ratings" style="width: {% if product.rating %}{% widthratio product.rating 5 100 %}{% else %}0{% endif %}%;"></span>
+                                    <span class="tooltiptext tooltip-top">
+                                        {% if product.rating %}
+                                            {{ product.rating|floatformat:2 }} out of 5
+                                        {% else %}
+                                            No rating available
+                                        {% endif %}
+                                    </span>
+                                </div>
+                                <a href="{{ product.get_absolute_url }}#reviews" class="rating-reviews">({{ product.reviews.count }} reviews)</a>
+                            </div>
+                            {% endiffeature %}
+                            {% purchase_info_for_product request product as session %}
+                                            
+                            <div class="product-price">
+                            {% if session.price.exists %}
+                                {% if session.price.excl_tax == 0 %}
+                                    <ins class="new-price">{% trans "Free" %}</ins>
+                                {% elif session.price.is_tax_known %}
+                                    <ins class="new-price">{{ session.price.incl_tax|currency:session.price.currency }}</ins>
+                                {% else %}
+                                    <ins class="new-price">{{ session.price.excl_tax|currency:session.price.currency }}</ins>
+                                {% endif %}
+                            {% else %}
+                                <ins class="new-price">&nbsp;</ins>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+
+    {% most_popular_products 7 as products %}
+    <div class="tab-pane" id="tab-3">
+        <div class="row grid-type products">
+            {% for product in products %}
+            {% if forloop.first %}
+            <div class="product-wrap lg-item">
+                <div class="product text-center">
+                    <figure class="product-media">
+                        <a href="{{ product.get_absolute_url }}">
+                            {% with image=product.primary_image %}
+                            {% oscar_thumbnail image.original "300x338" upscale=False as thumb %}
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
+                            </a>
+                            {% endwith %}
+                        </a>
+                        <div class="product-action-vertical">
+                            {% include "oscar/catalogue/partials/add_to_basket_form_compact.html" %}
+
+                            <!-- <a href="#" class="btn-product-icon btn-cart w-icon-cart"
+                                title="Add to cart"></a> -->
+                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                title="Add to wishlist"></a>
+                            <a href="#" class="btn-product-icon btn-quickview w-icon-search"
+                                title="Quickview"></a>
+                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                                title="Add to Compare"></a>
+                        </div>
+                    </figure>
+                    <div class="product-details">
+                        <h4 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h4>
+                        {% iffeature "reviews" %}
+                        <div class="ratings-container">
+                            <div class="ratings-full">
+                                <!-- Check if the product has a rating, else set width to 0% -->
+                                <span class="ratings" style="width: {% if product.rating %}{% widthratio product.rating 5 100 %}{% else %}0{% endif %}%;"></span>
+                                <span class="tooltiptext tooltip-top">
+                                    {% if product.rating %}
+                                        {{ product.rating|floatformat:2 }} out of 5
+                                    {% else %}
+                                        No rating available
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <a href="{{ product.get_absolute_url }}#reviews" class="rating-reviews">({{ product.reviews.count }} reviews)</a>
+                        </div>
+                        {% endiffeature %}
+                        {% purchase_info_for_product request product as session %}
+                                        
+                        <div class="product-price">
+                        {% if session.price.exists %}
+                            {% if session.price.excl_tax == 0 %}
+                                <ins class="new-price">{% trans "Free" %}</ins>
+                            {% elif session.price.is_tax_known %}
+                                <ins class="new-price">{{ session.price.incl_tax|currency:session.price.currency }}</ins>
+                            {% else %}
+                                <ins class="new-price">{{ session.price.excl_tax|currency:session.price.currency }}</ins>
+                            {% endif %}
+                        {% else %}
+                            <ins class="new-price">&nbsp;</ins>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="product-wrap sm-item">
+                <div class="product text-center">
+                    <figure class="product-media">
+                        <a href="{{ product.get_absolute_url }}">
+                            {% with image=product.primary_image %}
+                            {% oscar_thumbnail image.original "x155" upscale=False as thumb %}
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
+                            </a>
+                            {% endwith %}
+                        </a>
+                        <div class="product-action-vertical">
+                            {% include "oscar/catalogue/partials/add_to_basket_form_compact.html" %}
+
+                            <!-- <a href="#" class="btn-product-icon btn-cart w-icon-cart"
+                                title="Add to cart"></a> -->
+                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                title="Add to wishlist"></a>
+                            <a href="#" class="btn-product-icon btn-quickview w-icon-search"
+                                title="Quickview"></a>
+                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                                title="Add to Compare"></a>
+                        </div>
+                    </figure>
+                    <div class="product-details">
+                        <h4 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h4>
+                        {% iffeature "reviews" %}
+                        <div class="ratings-container">
+                            <div class="ratings-full">
+                                <!-- Check if the product has a rating, else set width to 0% -->
+                                <span class="ratings" style="width: {% if product.rating %}{% widthratio product.rating 5 100 %}{% else %}0{% endif %}%;"></span>
+                                <span class="tooltiptext tooltip-top">
+                                    {% if product.rating %}
+                                        {{ product.rating|floatformat:2 }} out of 5
+                                    {% else %}
+                                        No rating available
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <a href="{{ product.get_absolute_url }}#reviews" class="rating-reviews">({{ product.reviews.count }} reviews)</a>
+                        </div>
+                        {% endiffeature %}
+                        {% purchase_info_for_product request product as session %}
+                                        
+                        <div class="product-price">
+                        {% if session.price.exists %}
+                            {% if session.price.excl_tax == 0 %}
+                                <ins class="new-price">{% trans "Free" %}</ins>
+                            {% elif session.price.is_tax_known %}
+                                <ins class="new-price">{{ session.price.incl_tax|currency:session.price.currency }}</ins>
+                            {% else %}
+                                <ins class="new-price">{{ session.price.excl_tax|currency:session.price.currency }}</ins>
+                            {% endif %}
+                        {% else %}
+                            <ins class="new-price">&nbsp;</ins>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    {% all_products 7 as products %}
+    <div class="tab-pane" id="tab-4">
+        <div class="row grid-type products">
+            {% for product in products %}
+            {% if forloop.first %}
+            <div class="product-wrap lg-item">
+                <div class="product text-center">
+                    <figure class="product-media">
+                        <a href="{{ product.get_absolute_url }}">
+                            {% with image=product.primary_image %}
+                            {% oscar_thumbnail image.original "300x338" upscale=False as thumb %}
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
+                            </a>
+                            {% endwith %}
+                        </a>
+                        <div class="product-action-vertical">
+                            {% include "oscar/catalogue/partials/add_to_basket_form_compact.html" %}
+
+                            <!-- <a href="#" class="btn-product-icon btn-cart w-icon-cart"
+                                title="Add to cart"></a> -->
+                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                title="Add to wishlist"></a>
+                            <a href="#" class="btn-product-icon btn-quickview w-icon-search"
+                                title="Quickview"></a>
+                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                                title="Add to Compare"></a>
+                        </div>
+                    </figure>
+                    <div class="product-details">
+                        <h4 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h4>
+                        {% iffeature "reviews" %}
+                        <div class="ratings-container">
+                            <div class="ratings-full">
+                                <!-- Check if the product has a rating, else set width to 0% -->
+                                <span class="ratings" style="width: {% if product.rating %}{% widthratio product.rating 5 100 %}{% else %}0{% endif %}%;"></span>
+                                <span class="tooltiptext tooltip-top">
+                                    {% if product.rating %}
+                                        {{ product.rating|floatformat:2 }} out of 5
+                                    {% else %}
+                                        No rating available
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <a href="{{ product.get_absolute_url }}#reviews" class="rating-reviews">({{ product.reviews.count }} reviews)</a>
+                        </div>
+                        {% endiffeature %}
+                        {% purchase_info_for_product request product as session %}
+                                        
+                        <div class="product-price">
+                        {% if session.price.exists %}
+                            {% if session.price.excl_tax == 0 %}
+                                <ins class="new-price">{% trans "Free" %}</ins>
+                            {% elif session.price.is_tax_known %}
+                                <ins class="new-price">{{ session.price.incl_tax|currency:session.price.currency }}</ins>
+                            {% else %}
+                                <ins class="new-price">{{ session.price.excl_tax|currency:session.price.currency }}</ins>
+                            {% endif %}
+                        {% else %}
+                            <ins class="new-price">&nbsp;</ins>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="product-wrap sm-item">
+                <div class="product text-center">
+                    <figure class="product-media">
+                        <a href="{{ product.get_absolute_url }}">
+                            {% with image=product.primary_image %}
+                            {% oscar_thumbnail image.original "x155" upscale=False as thumb %}
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" style="width:auto;" >
+                            </a>
+                            {% endwith %}
+                        </a>
+                        <div class="product-action-vertical">
+                            {% include "oscar/catalogue/partials/add_to_basket_form_compact.html" %}
+
+                            <!-- <a href="#" class="btn-product-icon btn-cart w-icon-cart"
+                                title="Add to cart"></a> -->
+                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                title="Add to wishlist"></a>
+                            <a href="#" class="btn-product-icon btn-quickview w-icon-search"
+                                title="Quickview"></a>
+                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                                title="Add to Compare"></a>
+                        </div>
+                    </figure>
+                    <div class="product-details">
+                        <h4 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h4>
+                        {% iffeature "reviews" %}
+                        <div class="ratings-container">
+                            <div class="ratings-full">
+                                <!-- Check if the product has a rating, else set width to 0% -->
+                                <span class="ratings" style="width: {% if product.rating %}{% widthratio product.rating 5 100 %}{% else %}0{% endif %}%;"></span>
+                                <span class="tooltiptext tooltip-top">
+                                    {% if product.rating %}
+                                        {{ product.rating|floatformat:2 }} out of 5
+                                    {% else %}
+                                        No rating available
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <a href="{{ product.get_absolute_url }}#reviews" class="rating-reviews">({{ product.reviews.count }} reviews)</a>
+                        </div>
+                        {% endiffeature %}
+                        {% purchase_info_for_product request product as session %}
+                                        
+                        <div class="product-price">
+                        {% if session.price.exists %}
+                            {% if session.price.excl_tax == 0 %}
+                                <ins class="new-price">{% trans "Free" %}</ins>
+                            {% elif session.price.is_tax_known %}
+                                <ins class="new-price">{{ session.price.incl_tax|currency:session.price.currency }}</ins>
+                            {% else %}
+                                <ins class="new-price">{{ session.price.excl_tax|currency:session.price.currency }}</ins>
+                            {% endif %}
+                        {% else %}
+                            <ins class="new-price">&nbsp;</ins>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- End of Tab Content -->
+
+<script>
+    $('.view-all-link').on('click', function(e) {
+    e.preventDefault();
+    window.location.href = $(this).attr('href');
+});
+
+</script>

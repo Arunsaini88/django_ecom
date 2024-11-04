@@ -1,0 +1,96 @@
+{% load i18n %}
+{% load static %}
+
+{% block nav_account_languages %}
+{% if LANGUAGES|length > 1 %}
+    <form id="language_selector" class="form-inline mb-0 mt-2 mt-lg-0" action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ language_neutral_url_path }}" />
+        <div class="form-group mb-0">
+            <select name="language" class="form-control">
+                {% get_language_info_list for LANGUAGES as languages %}
+                {% for language in languages %}
+                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE%} selected="selected"{% endif %}>
+                        {{ language.name_local }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="btn btn-outline-secondary ml-2" type="submit" data-loading-text="{% trans 'Submitting...' %}">{% trans "Go" %}</button>
+    </form>
+    {% endif %}
+{% endblock %}
+    <!-- End of Dropdown Menu -->
+<div class="header-top">
+    <div class="container">
+        <div class="header-left">
+            <p class="welcome-msg">Welcome to Wolmart Store message or remove it!</p>
+        </div>
+        <div class="header-right">
+            <div class="dropdown">
+                <a href="#currency">USD</a>
+                <div class="dropdown-box">
+                    <a href="#USD">USD</a>
+                    <a href="#EUR">EUR</a>
+                </div>
+            </div>
+            <!-- End of DropDown Menu -->
+
+            <div class="dropdown">
+                <a href="#language"><img src="{% static 'assets/images/flags/eng.png' %}" alt="ENG Flag" width="14"
+                        height="8" class="dropdown-image" /> ENG</a>
+                <div class="dropdown-box">
+                    <a href="#ENG">
+                        <img src="{% static 'assets/images/flags/eng.png' %}" alt="ENG Flag" width="14" height="8"
+                            class="dropdown-image" />
+                        ENG
+                    </a>
+                    <a href="#FRA">
+                        <img src="{% static 'assets/images/flags/fra.png' %}" alt="FRA Flag" width="14" height="8"
+                            class="dropdown-image" />
+                        FRA
+                    </a>
+                </div>
+            </div>
+            <!-- End of Dropdown Menu -->
+        
+            <span class="divider d-lg-show"></span>
+            <a href="#" class="d-lg-show">Blog</a>
+            <a href="#" class="d-lg-show">Contact Us</a>
+        
+            {% if user.is_authenticated %}
+            {% block nav_account_navbar_authenticated %}
+            {% if num_unread_notifications > 0 %}
+                {# If user has new notifications - we change account link to go to inbox #}
+                <a href="{% url 'customer:notifications-inbox' %}" class="d-lg-show">
+                    <i class="far fa-user mr-2"></i>
+                    {% trans "Account" %}
+                    <span class="badge badge-warning">{{ num_unread_notifications }}</span>
+                </a>
+                {% else %}
+                <a href="{% url 'customer:summary' %}" class="d-lg-show">
+                    <i class="far fa-user mr-2"></i>
+                    {% trans "My Account" %}
+                </a>
+                {% endif %}
+                {% if user.is_staff or perms.partner.dashboard_access %}
+                        <a href="{% url 'dashboard:index' %}" class="d-lg-show">
+                            <i class="fas fa-list-ul mr-2"></i>
+                            {% trans "Dashboard" %}
+                        </a>
+                {% endif %}
+                    <a id="logout_link" href="{% url 'customer:logout' %}" class="d-lg-show">
+                        <i class="fas fa-sign-out-alt mr-2"></i>
+                        {% trans "Logout" %}
+                    </a>
+            {% endblock %}
+            {% else %}
+                <a id="login_link" href="static/assets/ajax/login.html" class="d-lg-show login register">
+                <a id="login_link" href="{% url 'customer:login' %}" class=" ml-0 d-lg-show login register">
+                    <i class="fas fa-sign-in-alt mr-2"></i>
+                    {% trans "Login or register" %}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>

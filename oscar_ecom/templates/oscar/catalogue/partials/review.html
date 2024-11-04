@@ -1,0 +1,108 @@
+{% load reviews_tags %}
+{% load i18n %}
+{% load static %}
+
+
+<div class="comment-body">
+    <figure class="comment-avatar">
+        {% if review.user.profile.avatar %}
+            <img src="{{ review.user.profile.avatar.url }}" alt="Commenter Avatar" width="90" height="90">
+        {% else %}
+            <img src="{% static 'assets/images/agents/1-100x100.png' %}" alt="Commenter Avatar" width="90" height="90">
+        {% endif %}
+    </figure>
+    <div class="comment-content">
+        {% if review.user == user %}
+            {% blocktrans with review_date=review.date_created %}
+            <h4 class="comment-author">
+                <span class="comment-date">Reviewed by you on {{ review_date }}</span>
+            </h4>
+            {% endblocktrans %}
+        {% else %}
+            {% blocktrans with name=review.reviewer_name review_date=review.date_created %}
+            <h4 class="comment-author">
+                <a href="#">{{ name }}</a>
+                <span class="comment-date">{{ review_date }}</span>
+            </h4>
+            {% endblocktrans %}
+        {% endif %}
+        <a href="{% url 'catalogue:reviews-detail' product_slug=product.slug product_pk=product.pk pk=review.pk %}">{% trans 'Permalink' %}</a>        
+        <div class="ratings-container comment-rating">
+            <div class="ratings-full">
+                <!-- Convert review score to percentage (out of 5 stars, e.g., 4/5 stars = 80%) -->
+                <span class="ratings" style="width: {%  widthratio review.score 5 100  %}%;"></span>
+                <span class="tooltiptext tooltip-top">{{ review.score}} out of 5</span>
+            </div>
+        </div>
+        
+
+
+        <p>{{ review.body|striptags }}</p>
+
+        <div class="comment-action">
+            {% if review|may_vote:user %}
+                <small>{% trans "Is this review helpful?" %}</small>
+                <form action="{% url 'catalogue:reviews-vote' product_slug=product.slug product_pk=product.pk pk=review.pk %}" method="post" class="vote_agree">
+                    {% csrf_token %}
+                    <input type="hidden" name="delta" value="1" />
+                    <button type="submit" class="btn btn-secondary btn-link btn-underline sm btn-icon-left font-weight-normal text-capitalize" data-loading-text="{% trans 'Submitting...' %}">
+                        <i class="far fa-thumbs-up"></i>{% trans "Helpful" %} (<span class="num-up-votes">{{ review.num_up_votes }}</span>)
+                    </button>
+                </form>
+                
+                <form action="{% url 'catalogue:reviews-vote' product_slug=product.slug product_pk=product.pk pk=review.pk %}" method="post" class="vote_disagree">
+                    {% csrf_token %}
+                    <input type="hidden" name="delta" value="-1" />
+                    <button type="submit" class="btn btn-dark btn-link btn-underline sm btn-icon-left font-weight-normal text-capitalize" data-loading-text="{% trans 'Submitting...' %}">
+                        <i class="far fa-thumbs-down"></i></i>{% trans "Unhelpful" %}  (<span class="num-down-votes">{{ review.num_down_votes }}</span>)
+                    </button>
+                </form>
+
+            {% endif %}
+            <p>
+                <small>
+                {% if review.has_votes %}
+                    {% blocktrans with num_up_votes=review.num_up_votes count num_votes=review.total_votes %}
+                    <a href="#"
+                    class="btn btn-secondary btn-link btn-underline sm btn-icon-left font-weight-normal text-capitalize">
+                    <i class="far fa-thumbs-up"></i>Helpful ({{ num_up_votes }})
+                    </a>
+                    {% plural %}
+                    <a href="#"
+                    class="btn btn-secondary btn-link btn-underline sm btn-icon-left font-weight-normal text-capitalize">
+                    <i class="far fa-thumbs-up"></i>Helpful ({{ num_up_votes }})
+                    </a>
+                    {% endblocktrans %}
+
+                    {% blocktrans with num_up_votes=review.num_down_votes count num_votes=review.total_votes %}
+                    <a href="#"
+                    class="btn btn-dark btn-link btn-underline sm btn-icon-left font-weight-normal text-capitalize">
+                    <i class="far fa-thumbs-down"></i>Unhelpful({{ num_up_votes }})
+                    </a> 
+                    {% plural %}
+                    <a href="#"
+                    class="btn btn-dark btn-link btn-underline sm btn-icon-left font-weight-normal text-capitalize">
+                    <i class="far fa-thumbs-down"></i>Unhelpful({{ num_up_votes }})
+                    </a>
+                    {% endblocktrans %}
+                {% else %}
+                    {% trans "This review has no votes." %}
+                {% endif %}
+                </small>
+            </p>
+
+            <div class="review-image">
+                {% if review.image %}
+                    <a href="#">
+                        <figure>
+                            <img src="{{ review.image.url }}"
+                                width="60" height="60"
+                                alt="Attachment image of {{ review.reviewer_name }}'s review on {{ product.title }}"
+                                data-zoom-image="{{ review.image.url }}" />
+                        </figure>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

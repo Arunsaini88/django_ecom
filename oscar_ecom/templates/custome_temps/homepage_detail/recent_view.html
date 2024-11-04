@@ -1,0 +1,33 @@
+{% load i18n %}
+{% load image_tags %}
+{% load history_tags %}
+
+{% load static %}
+
+
+<h2 class="title text-left text-capitalize mb-5 appear-animate">{% trans "Your Recent Views" %}</h2>
+<div class="swiper-container swiper-theme appear-animate viewed-products mb-7" data-swiper-options="{
+    'spaceBetween': 20,
+    'slidesPerView': 2,
+    'breakpoints': {
+        '576': {
+            'slidesPerView': 3
+        },
+        '768': {
+            'slidesPerView': 5
+        },
+        '992': {
+            'slidesPerView': 6
+        },
+        '1200': {
+            'slidesPerView': 8
+        }
+    }
+    }">
+    <div class="swiper-wrapper row cols-xl-8 cols-lg-6 cols-md-4 cols-2">
+
+        {% home_recently_viewed_products current_product=product %}
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
+<!-- End of Swiper Container -->

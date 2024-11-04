@@ -1,0 +1,40 @@
+    <script>
+        function addToCart(productId, quantity) {
+            // Define the URL to add to the basket
+            var addToCartUrl = `/basket/add/${productId}/`;
+    
+            $.ajax({
+                url: addToCartUrl,
+                type: 'POST',
+                data: {
+                    'product_id': productId,
+                    'quantity': quantity,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Update mini-basket or show a notification about the added product
+                        // alert(response.message);  // You can customize this as per your needs
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function(xhr) {
+                    console.log('An error occurred: ' + xhr.responseText);
+                }
+            });
+        }
+    
+        // Remove any previously bound click event handler before binding a new one
+        $(document).off('click', '.btn-cart').on('click', '.btn-cart', function(e) {
+            e.preventDefault();  // Prevent the default action (e.g., navigation)
+    
+            // Get the product ID from the data attribute and set default quantity
+            var productId = $(this).data('product-pk');
+            var quantity = $(this).closest('.product-form').find('.quantity').val() || 1;  // Default to 1 if no quantity is specified
+    
+            // Call the addToCart function
+            addToCart(productId, quantity);
+        });
+    </script>
+    

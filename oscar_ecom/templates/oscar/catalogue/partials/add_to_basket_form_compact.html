@@ -1,0 +1,6 @@
+
+<a href="#" class="btn-product-icon btn-cart w-icon-cart" title="Add to cart" 
+   data-product-pk="{{ product.pk }}"  data-url="{% url 'basket:add' pk=product.pk %}" >
+</a>
+
+{% include "custome_temps/shop_content/add_to_cart_js.html"%}

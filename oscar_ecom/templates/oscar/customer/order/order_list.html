@@ -1,0 +1,116 @@
+{% extends "oscar/customer/baseaccountpage.html" %}
+{% load currency_filters %}
+{% load i18n %}
+{% load static %}
+
+{% block styles %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static "oscar/js/bootstrap4-datetimepicker/tempusdominus-bootstrap-4.min.css" %}" />
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static "oscar/js/bootstrap4-datetimepicker/moment-with-locales.min.js" %}"></script>
+    <script src="{% static "oscar/js/bootstrap4-datetimepicker/tempusdominus-bootstrap-4.min.js" %}"></script>
+{% endblock %}
+
+{% block page_header %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-title mb-0">My Account</h1>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ homepage_url }}">{% trans 'Home' %}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{% url 'customer:summary' %}">{% trans 'Account' %}</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans 'Order history' %}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block tabcontent %}
+
+    <div class="tab-vertical row gutter-lg">
+        <ul class="nav nav-tabs mb-6 nav nav-pills flex-column" role="tablist">
+            {% include 'oscar/customer/partials/standard_tabs.html' %}
+        </ul>
+        <div class="tab-content mb-6">
+            {% if orders or form.is_bound %}
+                <div class="card card-body bg-light">
+                    <h2>{% trans "Filter" %}</h2>
+                    <form method="get">
+                        {% include "oscar/partials/form_fields.html" with form=form style='horizontal' %}
+                        <div class="form-group row">
+                            <div class="offset-sm-4 col-sm-8">
+                                <button type="submit" class="btn btn-primary" data-loading-text="{% trans 'Filtering...' %}">{% trans 'Filter results' %}</button>
+                                <a href="{% url 'customer:order-list' %}" class="btn btn-secondary">{% trans 'Reset' %}</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+
+            {% if orders %}
+                    <div class="tab-pane mb-4" id="account-orders">
+                        <div class="icon-box icon-box-side icon-box-light">
+                            <span class="icon-box-icon icon-orders">
+                                <i class="w-icon-orders"></i>
+                            </span>
+                            <div class="icon-box-content">
+                                <h4 class="icon-box-title text-capitalize ls-normal mb-0">Orders-{{ form.description }}</h4>
+                            </div>
+                        </div>
+
+                        <table class="shop-table account-orders-table mb-6">
+                            <thead>
+                                <tr>
+                                    <th class="order-id">{% trans "Order number" %}</th>
+                                    <th class="order-date">{% trans "Date submitted" %}</th>
+                                    <th class="order-status">{% trans "Status" %}</th>
+                                    <th class="order-total">{% trans "Total inc tax" %}</th>
+                                    <th class="order-actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <td class="order-id">{{ order.number }}</td>
+                                    <td class="order-date">{{ order.date_placed }}</td>
+                                    <td class="order-status">{{ order.status }}</td>
+                                    <td class="order-total">
+                                        <span class="order-price">{{ order.total_incl_tax|currency:order.currency }</span> for
+                                        <span class="order-quantity"> {{ order.num_items }}</span> item
+                                    </td>
+                                    <td class="order-action">
+                                        <a href="{{ order.get_absolute_url }}"
+                                            class="btn btn-outline btn-default btn-block btn-sm btn-rounded">View</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <a href="{{ homepage_url }}" class="btn btn-dark btn-rounded btn-icon-right">Go Shop<i class="w-icon-long-arrow-right"></i></a>
+                    </div>
+                {% include "oscar/partials/pagination.html" %}
+            {% else %}
+                {% if form.is_bound %}
+                    <p>{% trans "No orders match your search." %}</p>
+                {% else %}
+                    <p>{% trans "You haven't placed any orders." %}</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock tabcontent %}

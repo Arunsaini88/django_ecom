@@ -1,0 +1,49 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.delete-item').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+    
+                // Get the line ID from the data-id attribute
+                const lineId = button.getAttribute('data-id');
+    
+                // Find and mark the DELETE field for deletion
+                const deleteInput = document.querySelector(`#id_form-${lineId}-DELETE`);
+                if (deleteInput) {
+                    deleteInput.checked = true; // Mark item as deleted
+                }
+    
+                // Optionally hide the row for instant feedback
+                const row = button.closest('tr');
+                if (row) {
+                    row.style.display = 'none';
+                }
+    
+                // Submit the form to process the deletion on the server
+                const form = document.getElementById('basket_formset');
+                form.submit();
+            });
+        });
+    });
+    
+    
+    
+    function updateQuantity(button, change) {
+        const lineId = button.getAttribute('data-line-id');
+        const quantityInput = document.querySelector(`#id_form-${lineId}-quantity`);
+    
+        if (quantityInput) {
+            // Adjust quantity
+            let newQuantity = parseInt(quantityInput.value || '0') + change;
+            newQuantity = newQuantity < 1 ? 1 : newQuantity; // Ensure quantity doesn't go below 1
+    
+            // Set new quantity
+            quantityInput.value = newQuantity;
+    
+            // Submit the form to update the basket
+            const form = document.getElementById('basket_formset');
+            form.submit();
+        }
+    }
+    </script>
+    

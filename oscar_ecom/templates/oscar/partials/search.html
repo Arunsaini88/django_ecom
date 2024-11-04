@@ -1,0 +1,17 @@
+{% load i18n %}
+{% load category_tags %}
+<form class="header-search hs-expanded hs-round d-none d-md-flex input-wrapper" method="GET" action="{% url 'search:search' %}">
+    <div class="select-box">
+        <select id="category" name="category">
+            <option value="">All Categories</option>
+            {% category_tree depth=1 as tree_categories %}
+            {% if tree_categories %}
+            {% for tree_category in tree_categories %}
+                <option value="{{ category.pk }}">{{ tree_category.name }}</option>
+            {% endfor %}
+            {% endif %}
+        </select>
+    </div>
+    <input class="form-control" name="q" id="id_q" placeholder="{% trans 'Search in...' %}" aria-label="{% trans 'Search' %}" required/>
+    <button class="btn btn-search" type="submit"><i class="w-icon-search"></i></button>
+</form>

@@ -1,0 +1,24 @@
+{% load i18n %}
+{% load image_tags %}
+
+{% with products_sliced=products|slice:":6" %}
+    {% if products_sliced %}
+        {% for product in products_sliced %}
+        <div class="swiper-slide product-wrap mb-0">
+            <div class="product text-center product-absolute">
+                {% with image=product.primary_image %}
+                    {% oscar_thumbnail image.original "x155" upscale=False as thumb %}
+                    <figure class="product-media">
+                        <a href="{{ product.get_absolute_url }}">
+                            <img src="{{ thumb.url }}" alt="{{ product.get_title }}" alt="Category image" width="130" height="146" style="background-color: #fff" />
+                        </a>
+                    </figure>
+                {% endwith %}
+                <h4 class="product-name">
+                    <a href="{{ product.get_absolute_url }}" title="{{ product.get_title }}">{{ product.get_title|truncatewords:4 }}</a>
+                </h4>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
