@@ -28,7 +28,7 @@
             {% endif %}
         {% endwith %}
     {% else %}
-        <span class="dropdown-item">{% trans 'Please login' %}</span>
+        <a href="{% url 'customer:login' %}" class="dropdown-item">{% trans 'Please login' %}</a>
     {% endif %}
 </div>
 

@@ -46,7 +46,7 @@
             </li>
             <li>
                 <label>{% trans "Payment method" %}</label>
-                <strong>{{ shipping_method.name }}</strong>
+                <strong>{% trans "payment method here"%}</strong>
             </li>
         </ul>
 
@@ -107,7 +107,7 @@
                     </tr>
                     <tr>
                         <th>{% trans "Payment method:" %}</th>
-                        <td>{{ shipping_method.name }}</td>
+                        <td>{% trans 'No publish' %}</td>
                     </tr>
                     <tr class="total">
                         <th class="border-no">{% trans "Total:" %}</th>
@@ -234,8 +234,8 @@
         {% endblock shipping_address %}
 
         {# You will almost certainly want to override this block to provide a payment summary #}
-        {% block payment_method %}
         <div class="sub-orders mb-10">
+            {% block payment_method %}
             <h4 class="title mb-5 font-weight-bold ls-25">{% trans "Payment" %}-  <a href="{% url 'checkout:payment-details' %}" class="float-right">{% trans "Change" %}</a></h4>
             <table class="order-subtable">
                 <thead>
@@ -251,15 +251,16 @@
             </table>
             {% block place_order %}
             {% endblock place_order %}
-        </div>
-        {% endblock payment_method %}
+
+            {% endblock payment_method %}
+        
     
-    {% block shipping_method %}
-    {% endblock shipping_method %}
+            {% block shipping_method %}
+            {% endblock shipping_method %}
 
-    {% block payment_details %}
-    {% endblock payment_details %}
-
+            {% block payment_details %}
+            {% endblock payment_details %}
+        </div>
     
 
 {% endblock content %}

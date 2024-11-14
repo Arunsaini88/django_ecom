@@ -47,12 +47,12 @@
         {% endblock %}
     </head>
 
-    <body id="{% block body_id %}default{% endblock %}" class="{% block body_class %}default{% endblock %}">
+    <body id="{% block body_id %}default{% endblock %}" class="{% block body_class %}default{% endblock %} Home">
         {# Main content goes in this 'layout' block #}
         <div class="page-wrapper">
         {% block layout %}{% endblock %}
         </div>
-
+        
         {# Scripts loaded from a CDN. #}
         {% block cdn_scripts %}
             <!-- jQuery -->

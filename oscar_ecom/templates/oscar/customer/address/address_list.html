@@ -5,7 +5,7 @@
 {% block page_header %}
 <div class="page-header">
     <div class="container">
-        <h1 class="page-title mb-0">My Account</h1>
+        <h1 class="page-title mb-0">{% trans "My Account" %}</h1>
     </div>
 </div>
 {% endblock %}
@@ -17,19 +17,16 @@
             {% include 'oscar/customer/partials/standard_tabs.html' %}
         </ul>
         <div class="tab-content mb-6">
-            
             {% if addresses %}
-          
                 <div class="icon-box icon-box-side icon-box-light">
                     <span class="icon-box-icon icon-map-marker">
                         <i class="w-icon-map-marker"></i>
                     </span>
                     <div class="icon-box-content">
-                        <h4 class="icon-box-title mb-0 ls-normal">Addresses</h4>
+                        <h4 class="icon-box-title mb-0 ls-normal">{% trans "Addresses" %}</h4>
                     </div>
                 </div>
-                <p>The following addresses will be used on the checkout page
-                    by default.</p>
+                <p>{% trans "The following addresses will be used on the checkout page by default." %}</p>
                     <div class="row">
                         <div class="col-sm-6 mb-6">
                             <div class="ecommerce-address billing-address pr-lg-8">

@@ -1,0 +1,37 @@
+{% extends "oscar/catalogue/browse.html" %}
+
+{% load i18n %}
+
+{% block title %}
+    {{ brand.get_meta_title }} | {{ block.super }}
+{% endblock %}
+
+{% block description %}
+    {{ brand.get_meta_description }}
+{% endblock %}
+
+{% block header%}
+    <div class="page-header">
+        {% if user.is_staff %}
+            <a class="float-right d-none d-md-block" href="{% url 'dashboard:catalogue-brand-update' pk=brand.id %}">
+              <small><i class="fas fa-pencil-alt"></i> {% trans "Edit this brand" %}</small></a>
+        {% endif %}
+        <h1>{% block headertext %}{{ brand.name }}{% endblock %}</h1>
+    </div>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ homepage_url }}">{% trans "Home" %}</a></li>
+            {% for brand in brand.get_ancestors %}
+                <li class="breadcrumb-item"><a href="{{ brand.get_absolute_url }}">{{ brand.name }}</a></li>
+            {% endfor %}
+            <li class="breadcrumb-item active" aria-current="page">{{ brand.name }}</li>
+        </ol>
+    </nav>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    {{ block.super }}
+{% endblock %}

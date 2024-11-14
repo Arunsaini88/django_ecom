@@ -18,6 +18,7 @@
 
 {% block payment_details %}
     {% block payment_details_content %}
+    <div class="container">
         <p>{% trans "This page needs implementing within your project.  You may want to use one of Oscar's payment gateway libraries:" %}</p>
         <ul>
             <li><a href="https://github.com/django-oscar/django-oscar-paypal">django-oscar-paypal</a></li>
@@ -26,5 +27,6 @@
             <li><a href="https://github.com/django-oscar/django-oscar-accounts">django-oscar-accounts</a></li>
         </ul>
         <a id="view_preview" href="{% url 'checkout:preview' %}" class="btn btn-primary btn-lg">{% trans "Continue" %}</a>
+    </div>
     {% endblock payment_details_content %}
 {% endblock payment_details %}

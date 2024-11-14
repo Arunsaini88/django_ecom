@@ -84,11 +84,19 @@
                             <div class="widget-col swiper-slide">
                             {% endif %}
                                 <div class="product product-widget">
+                                    {% if product.images.exists %}
                                     <figure class="product-media">
                                         <a href="{{ product.get_absolute_url }}">
                                             <img src="{{ product.primary_image.original.url }}" alt="{{ product.title }}" width="100" height="113" />
                                         </a>
                                     </figure>
+                                    {% else %}
+                                        <figure class="product-image">
+                                            <img src="{% static 'assets/image_not_found.jpg' %}" alt="Default Image" 
+                                                data-zoom-image="{% static 'assets/image_not_found.jpg' %}"
+                                                width="800" height="900">
+                                        </figure>
+                                    {% endif %}
                                     <div class="product-details">
                                         <h4 class="product-name">
                                             <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>

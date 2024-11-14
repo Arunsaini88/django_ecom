@@ -1,0 +1,51 @@
+{% extends 'oscar/dashboard/layout.html' %}
+<!-- {% load category_tags %} -->
+{% load i18n %}
+{% load render_table from django_tables2 %}
+
+{% block body_class %}{{ block.super }} catalogue{% endblock %}
+
+{% block title %}
+    {% trans "Settings" %} | {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                {% trans "Setting" %}
+            </li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block header %}
+    <div class="page-header">
+        <a href="{% url 'create-site-settings' %}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> {% trans "Create New Site Settings" %}</a>
+        <h1>{% trans "Settings" %}</h1>
+    </div>
+{% endblock header %}
+
+{% block dashboard_content %}
+    <div class="alert alert-info">
+        <div>{% trans "You are editing:" %}
+            <strong><a href="{% url 'site-settings-list' %}">{% trans "Home" %}</a></strong>
+            {% if ancestors %}
+                &gt;
+                {% for ancestor in ancestors %}
+                    <strong><a href="{% url 'manage-site-settings' pk=ancestor.pk %}">{{ ancestor.name }}</a></strong>{% if not forloop.last %} > {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+   
+    {% if table %}
+       {% render_table table %}
+    {% else %}
+        <p>{% trans "There are no setting." %}</p>
+    {% endif %}
+{% endblock dashboard_content %}

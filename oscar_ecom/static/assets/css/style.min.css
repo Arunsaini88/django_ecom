@@ -15545,7 +15545,7 @@ body .product-popup {
   overflow: visible;
 }
 .cart-dropdown .products {
-  max-height: 28rem;
+  max-height: none;
   border-bottom: 1px solid #eee;
   padding-bottom: 2.1rem;
 }

@@ -8,32 +8,32 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a></li>
             <li class="breadcrumb-item">
-                <a href="{% if parent %}{% url 'dashboard:catalogue-category-detail-list' pk=parent.pk %}{% else %}{% url 'dashboard:catalogue-category-list' %}{% endif %}">
-                    {% trans "Categories" %}
+                <a href="{% if parent %}{% url 'dashboard:catalogue-brand-detail-list' pk=parent.pk %}{% else %}{% url 'dashboard:catalogue-brand-list' %}{% endif %}">
+                    {% trans "Brands" %}
                 </a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">{% trans "Delete category?" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "Delete brand?" %}</li>
         </ol>
     </nav>
 {% endblock %}
 
 {% block headertext %}
-    {% trans "Delete category?" %}
+    {% trans "Delete brand?" %}
 {% endblock %}
 
 {% block dashboard_content %}
     <div class="table-header">
-        <h2>{% trans "Delete category" %}</h2>
+        <h2>{% trans "Delete brand" %}</h2>
     </div>
     <form method="post" class="card card-body bg-light">
         {% csrf_token %}
         {{ form }}
         {% blocktrans with name=object.name %}
-            <p>Delete category <strong>{{ name }}</strong> - are you sure?</p>
+            <p>Delete brand <strong>{{ name }}</strong> - are you sure?</p>
         {% endblocktrans %}
         <div class="form-actions">
             <button type="submit" class="btn btn-danger" data-loading-text="{% trans 'Deleting...' %}">{% trans "Delete" %}</button>
-        {% trans "or" %} <a href="{% if parent %}{% url 'dashboard:catalogue-category-detail-list' pk=parent.pk %}{% else %}{% url 'dashboard:catalogue-category-list' %}{% endif %}">{% trans "cancel" %}</a>
+        {% trans "or" %} <a href="{% if parent %}{% url 'dashboard:catalogue-brand-detail-list' pk=parent.pk %}{% else %}{% url 'dashboard:catalogue-brand-list' %}{% endif %}">{% trans "cancel" %}</a>
     </div>
 </form>
 {% endblock %}

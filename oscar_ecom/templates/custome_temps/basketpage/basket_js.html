@@ -26,8 +26,6 @@
         });
     });
     
-    
-    
     function updateQuantity(button, change) {
         const lineId = button.getAttribute('data-line-id');
         const quantityInput = document.querySelector(`#id_form-${lineId}-quantity`);
@@ -41,9 +39,18 @@
             quantityInput.value = newQuantity;
     
             // Submit the form to update the basket
-            const form = document.getElementById('basket_formset');
-            form.submit();
+            // const form = document.getElementById('basket_formset');
+            // form.submit();
         }
     }
+
+    function clearCart() {
+            // Find all quantity input fields and set their value to 0
+            document.querySelectorAll('.product-quantity input[type="number"]').forEach(input => {
+                input.value = 0;
+            });
+            // Submit the form to update the cart with all quantities set to zero
+            document.getElementById('basket_formset').submit();
+        }
     </script>
     

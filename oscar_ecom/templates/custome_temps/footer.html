@@ -39,24 +39,19 @@
                 <div class="row">
                     <div class="col-lg-4 col-sm-6">
                         <div class="widget widget-about">
-                            <a href="demo1.html" class="logo-footer">
-                                <img src="{% static 'assets/images/logo_footer.png' %}" alt="logo-footer" width="144"
-                                    height="45" />
-                            </a>
+                            {% if site_info.site_logo %}
+                            <a href="{{ homepage_url }}" class="logo-footer">{% block brand_title %} <img src="{{ site_info.site_logo.url }}" alt="logo-footer" width="144" height="45" >{% endblock %}</a>
+                            {% endif %}
                             <div class="widget-body">
                                 <p class="widget-about-title">Got Question? Call us 24/7</p>
-                                <a href="tel:18005707777" class="widget-about-call">1-800-570-7777</a>
-                                <p class="widget-about-desc">Register now to get updates on pronot get up icons
-                                    & coupons ster now toon.
-                                </p>
-
+                                <a href="tel:18005707777" class="widget-about-call">{{ site_info.site_phone }}</a>
+                                <p class="widget-about-desc">Health to Harmony</p>
+                                {% for link in site_info.social_links.all %}
                                 <div class="social-icons social-icons-colored">
-                                    <a href="#" class="social-icon social-facebook w-icon-facebook"></a>
-                                    <a href="#" class="social-icon social-twitter w-icon-twitter"></a>
-                                    <a href="#" class="social-icon social-instagram w-icon-instagram"></a>
-                                    <a href="#" class="social-icon social-youtube w-icon-youtube"></a>
-                                    <a href="#" class="social-icon social-pinterest w-icon-pinterest"></a>
+                                    <a href="{{ link.url }}" class="{{ link.media_logo_link }}">
+                                    </a>                                
                                 </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -101,79 +96,27 @@
                     </div>
                 </div>
             </div>
+            
             <div class="footer-middle">
                 <div class="widget widget-category">
                     <div class="category-box">
-                        <h6 class="category-name">Consumer Electric:</h6>
-                        <a href="#">TV Television</a>
-                        <a href="#">Air Condition</a>
-                        <a href="#">Refrigerator</a>
-                        <a href="#">Washing Machine</a>
-                        <a href="#">Audio Speaker</a>
-                        <a href="#">Security Camera</a>
-                        <a href="#">View All</a>
-                    </div>
+                        {% if  site_info.address  %}
+                        <h6 class="category-name">Address:</h6>
+                        <a href="#"><i class="fas fa-map-marker-alt"></i> {{ site_info.address }}</a>
+                        {% endif %}
+                    </div><br>
                     <div class="category-box">
-                        <h6 class="category-name">Clothing & Apparel:</h6>
-                        <a href="#">Men's T-shirt</a>
-                        <a href="#">Dresses</a>
-                        <a href="#">Men's Sneacker</a>
-                        <a href="#">Leather Backpack</a>
-                        <a href="#">Watches</a>
-                        <a href="#">Jeans</a>
-                        <a href="#">Sunglasses</a>
-                        <a href="#">Boots</a>
-                        <a href="#">Rayban</a>
-                        <a href="#">Acccessories</a>
-                    </div>
+                        {% if  site_info.contact_email %}
+                        <h6 class="category-name">Contact:</h6>
+                        <a href="#"><i class="fas fa-envelope"></i> Email : {{ site_info.contact_email }}</a>
+                        <a href="#"><i class="fa fa-phone" aria-hidden="true"></i> Phone : {{ site_info.site_phone }}</a>     
+                        {% endif %}
+                    </div><br>
                     <div class="category-box">
-                        <h6 class="category-name">Home, Garden & Kitchen:</h6>
-                        <a href="#">Sofa</a>
-                        <a href="#">Chair</a>
-                        <a href="#">Bed Room</a>
-                        <a href="#">Living Room</a>
-                        <a href="#">Cookware</a>
-                        <a href="#">Utensil</a>
-                        <a href="#">Blender</a>
-                        <a href="#">Garden Equipments</a>
-                        <a href="#">Decor</a>
-                        <a href="#">Library</a>
-                    </div>
-                    <div class="category-box">
-                        <h6 class="category-name">Health & Beauty:</h6>
-                        <a href="#">Skin Care</a>
-                        <a href="#">Body Shower</a>
-                        <a href="#">Makeup</a>
-                        <a href="#">Hair Care</a>
-                        <a href="#">Lipstick</a>
-                        <a href="#">Perfume</a>
-                        <a href="#">View all</a>
-                    </div>
-                    <div class="category-box">
-                        <h6 class="category-name">Jewelry & Watches:</h6>
-                        <a href="#">Necklace</a>
-                        <a href="#">Pendant</a>
-                        <a href="#">Diamond Ring</a>
-                        <a href="#">Silver Earing</a>
-                        <a href="#">Leather Watcher</a>
-                        <a href="#">Rolex</a>
-                        <a href="#">Gucci</a>
-                        <a href="#">Australian Opal</a>
-                        <a href="#">Ammolite</a>
-                        <a href="#">Sun Pyrite</a>
-                    </div>
-                    <div class="category-box">
-                        <h6 class="category-name">Computer & Technologies:</h6>
-                        <a href="#">Laptop</a>
-                        <a href="#">iMac</a>
-                        <a href="#">Smartphone</a>
-                        <a href="#">Tablet</a>
-                        <a href="#">Apple</a>
-                        <a href="#">Asus</a>
-                        <a href="#">Drone</a>
-                        <a href="#">Wireless Speaker</a>
-                        <a href="#">Game Controller</a>
-                        <a href="#">View all</a>
+                        {% if site_info.contact_email %}
+                        <h6 class="category-name">Hours of Operation:</h6>
+                        <a href="#"><i class="fas fa-clock"></i> {{ site_info.hours_of_operation }}</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

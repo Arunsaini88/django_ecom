@@ -9,7 +9,7 @@
         <div class="call-info d-lg-show">
             <h4 class="chat font-weight-normal font-size-md text-normal ls-normal text-light mb-0">
                 <a href="mailto:#" class="text-capitalize">Live Chat</a> or :</h4>
-            <a href="tel:#" class="phone-number font-weight-bolder ls-50">0(800)123-456</a>
+            <a href="tel:#" class="phone-number font-weight-bolder ls-50">{{ site_info.site_phone }}</a>
         </div>
     </div>
     
@@ -74,56 +74,7 @@
                 <a href="{% url 'basket:summary' %}" class="btn btn-dark btn-outline btn-rounded">{% trans "View Cart" %}</a>
                 <a href="{% url 'checkout:index' %}" class="btn btn-primary btn-rounded">{% trans "Checkout" %}</a>
             </div>
-        </div>
-        
-        
-        <!-- <div class="dropdown-box" >
-            <div class="cart-header">
-                <span>{% trans "Shopping Cart" %}</span>
-                <a href="#" class="btn-close">Close<i class="w-icon-long-arrow-right"></i></a>
-            </div>
-
-          
-            <div class="products">
-                {% for line in request.basket.all_lines %}
-                <div class="product product-cart">
-                    <div class="product-detail">
-                        <a href="{{ line.product.get_absolute_url }}" class="product-name">{{ line.product.title }}</a>
-                        <div class="price-box">
-                            <span class="product-quantity">{{ line.quantity }}</span>
-                            <span class="product-price">{{ line.line_price_incl_tax|currency:request.basket.currency }}</span>
-                        </div>
-                    </div>
-                    <figure class="product-media">
-                        {% with image=line.product.primary_image %}
-                            {% oscar_thumbnail image.original "100x100" upscale=False as thumb %}
-                            <a href="{{ line.product.get_absolute_url }}">
-                                <img src="{{ thumb.url }}" alt="{{ line.product.get_title }}" class="img-thumbnail w-auto mx-auto my-0">
-                            </a>
-                        {% endwith %}
-                    </figure>
-                    <button class="btn btn-link btn-close" aria-label="button">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                {% empty %}
-                <div class="product">
-                    <p>{% trans "Your basket is empty." %}</p>
-                </div>
-                {% endfor %}
-            </div>
-
-          
-            <div class="cart-total">
-                <label>{% trans "Subtotal:" %}</label>
-                <span class="price">{{ request.basket.total_incl_tax|currency:request.basket.currency }}</span>
-            </div>
-
-            <div class="cart-action">
-                <a href="{% url 'basket:summary' %}" class="btn btn-dark btn-outline btn-rounded">{% trans "View Cart" %}</a>
-                <a href="{% url 'checkout:index' %}" class="btn btn-primary btn-rounded">{% trans "Checkout" %}</a>
-            </div>
-        </div> -->
+        </div>     
     </div>
 </div>
 

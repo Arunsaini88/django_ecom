@@ -12,17 +12,16 @@
                 'nextEl': '.swiper-button-next',
                 'prevEl': '.swiper-button-prev'
             }
-        }">
-
+        }"> 
             <div class="swiper-wrapper row cols-1 gutter-no">
-                    {% for image in all_images %}
-                    <div class="swiper-slide">
-                    <figure class="product-image">
-                            {% oscar_thumbnail image.original "x155" upscale=False as thumb %}
-                            <img src="{{ image.original.url }}" data-zoom-image="{{ image.original.url }}" alt="{{ product.get_title }}"  style="width: auto;" />
-                    </figure>
-                    </div>
-                    {% endfor %}
+                {% for image in all_images %}
+                <div class="swiper-slide">
+                <figure class="product-image">
+                        {% oscar_thumbnail image.original "800x900" upscale=False as thumb %}
+                        <img src="{{ image.original.url }}" data-zoom-image="{{ image.original.url }}" alt="{{ product.get_title }}" width="800" height="900" />
+                </figure>
+                </div>
+                {% endfor %}
             </div>
             <button class="swiper-button-next"></button>
             <button class="swiper-button-prev"></button>
@@ -38,7 +37,7 @@
             <div class="product-thumbs swiper-wrapper row cols-4 gutter-sm">
             {% for image in all_images %}
                 <div class="product-thumb swiper-slide">
-                    {% oscar_thumbnail image.original "65x55" crop="center" as thumb %}
+                    {% oscar_thumbnail image.original "800x900" crop="center" as thumb %}
                     <img src="{{ thumb.url }}" alt="{{ product.get_title }}"  width="800" height="900"/>
                 </div>
             {% endfor %}
@@ -55,7 +54,7 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                     {% with image=product.primary_image %}
-                        {% oscar_thumbnail image.original "440x400" upscale=False as thumb %}
+                        {% oscar_thumbnail image.original "800x900" upscale=False as thumb %}
                         <img src="{{ thumb.url }}" data-zoom-image="{{ thumb.url }}" alt="{{ product.get_title }}"  width="800" height="900"/>
                     {% endwith %}
                     </div>

@@ -1,0 +1,102 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+{% load static %}
+{% load category_tags %}
+
+{% block styles %}
+
+    {% include "custome_temps/brand_category_detail/brand_category_css.html" %}
+
+{% endblock %}
+
+      <!-- Start of Main -->
+       
+            {% block page_header %} 
+            <!-- Start of Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">{% trans "Product Categories" %}</h1>
+            </div>
+            <!-- End of Page Header -->
+            {% endblock %}
+            <!-- Start of Breadcrumb -->
+            {% block breadcrumbs %}
+            <nav class="breadcrumb-nav mb-10 pb-1">
+                <div class="container">
+                    <ul class="breadcrumb">
+                        <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+                        <li>{% trans "Product Categories" %}</li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- End of Breadcrumb -->
+            {% endblock %}
+
+            {{% block content %}
+            <!-- Start of Page Content -->
+            <div class="page-content pb-10 mb-2">
+                <div class="container">
+                <!-- <section class="category-classic-section pt-10 pb-10"> -->
+                    <div class="container mt-1 mb-2">
+                        <div class="swiper-theme show-code-action" data-swiper-options="{
+                            'spaceBetween': 20,
+                            'slidesPerView': 2,
+                            'breakpoints': {
+                                '576': {
+                                    'slidesPerView': 3
+                                },
+                                '768': {
+                                    'slidesPerView': 4
+                                },
+                                '992': {
+                                    'slidesPerView': 5
+                                },
+                                '1200': {
+                                    'slidesPerView': 6
+                                }
+                            }
+                        }">
+                            <div class="swiper-wrapper row cols-xl-6 cols-lg-5 cols-md-4 cols-sm-3 cols-2">
+                                {% category_tree as tree_categories %}
+                                {% if tree_categories %}
+                                {% for tree_category in tree_categories %}
+                                <div
+                                    class="swiper-slide category category-classic category-absolute overlay-zoom br-xs">
+                                    <a href="{{ tree_category.url }}">
+                                        <figure class="category-media">
+                                            <img src="{{ tree_category.image.url }}" alt="{{ category.image.url }}"
+                                                width="190" height="184" />
+                                        </figure>
+                                    </a>
+                                    <div class="category-content">
+                                        <h4 class="category-name">{{ tree_category.name }}</h4>
+                                        <a href="{{ tree_category.url }}"
+                                            class="btn btn-primary btn-link btn-underline">Shop Now</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                <!-- </section> -->
+                </div>
+                <!-- End of Container -->
+            </div>
+            <!-- End of Page Content -->
+            {% endblock %}
+        <!-- End of Main -->
+
+      
+    
+    <!-- End of Page Wrapper -->
+
+    {% block extrascripts %}
+
+    {% include "custome_temps/brand_category_detail/sticky_footer.html" %}
+     
+   
+    {% include "custome_temps/brand_category_detail/mobile_manu.html" %}
+    {% include "custome_temps/brand_category_detail/plugin_js.html" %}
+
+{% endblock %}

@@ -34,10 +34,16 @@
             <div class="swiper-slide category-wrap">
                 <div class="category category-ellipse">
                     <figure class="category-media">
+                        {% if tree_category.image %}
                         <a href="{{ tree_category.url }}">
                             <img src="{{ tree_category.image.url }}" alt="{{ tree_category.name }}"
-                                width="190" height="190" style="background-color: #5C92C0;" />
+                                width="190" height="190" style="background-color: #5C92C0;" class="img-fluid"/>
                         </a>
+                        {% else %}
+                        <a href="{{ tree_category.url }}">
+                            <img src="{% static '/image_not_found.jpg' %}" alt="{{ tree_category.name }}"
+                                width="190" height="190" style="background-color: #5C92C0;" class="img-fluid"/>
+                        {% endif %}
                     </figure>
                     <div class="category-content">
                         <h4 class="category-name">
@@ -45,10 +51,9 @@
                         </h4>
                     </div>
                 </div>
-                {% endfor %}
-                {% endif %}
-
             </div>
+            {% endfor %}
+            {% endif %}
         </div>
         <div class="swiper-pagination"></div>
     </div>

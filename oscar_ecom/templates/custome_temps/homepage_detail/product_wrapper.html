@@ -1,14 +1,7 @@
-{% load static %}
 {% load i18n %}
 
-
-{% load display_tags %}
-{% load image_tags %}
-{% load reviews_tags %}
-
-{% load currency_filters %}
-{% load purchase_info_tags %}
-
+{% load static %}
+{% load product_tags %}
 {% load category_tags %}
 
 
@@ -24,7 +17,7 @@
                     <li>No top categories available</li>
                 {% endfor %}
             </ul>
-            <a href="{{ top_categories.0.category.get_absolute_url }}"
+            <a href="{% url 'Category' %}"
                 class="btn btn-dark btn-link btn-underline btn-icon-right font-weight-bolder text-capitalize ls-50">
                 Browse All<i class="w-icon-long-arrow-right"></i></a>
         </div>
@@ -71,69 +64,13 @@
 
                     {% for product in category.products %}
                         <div class="swiper-slide product-wrap">
-                            <div class="product text-center">
-                                <figure class="product-media">
-                                    {% with image=product.primary_image %}
-                                        {% oscar_thumbnail image.original "x180" upscale=False as thumb %}
-                                        <a href="{{ product.get_absolute_url }}">
-                                            <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
-                                        </a>
-                                    {% endwith %}
-                                    <div class="product-action-vertical">
-                                        {% include "oscar/catalogue/partials/add_to_basket_form_compact.html" %}
-                                        <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
-                                            title="Add to wishlist"></a>
-                                        <a href="#" class="btn-product-icon btn-quickview w-icon-search"
-                                            title="Quickview"></a>
-                                        <a href="#" class="btn-product-icon btn-compare w-icon-compare"
-                                            title="Add to Compare"></a>
-                                    </div>
-                                </figure>
-                                <div class="product-details">
-                                    <h4 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h4>
-
-                                        {% iffeature "reviews" %}
-                                        <div class="ratings-container">
-                                            <div class="ratings-full">
-                                                <!-- Check if the product has a rating, else set width to 0% -->
-                                                <span class="ratings" style="width: {% if product.rating %}{% widthratio product.rating 5 100 %}{% else %}0{% endif %}%;"></span>
-                                                <span class="tooltiptext tooltip-top">
-                                                    {% if product.rating %}
-                                                        {{ product.rating|floatformat:2 }} out of 5
-                                                    {% else %}
-                                                        No rating available
-                                                    {% endif %}
-                                                </span>
-                                            </div>
-                                            <a href="{{ product.get_absolute_url }}#reviews" class="rating-reviews">({{ product.reviews.count }} reviews)</a>
-                                        </div>
-                                        {% endiffeature %}
-
-                                        {% purchase_info_for_product request product as session %}
-                                        
-                                            <div class="product-price">
-                                        {% if session.price.exists %}
-                                            {% if session.price.excl_tax == 0 %}
-                                                <ins class="new-price">{% trans "Free" %}</ins>
-                                            {% elif session.price.is_tax_known %}
-                                                <ins class="new-price">{{ session.price.incl_tax|currency:session.price.currency }}</ins>
-                                            {% else %}
-                                                <ins class="new-price">{{ session.price.excl_tax|currency:session.price.currency }}</ins>
-                                            {% endif %}
-                                        {% else %}
-                                            <ins class="new-price">&nbsp;</ins>
-                                        {% endif %}
-                                      
-                                    </div>
-                                </div>
-                            </div>
+                            {% render_product product %}
                         </div>
                     {% endfor %}
                 {% endfor %}
             </div>
             <div class="swiper-pagination"></div>
         </div>
-        <!-- End of Swiper -->
     </div>
 </div>
 

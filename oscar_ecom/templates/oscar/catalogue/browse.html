@@ -40,7 +40,7 @@
                     <li class="mt-2">
                         <a href="{{ tree_category.url }}">
                             {% if tree_category.pk == category.pk %}
-                                <strong>{{ tree_category.name }}</strong>
+                                <strong>{{  ory.name }}</strong>
                             {% else %}
                                 {{ tree_category.name }}
                             {% endif %}
@@ -55,6 +55,7 @@
         </div>
     {% endif %}
     {% if has_facets %}
+    
         <h4>{% trans "Refine by" %}</h4>
         <div class="side_categories card card-body bg-light">
             {% for field, data in facet_data.items %}
@@ -80,16 +81,12 @@
         <div class="main-content">
             {% include "custome_temps/shop_content/shop_nav.html" %}
             <div class="product-wrapper row cols-md-4 cols-sm-3 cols-2 scroll-load">
-                <!-- <section>
-                    <div>
-                        <ol class="row list-unstyled ml-0 pl-0"> -->
-                            {% for product in products %}
-                                {% render_product product %}
-                            {% endfor %}
-                        <!-- </ol> -->
-                        {% include "oscar/partials/pagination.html" %}
-                    <!-- </div>
-                </section> -->
+
+                {% for product in products %}
+                    {% render_product product %}
+                {% endfor %}               
+                {% include "oscar/partials/pagination.html" %} 
+
             </div>
         </div>
         {% include "custome_temps/shop_content/shop_slidebar.html" %}
@@ -132,7 +129,12 @@
     </form>
     
 {% endblock content %}
-{% include 'custome_temps/Plugin_JS.html'%}
+{% block scripts %}
+    {{ block.super }}
+    {% include 'custome_temps/Plugin_JS.html'%}
+    {% include 'custome_temps/homepage_detail/quick_view.html'%}
+{% endblock %}
+
 {% block onbodyload %}
     {{ block.super }}
     oscar.search.init();

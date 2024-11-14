@@ -12,3 +12,12 @@
 
    <!-- Main Js -->
    <script src="{% static 'assets/js/main.min.js' %}"></script>
+
+   <script>
+    
+      $('.view-all-link').on('click', function(e) {
+      e.preventDefault();
+      window.location.href = $(this).attr('href');
+  });
+  
+  </script>

@@ -3,9 +3,10 @@
 <div class="header-left mr-md-4">
     <a href="#" class="mobile-menu-toggle  w-icon-hamburger" aria-label="menu-toggle">
     </a>
-    <a href="{{ homepage_url }}" class="logo ml-lg-0"
-      >{% block brand_title %} <img src="{% static 'assets/images/logo.png' %}" alt="logo" width="144" height="45" >{% endblock %}</a
-    ><small> {{ shop_tagline }}</small>
+    {% if site_info.site_logo %}
+    <a href="{{ homepage_url }}" class="logo ml-lg-0">{% block brand_title %} <img src="{{ site_info.site_logo.url }}" alt="Site Logo" width="144" height="45" >{% endblock %}</a>
+    {% endif %}
+    <small> {{ shop_tagline }}</small>
     {% block nav_extra %}
         {% include "oscar/partials/search.html" %}
     {% endblock %}

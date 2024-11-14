@@ -10,20 +10,20 @@
 {% endblock %}
 
 {% block tabcontent %}
+
 <div class="tab-vertical row gutter-lg">
     <ul class="nav nav-tabs mb-6" role="tablist">
         {% include 'oscar/customer/partials/standard_tabs.html' %}
     </ul>
 
     <div class="tab-content mb-6">
-
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
+        <ul class="nav-tabs">
+            <div class="nav-item">
                 <a href="{% url 'customer:notifications-inbox' %}" class="nav-link{% if list_type == 'inbox' %} active{% endif %}">{% trans 'Inbox' %}</a>
-            </li>
-            <li class="nav-item">
+            </div>
+            <div class="nav-item">
                 <a href="{% url 'customer:notifications-archive' %}" class="nav-link{% if list_type == 'archive' %} active{% endif %}">{% trans 'Archive' context 'noun' %}</a>
-            </li>
+            </div>
         </ul>
         
     {% if notifications %}

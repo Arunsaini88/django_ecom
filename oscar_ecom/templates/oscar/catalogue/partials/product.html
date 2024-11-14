@@ -1,9 +1,10 @@
-{% load display_tags %}
 {% load i18n %}
+{% load display_tags %}
 {% load image_tags %}
 {% load reviews_tags %}
 {% load static %}
 {% load basket_tags %}
+
 
 {% block product %}
     <div class="product-wrap">
@@ -21,9 +22,10 @@
                     
                     {% include "oscar/catalogue/partials/add_to_basket_form_compact.html" %}
                     {% include "oscar/catalogue/partials/add_to_wishlist.html" %}
-                    <!-- <a href="#" class="btn-product-icon btn-wishlist w-icon-heart" title="Wishlist"></a> -->
                     <a href="#" class="btn-product-icon btn-compare w-icon-compare" title="Compare"></a>
-                    <a href="#" class="btn-product-icon btn-quickview w-icon-search" title="Quick View"></a>
+                    <a href="#" class="btn-product-icon btn-quickview w-icon-search" title="Quick View" 
+                    data-product-id="{{ product.id }}" data-toggle="modal" data-target="#quickViewModal"></a>
+
                 </div>
             </figure>
             {% endblock %}

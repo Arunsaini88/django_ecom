@@ -4,5 +4,5 @@ from .models import Brand
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')
-    prepopulated_fields = {'slug': ('name',)}
+    list_display = ('name', 'brand_slug')
+    prepopulated_fields = {'brand_slug': ('name',)}
