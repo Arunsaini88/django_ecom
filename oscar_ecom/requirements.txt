@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 asgiref==3.8.1
 babel==2.16.0
 Django==4.2.16
@@ -22,3 +23,29 @@ sorl-thumbnail==12.9.0
 sqlparse==0.5.1
 typing_extensions==4.12.2
 tzdata==2024.2
+=======
+asgiref==3.8.1
+babel==2.16.0
+Django==4.2.16
+django-extra-views==0.14.0
+django-haystack==3.3.0
+django-oscar==3.2.2
+django-phonenumber-field==6.4.0
+django-tables2==2.3.4
+django-treebeard==4.7.1
+django-widget-tweaks==1.5.0
+factory-boy==3.2.1
+Faker==30.3.0
+packaging==24.1
+phonenumbers==8.13.47
+pillow==10.4.0
+purl==1.6
+pycountry==24.6.1
+python-dateutil==2.9.0.post0
+setuptools==75.1.0
+six==1.16.0
+sorl-thumbnail==12.9.0
+sqlparse==0.5.1
+typing_extensions==4.12.2
+tzdata==2024.2
+>>>>>>> d45cd4d2d502504b5221103c263c6c7428a9a309
