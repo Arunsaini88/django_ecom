@@ -17,7 +17,7 @@ def quick_view(request, pk):
     product = get_object_or_404(Product, pk=pk)
     stockrecord = product.stockrecords.first()  # Get the first stock record
     price = stockrecord.price if stockrecord else None
-    html = render_to_string('custome_temps/homepage_detail/quick_view.html', {'product': product, 'price': price}, request=request)
+    html = render_to_string('custom_temps/homepage_detail/quick_view.html', {'product': product, 'price': price}, request=request)
     return JsonResponse({'html': html})
 
 

@@ -19,21 +19,29 @@
 {% block payment_method %}{% endblock %}
 
 {% block shipping_method %}
-    <div class="basket-title">
-        <div class="row">
-            <h4 class="col-sm-8 m-0">{% trans "Method" %}</h4>
-            <h4 class="col-sm-3 m-0">{% trans "Cost" %}</h4>
-        </div>
-    </div>
-    {% for method in methods %}
-        <div class="basket-items">
-            <div class="row">
-                <div class="col-sm-8">
-                    <h4>{{ method.name }}</h4>
-                    {% if method.description %}
+    <div class="sub-orders mb-10">
+        <table class="order-subtable">
+            <thead>
+                <tr>
+                    <th class="order">{% trans "Method" %}</th>
+                    <th class="date"></th>
+                    <th class="status"></th>
+                    <th class="total">{% trans "Cost" %}</th>
+                    <th class="action"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for method in methods %}
+                <tr>
+                    <td class="order"><h4>{{ method.name }}</h4></td>
+
+                    <td class="date">
+                        {% if method.description %}
                         <p>{{ method.description|safe }}</p>
-                    {% endif %}
-                    {% if method.is_discounted %}
+                        {% endif %}
+                    </td>
+                    <td class="status">
+                        {% if method.is_discounted %}
                         <small>
                             {% shipping_charge_discount method basket as discount %}
                             {% blocktrans with amount=discount|currency:basket.currency name=method.discount_name %}
@@ -41,24 +49,27 @@
                                 your basket qualifies for the <strong>{{ name }}</strong> offer.
                             {% endblocktrans %}
                         </small>
-                    {% endif %}
-                </div>
-                <div class="col-sm-1">
-                    {% shipping_charge method basket as charge %}
-                    {% if charge.is_tax_known %}
-                        {{ charge.incl_tax|currency:basket.currency }}
-                    {% else %}
-                        {{ charge.excl_tax|currency:basket.currency }}
-                    {% endif %}
-                </div>
-                <div class="col-sm-3">
-                    <form method="post" action="{% url 'checkout:shipping-method' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="method_code" value="{{ method.code }}" />
-                        <button type="submit" class="btn btn-lg btn-primary float-right" data-loading-text="{% trans 'Submitting...' %}">{% trans "Select option" %}</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
+                        {% endif %}
+                    </td>
+                    <td class="total">
+                        {% shipping_charge method basket as charge %}
+                        {% if charge.is_tax_known %}
+                            {{ charge.incl_tax|currency:basket.currency }}
+                        {% else %}
+                            {{ charge.excl_tax|currency:basket.currency }}
+                        {% endif %}
+                    </td>
+                    <td class="action">
+                        <form method="post" action="{% url 'checkout:shipping-method' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="method_code" value="{{ method.code }}" />
+                            <button type="submit" class="btn btn-lg btn-primary float-right " data-loading-text="{% trans 'Submitting...' %}">{% trans "Select option" %}</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
 {% endblock shipping_method %}

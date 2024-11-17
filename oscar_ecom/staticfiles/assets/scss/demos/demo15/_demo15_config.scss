@@ -1,0 +1,94 @@
+@include set (
+    (
+        base: (
+            _container-fluid-width: 1820px,
+        ),
+        header: (
+            top: (
+                border-bottom:1px solid #eee,
+                color: $dark-color,
+                padding: .6rem 0 .5rem,
+                font-size: 1.1rem,
+                font-weight: 400,
+                letter-spacing: -.275px,
+                text-transform: none,
+                background-color: white
+            ),
+            middle: (
+                padding:3.2rem 0 2rem 0,
+                border: none
+            ),
+            search: (
+                expanded: (
+                    width: 96.2rem
+                ),
+                btn: (
+                    width: 4.2rem
+                )
+            ),
+            logo: (
+                margin-right: 2.9rem
+            ),
+            category: (
+                toggle: (
+                    padding: 2.1rem 10.1rem 2.1rem 2rem,
+                    min-width: 22.9rem,
+                    _link-active-color: $primary-color
+                )
+            ),
+            call:(
+                margin:0 5.2rem .1rem 0
+            ),
+            wishlist: (
+                margin: 0 5rem -.1rem 0
+            ),
+            compare: (
+                margin-top:0
+            ),
+            cart: (
+                label: (
+                    margin:0 1.4rem 0 0,
+                    font-size:1.1rem,
+                    font-weight:500,
+                    transition:color .1s
+                )
+            )
+        ),
+        menu: (
+            ancestor: (
+                _gap: 5rem,
+                letter-spacing: -.025em,
+                padding: 2.1rem 0
+            )
+        ),
+        product: (
+            rating: (
+                _star-color:#666,
+                margin-bottom: 1rem
+            ),
+            label: (
+                background-color: #666
+            )
+        ),
+        footer:(
+            top: (
+                padding: 6.1rem 0 .5rem,
+                widget: (
+                    title: (
+                        font-size: 1.6rem,
+                        text-transform: capitalize,
+                        margin-bottom: 1.8rem
+                    )
+                )
+            ), 
+            middle: (
+                padding: 2.5rem 0 1.8rem
+            ),
+            about: (
+                logo: (
+                    margin-bottom: 2rem
+                )
+            )
+        )
+    )
+)

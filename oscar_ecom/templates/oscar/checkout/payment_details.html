@@ -20,12 +20,110 @@
     {% block payment_details_content %}
     <div class="container">
         <p>{% trans "This page needs implementing within your project.  You may want to use one of Oscar's payment gateway libraries:" %}</p>
-        <ul>
-            <li><a href="https://github.com/django-oscar/django-oscar-paypal">django-oscar-paypal</a></li>
-            <li><a href="https://github.com/django-oscar/django-oscar-adyen">django-oscar-adyen</a></li>
-            <li><a href="https://github.com/django-oscar/django-oscar-docdata">django-oscar-docdata</a></li>
-            <li><a href="https://github.com/django-oscar/django-oscar-accounts">django-oscar-accounts</a></li>
-        </ul>
+        <!-- <form id="payment-form">
+            <script
+              src="https://checkout.razorpay.com/v1/checkout.js"
+              data-key="rzp_test_dHwP3rUEWuG97o" 
+              data-amount="{{ razorpay_order.amount }}" 
+              data-currency="{{ razorpay_order.currency }}"
+              data-order_id="{{ razorpay_order.id }}" 
+              data-buttontext="Pay with Razorpay"
+              data-name="Your Store Name"
+              data-description="Order #{{ razorpay_order.id }}"
+              data-prefill.name="{{ user.username }}"
+              data-prefill.email="{{ user.email }}"
+              data-theme.color="#F37254"
+            ></script>
+            <input type="hidden" custom="Hidden Element" name="hidden">
+        </form> -->
+
+
+            <button id="rzp-button1">Pay</button>
+
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+            <script>
+            var options = {
+                "key": "rzp_test_6bIJl2FhugXCH6", // Enter the Key ID generated from the Dashboard
+                "name": "Acme Corp", //your business name
+                "amount":"{{amount}}",
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                "order_id": "{{order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "handler": function (response){
+                    alert(response.razorpay_payment_id);
+                    alert(response.razorpay_order_id);
+                    alert(response.razorpay_signature)
+                },
+                "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+                    "name": "{{ user.username }}", //your customer's name
+                    "email": "{{ guest_email }}", 
+                    "contact": "{{shipping_address.phone_number}}"  //Provide the customer's phone number for better conversion rates 
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', function (response){
+                    alert(response.error.code);
+                    alert(response.error.description);
+                    alert(response.error.source);
+                    alert(response.error.step);
+                    alert(response.error.reason);
+                    alert(response.error.metadata.order_id);
+                    alert(response.error.metadata.payment_id);
+            });
+            document.getElementById('rzp-button1').onclick = function(e){
+                rzp1.open();
+                e.preventDefault();
+            }
+            </script>
+
+        <!-- <button id="rzp-button1">Pay</button>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script>
+        var options = {
+            "key": "rzp_test_6bIJl2FhugXCH6",  // Pass your API key here
+            "amount": "522200", // Amount in paise
+            "currency": "INR",
+            "name": "Your Store Name",
+            "description": "Order Payment",
+            "order_id": "{{ order_id }}", // Order ID from Razorpay
+            "handler": function (response){
+                // Handle payment success
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '{% url "checkout:payment-details" %}';
+                form.innerHTML = `
+                    <input type="hidden" name="razorpay_payment_id" value="${response.razorpay_payment_id}">
+                    <input type="hidden" name="razorpay_order_id" value="${response.razorpay_order_id}">
+                    <input type="hidden" name="razorpay_signature" value="${response.razorpay_signature}">
+                `;
+                document.body.appendChild(form);
+                form.submit();
+            },
+            "prefill": {
+                "name": "{{ user.username }}",
+                "email": "{{ user.email }}",
+                "contact": "{{shipping_address.phone_number}}"  // Optional: Add contact details if available
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        document.getElementById('rzp-button1').onclick = function(e){
+            rzp1.open();
+            e.preventDefault();
+        }
+        </script> -->
+        
+
+
         <a id="view_preview" href="{% url 'checkout:preview' %}" class="btn btn-primary btn-lg">{% trans "Continue" %}</a>
     </div>
     {% endblock payment_details_content %}

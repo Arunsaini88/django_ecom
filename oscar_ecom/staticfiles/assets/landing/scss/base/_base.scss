@@ -1,0 +1,203 @@
+/*------------------------------------
+    Base
+-------------------------------------*/
+@include set-default(
+    (
+        base: (
+            _container-width: 1220px,
+            _container-fluid-width: 1820px,
+            _gutter-lg: 15px,
+            _gutter-md: 10px,
+            _gutter-sm: 5px,
+            _gutter-xs: 1px,
+            // Body
+            body: (
+                font-family: $font-family,
+                font-size: 1.4rem,
+                line-height: 1.6,
+                color: $body-color,
+                background: #fff
+            ),
+            page-wrapper: (
+                margin-#{$left}: false,
+                margin-#{$right}: false
+            ),
+        )
+    )
+);
+
+*, ::after, ::before {
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 62.5%;
+    font-size-adjust: 100%;
+    font-weight: 400;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+    margin: 0;
+    overflow-x: hidden;
+    @include print_css(base, body);
+}
+
+main {
+    display: block;
+    position: relative;
+}
+
+.page-wrapper {
+    position: relative;
+    transition: margin .4s, opacity .5s;
+    //opacity: 0;
+    @include print_css(base, page-wrapper);
+    .loaded > & {
+        //opacity: 1;
+    }
+}
+figure {
+    margin: 0;
+}
+a {
+    color: $link-color;
+    text-decoration: none;
+    transition: color .4s;
+
+    &:hover,
+    &:focus {
+        color: darken($link-color, 10%);
+        text-decoration: none;
+    }
+}
+
+img,video {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+img.lazy-img {
+    height: 0;
+}
+
+ul {
+    padding-#{$left}: 1.5em;
+    margin: 0 0 1.5rem;
+}
+.menu,
+.nav-filters,
+.footer ul,
+.mobile-menu {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+// Sticky Content
+.sticky-content {
+    &.fix-top {
+        top: 0;
+    }
+
+    &.fix-bottom {
+        bottom: 0;
+    }
+
+    &.fixed {
+        &.fix-top {
+            animation: fixedTopContent .4s;
+        }
+        &.fix-bottom {
+            animation: fixedBottomContent .4s;
+        }
+        position: fixed;
+        #{$left}: 0;
+        #{$right}: 0;
+        opacity: 1;
+        transform: translateY(0);
+        z-index: 1051;
+        box-shadow: 0 0 10px 1px rgba(0,0,0,.1);
+    }
+}
+
+// Scroll Top
+#scroll-top {
+    position:fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: -4rem;
+    #{$right}: 1.5rem;
+    z-index: 9999;
+    width: 4.6rem;
+    height: 4.6rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #222;
+    opacity: 0;
+    transition: bottom 0.3s,opacity 0.3s;
+}
+
+#scroll-top.show {
+    opacity: 1;
+    bottom: 98px;
+}
+
+#scroll-top:focus,#scroll-top:hover {
+    text-decoration: none
+}
+
+#scroll-top:hover {
+    opacity: .8
+}
+
+#scroll-top i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.6rem;
+    height: 3.6rem;
+    color: #fff;
+    background-color: #333;
+    border: 2px solid #333;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+#scroll-top svg {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    top: 1px;
+    #{$left}: 1px;
+    z-index: -1
+}
+
+#scroll-top svg circle {
+    stroke: #2C67E7;
+    stroke-width: 4px;
+    stroke-linecap: round;
+    stroke-dasharray: 1,400
+}
+
+@media (max-width: 768px) {
+    #scroll-top {
+        display: none;
+    }
+}
+
+    
+// Animation
+.appear-animate {
+    transform:  translate3d(0, 0, 0) scale(1);
+}
+
+@include mq(sm, max) {
+    html {
+        font-size: 8px;
+    }
+}

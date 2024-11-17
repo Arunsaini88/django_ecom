@@ -124,35 +124,41 @@
             {% endif %}
         {% endblock vouchers %} -->
     </div>
-{% block baskettotals %}
-    <div class="col-lg-4 sticky-sidebar-wrapper">
-        <div class="sticky-sidebar">
-            <div class="cart-summary mb-4">
+    {% block baskettotals %}
+        <div class="col-lg-4 sticky-sidebar-wrapper">
+            <div class="sticky-sidebar">
+                <div class="cart-summary mb-4">
                     <h3 class="cart-title text-uppercase">{% trans "Totals" %}</h3>
                     <div class="cart-subtotal d-flex align-items-center justify-content-between">
-                        <label class="ls-25">Subtotal</label>
+                        <label class="ls-25">{% trans "Subtotal" %}</label>
                         <span>{{ basket.total_incl_tax|currency:basket.currency }}</span>
                     </div>
+
                     <hr class="divider">
-{% endblock baskettotals %}
-                <hr class="divider">
 
-                <hr class="divider mb-6">
-                <div class="order-total d-flex justify-content-between align-items-center">
-                    <label>Total</label>
-                    <span class="ls-50">
-                        {% if order_total.is_tax_known %}
-                            {{ order_total.incl_tax|currency:basket.currency }}
-                        {% else %}
-                            {{ order_total.excl_tax|currency:basket.currency }}
-                        {% endif %}
-                    </span>
+                    <div class="shipping-calculator d-flex justify-content-between">
+                        <p class="shipping-destination lh-1">{% trans "Shipping Charge" %}</p>
+                        <p class="shipping-destination lh-1">{{ shipping_charge.tax|currency:basket.currency }}</p>
+                    </div>
+
+                    <hr class="divider mb-6">
+
+                    <div class="order-total d-flex justify-content-between align-items-center">
+                        <label>Total</label>
+                        <span class="ls-50">
+                            {% if order_total.is_tax_known %}
+                                {{ order_total.incl_tax|currency:basket.currency }}
+                            {% else %}
+                                {{ order_total.excl_tax|currency:basket.currency }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    <a href="{% url 'checkout:index' %}" class="btn btn-block btn-dark btn-icon-right btn-rounded  btn-checkout">{% trans "Proceed to checkout" %}<i class="w-icon-long-arrow-right"></i></a>
+
                 </div>
-                <a href="{% url 'checkout:index' %}" class="btn btn-block btn-dark btn-icon-right btn-rounded  btn-checkout">{% trans "Proceed to checkout" %}<i class="w-icon-long-arrow-right"></i></a>
-
             </div>
         </div>
-    </div>
+    {% endblock baskettotals %}
 </div>
 
 {% else %}
@@ -221,4 +227,4 @@
     {% endif %}
 {% endblock %}
 
-{% include "custome_temps/basketpage/basket_js.html" %}
+{% include "custom_temps/basketpage/basket_js.html" %}

@@ -1,0 +1,138 @@
+@include set (
+    (
+        base: (
+            _container-width: 1400px,
+            title-link: (
+                link: (
+                    margin-bottom: .2rem,
+                    font-weight: 600,
+                    letter-spacing: -.025em,
+                    color: $dark-color
+                ),
+                icon: (
+                    display: inline-block,
+                    margin-bottom: .1rem
+                )
+            )
+        ),
+        header: (
+            top: (
+                background:#132A36,
+                text-transform: none,
+                letter-spacing: -.03em,
+                color: #ccc,
+                icon: (
+                    margin-left:.2rem,
+                    margin-right:.5rem
+                )
+            ),
+            middle: (
+                background:#183544,
+                padding:2.9rem 0 2.8rem,
+                color: #fff,
+                border-bottom:1px solid rgba(#999,0.2),
+            ),
+            bottom: (
+                background:#183544,
+                color: #fff,
+            ),
+            main-nav: (
+                margin-left: 5.1rem
+            ),
+            compare: (
+                margin: -0.3rem 2.8rem 0 0
+            ),
+            wishlist: (
+                margin-top: .1rem,
+                margin-right: 2.4rem
+            ),
+            search: (
+                expanded: (
+                    width: 75.3rem,
+                    height: 4.8rem
+                ),
+                btn: (
+                    width: 4.5rem
+                )
+            ),
+            cart: (
+                color:#fff
+            ),
+            category: (
+                toggle: (
+                    padding: 2.4rem 2.3rem 2.4rem 2.5rem,
+                    background: $primary-color,
+                    text-transform: capitalize,
+                    letter-spacing: -.01em
+                )
+            ),
+            call: (
+                margin-right: 6.1rem,
+                num: (
+                    font-weight: 600
+                )
+            )
+        ),
+        menu: (
+            ancestor: (
+                padding: 1.8rem 0
+            )
+        ),
+        category-menu: (
+            padding: 1rem 0 0.8rem,
+            ancestor: (
+                _split-line: 1px solid #e1e1e1,
+                padding: 1.5rem 1rem 1.4rem 1.1rem,
+                font-size: 1.4rem,
+                font-weight: 400,
+                line-height: 14px
+            )
+        ),
+        product: (
+            rating: (
+                _star-color: $body-color
+            ),
+            body:(
+                padding-left: 1rem,
+                padding-right: 1rem
+            ),
+            name: (
+                margin-bottom: .8rem
+            ),
+            price: (
+                new:(
+                   _space: .9rem 
+                )
+            )
+        ),
+        product-single: (
+            ratings: (
+                margin-bottom: 1.8rem,
+                font-size: 1.3rem
+            ),
+            old-price: (
+                margin-right: 1rem,
+                font-size: 1.8rem,
+                color: $light-color
+            )
+        ),
+        footer: (
+            background: #f8f8f8,
+            top: (
+                padding-top:6rem
+            ),
+            middle: (
+                padding: 2.7rem 0 1.7rem,
+                color: $body-color
+            ),
+            about: (
+                call: (
+                    margin-bottom: .8rem
+                ),
+                logo: (
+                    margin-bottom: 2rem
+                )
+            )
+        )
+    )
+)

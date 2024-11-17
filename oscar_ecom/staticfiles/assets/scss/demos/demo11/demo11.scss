@@ -1,0 +1,78 @@
+@charset 'UTF-8';
+
+/*
+1. color
+2. config
+3. mixins
+4. plugins
+5. base
+6. components
+7. header
+8. footer
+9. demo
+*/
+
+/* 1. color */
+$primary-color: #f14242;
+$secondary-color: #1cbcd0;
+/* 2. config */
+@import '../../config/variables';
+$second-font-family: "Yellowtail", Sans-serif;
+/* 3. mixins */
+@import '../../mixins/breakpoint';
+@import '../../mixins/core';
+@import '../../mixins/buttons'; @import '../../mixins/direction';
+
+@import 'demo11_config';
+
+/* 4. plugins */
+@import '../../components/slider';
+
+/* 5. base */
+@import '../../base/base';
+@import '../../base/helper';
+@import '../../base/type';
+@import '../../base/layout';
+@import '../../base/grid';
+@import '../../base/spacing';
+
+/* 6. components */
+
+@import '../../components/animation';
+@import '../../components/banner';
+@import '../../components/breadcrumb';
+@import '../../components/buttons';
+@import '../../components/blog';
+@import '../../components/categories';
+@import '../../components/font-icons';
+@import '../../components/forms';
+@import '../../components/icons';
+@import '../../components/icon-boxes';
+@import '../../components/minipopup';
+@import '../../components/overlay';
+@import '../../components/pagination';
+@import '../../components/popup';
+@import '../../components/product-single';
+@import '../../components/products';
+@import '../../components/social-icons';
+@import '../../components/sidebar';
+@import '../../components/tab';
+@import '../../components/titles';
+@import '../../components/tooltip';
+@import '../../components/widget';
+
+@import '../../pages/categories';
+@import '../../pages/products';
+@import '../../pages/compare';
+@import '../../pages/shop';
+
+/* 7. header */
+@import '../../base/header/header';
+@import '../../base/header/dropdown';
+@import '../../base/header/menu';
+
+/* 8. footer */
+@import '../../base/footer/footer';
+
+/* 9. Demo */
+@import 'demo11_custom';

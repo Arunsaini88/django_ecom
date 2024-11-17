@@ -66,7 +66,7 @@ INSTALLED_APPS = [
     'oscar.apps.offer.apps.OfferConfig',
     'oscar.apps.order.apps.OrderConfig',
     'oscar.apps.customer.apps.CustomerConfig',
-    'oscar.apps.search.apps.SearchConfig',
+    'apps.search.apps.SearchConfig',
     'oscar.apps.voucher.apps.VoucherConfig',
     'oscar.apps.wishlists.apps.WishlistsConfig',
     'oscar.apps.dashboard.apps.DashboardConfig',
@@ -288,10 +288,10 @@ OSCAR_DASHBOARD_NAVIGATION = [
             # be confusing. Weight-based shipping methods aren't hooked into
             # the shipping repository by default (as it would make
             # customising the repository slightly more difficult).
-            # {
-            #     'label': _('Shipping charges'),
-            #     'url_name': 'dashboard:shipping-method-list',
-            # },
+            {
+                'label': _('Shipping charges'),
+                'url_name': 'dashboard:shipping-method-list',
+            },
         ],
     },
     {
@@ -361,3 +361,6 @@ OSCAR_DASHBOARD_NAVIGATION = [
         ],
     }
 ]
+
+ROZARPAY_API_KEY = "rzp_test_6bIJl2FhugXCH6"
+ROZARPAY_API_SECRET = "KFyKNO9yoUxkxTtdzz1BV3aj"

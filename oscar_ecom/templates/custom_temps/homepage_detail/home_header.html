@@ -1,0 +1,24 @@
+{% load static %}
+{% load i18n %}
+ <!-- Start of Header -->
+ <header class="header header-border">
+    {% include "oscar/partials/nav_accounts.html" %}
+    <!-- End of Header Top -->
+
+    <div class="header-middle">
+        <div class="container">
+           
+            {% include 'oscar/partials/brand.html' %}
+            
+            {% include "oscar/partials/mini_basket.html"%}
+        </div>
+    </div>
+    <!-- End of Header Middle -->
+
+    <div class="header-bottom sticky-content fix-top sticky-header">
+        <div class="container">
+            {% include 'custom_temps/bottem_header.html' %}
+        </div>
+    </div>
+</header>
+<!-- End of Header -->

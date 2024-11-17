@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block styles %}
-    {% include "custome_temps/product_detail/style_font.html"%}
+    {% include "custom_temps/product_detail/style_font.html"%}
 {% endblock %}
 {% block description %}
     {{ product.get_meta_description }}
@@ -23,7 +23,7 @@
 
         {% block layout %}
 
-            {% include "custome_temps/homepage_detail/home_header.html"%}
+            {% include "custom_temps/homepage_detail/home_header.html"%}
             
             <main class="main mb-10 pb-1">
             {% block content_wrapper %}
@@ -192,7 +192,7 @@
                                                         <i class="w-icon-cart"></i>
                                                         <span>Add to Cart</span>
                                                     </a>
-                                                    {% include "custome_temps/shop_content/add_to_cart_js.html" %}
+                                                    {% include "custom_temps/shop_content/add_to_cart_js.html" %}
                                                 </div>
                                             </div>
                                             {% endblock %}
@@ -672,7 +672,7 @@
                             </div>
                             
                             
-                            {% include "custome_temps/product_detail/brand_product.html"%}
+                            {% include "custom_temps/product_detail/brand_product.html"%}
                         
                             {% related_products product=product %}
 
@@ -697,7 +697,7 @@
                         </div>
                         <!-- End of Main Content -->
                         <aside class="sidebar product-sidebar sidebar-fixed right-sidebar sticky-sidebar-wrapper">
-                        {% include "custome_temps/product_detail/sidebar.html"%}
+                        {% include "custom_temps/product_detail/sidebar.html"%}
                         </aside>
 
                         <!-- End of Sidebar -->
@@ -717,10 +717,10 @@
         {% endblock %}
 {% block scripts %}
     {{ block.super }}
-    {% include "custome_temps/product_detail/photoswiper.html"%}
-    {% include "custome_temps/product_detail/sticky_footer.html"%}
-    {% include "custome_temps/product_detail/mobile_menu.html"%}
-    {% include "custome_temps/homepage_detail/quick_view.html"%}
-    {% include "custome_temps/product_detail/Scroll_top_JS.html"%}
+    {% include "custom_temps/product_detail/photoswiper.html"%}
+    {% include "custom_temps/product_detail/sticky_footer.html"%}
+    {% include "custom_temps/product_detail/mobile_menu.html"%}
+    {% include "custom_temps/homepage_detail/quick_view.html"%}
+    {% include "custom_temps/product_detail/Scroll_top_JS.html"%}
 {% endblock %}
 

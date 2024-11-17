@@ -7,36 +7,36 @@
     {% trans 'Home' %} | {{ block.super }}
 {% endblock %}
     {% block styles %}
-        {% include "custome_temps/homepage_detail/vender_font.html"%}
-        {% include "custome_temps/homepage_detail/home_css.html"%}
+        {% include "custom_temps/homepage_detail/vender_font.html"%}
+        {% include "custom_temps/homepage_detail/home_css.html"%}
     {% endblock %}
     
     {% block layout %}
 
-        {% include "custome_temps/homepage_detail/home_header.html"%}
+        {% include "custom_temps/homepage_detail/home_header.html"%}
    
         <!-- Start of Main-->
         <main class="main">
             {% block content_wrapper %}
             
                 {% block banner %}
-                {% include "custome_temps/homepage_detail/intro_section.html"%}
+                {% include "custom_temps/homepage_detail/intro_section.html"%}
                 {% endblock %}
                 <!-- End of .intro-section -->
 
                 {% block content %}
                 <div class="container">
-                    {% include "custome_temps/homepage_detail/home_icon_box.html"%}
+                    {% include "custom_temps/homepage_detail/home_icon_box.html"%}
                     <!-- End of Iocn Box Wrapper -->
 
                     <!-- End of Deals Wrapper -->
                     
-                    {% include "custome_temps/homepage_detail/category_banner.html"%}
+                    {% include "custom_temps/homepage_detail/category_banner.html"%}
                     <!-- End of Category Banner Wrapper -->
 
-                    {% include "custome_temps/homepage_detail/top_brands.html"%}
+                    {% include "custom_temps/homepage_detail/top_brands.html"%}
 
-                    {% include "custome_temps/homepage_detail/tab_category.html"%}
+                    {% include "custom_temps/homepage_detail/tab_category.html"%}
 
 
                     <div class="sale-banner banner br-sm appear-animate">
@@ -63,11 +63,11 @@
                     </div>
                     <!-- End of Sale Banner -->
 
-                    {% include "custome_temps/homepage_detail/product_wrapper.html" %}
+                    {% include "custom_temps/homepage_detail/product_wrapper.html" %}
 
-                    {% include "custome_temps/homepage_detail/category_wrapper.html" %}
+                    {% include "custom_temps/homepage_detail/category_wrapper.html" %}
 
-                    {% include "custome_temps/homepage_detail/product_wrapper_2.html" %}
+                    {% include "custom_temps/homepage_detail/product_wrapper_2.html" %}
 
                     <div class="banner br-sm banner-electronics appear-animate" style="background-image: url({% static 'assets/images/demos/demo2/banners/3.jpg' %});
                         background-color: #333;">
@@ -82,13 +82,13 @@
                     </div>
                     <!-- End of Banner -->
 
-                    {% include "custome_temps/homepage_detail/top_rated_product.html" %}
+                    {% include "custom_temps/homepage_detail/top_rated_product.html" %}
 
-                    {% include "custome_temps/homepage_detail/recent_view.html"%}
+                    {% include "custom_temps/homepage_detail/recent_view.html"%}
 
-                    {% include "custome_temps/homepage_detail/our_client.html"%}
+                    {% include "custom_temps/homepage_detail/our_client.html"%}
 
-                    {% include "custome_temps/homepage_detail/home_blog.html"%}
+                    {% include "custom_temps/homepage_detail/home_blog.html"%}
 
                 {% endblock %}
             </div>
@@ -101,27 +101,27 @@
     <!-- End of Page-wrapper-->
 {% block scripts %}
     <!-- Start of Sticky Footer -->
-    {% include "custome_temps/homepage_detail/sticky_footer.html"%}
+    {% include "custom_temps/homepage_detail/sticky_footer.html"%}
     <!-- End of Sticky Footer -->
 
     <!-- Start of Scroll Top -->
-    {% include "custome_temps/homepage_detail/scroll_top.html"%}
+    {% include "custom_temps/homepage_detail/scroll_top.html"%}
     <!-- End of Scroll Top -->
 
     <!-- Start of Mobile Menu -->
-    {% include "custome_temps/homepage_detail/mobile_menu.html"%}
+    {% include "custom_temps/homepage_detail/mobile_menu.html"%}
     <!-- End of Mobile Menu -->
 
     <!-- Start of Newsletter popup -->
     
-    {% include "custome_temps/homepage_detail/news_letter_popup.html"%}
+    {% include "custom_temps/homepage_detail/news_letter_popup.html"%}
     <!-- End of Newsletter popup -->
 
     <!-- Start of Quick View -->
-    {% include "custome_temps/homepage_detail/quick_view.html"%}
+    {% include "custom_temps/homepage_detail/quick_view.html"%}
     <!-- End of Quick view -->
 
     <!-- Plugin JS File -->
-    {% include "custome_temps/homepage_detail/plugin_JS.html"%}
+    {% include "custom_temps/homepage_detail/plugin_js.html"%}
 
 {% endblock %}

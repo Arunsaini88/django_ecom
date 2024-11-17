@@ -26,7 +26,7 @@
 {% endblock breadcrumbs %}
 
 {% block banner %}
-    {% include "custome_temps/shop_content/banner.html"%}
+    {% include "custom_temps/shop_content/banner.html"%}
 {% endblock %}
 
 
@@ -68,18 +68,18 @@
 {% endblock %}
 
 {% block brand %}
-    {% include "custome_temps/shop_content/shop_brand.html" %}
+    {% include "custom_temps/shop_content/shop_brand.html" %}
 {% endblock %}
 
 {% block category %}
-    {% include "custome_temps/shop_content/shop_category.html"%} 
+    {% include "custom_temps/shop_content/shop_category.html"%} 
 {% endblock %}
 
 {% block content %}
     {% if products %}
     <div class="shop-content pb-10">
         <div class="main-content">
-            {% include "custome_temps/shop_content/shop_nav.html" %}
+            {% include "custom_temps/shop_content/shop_nav.html" %}
             <div class="product-wrapper row cols-md-4 cols-sm-3 cols-2 scroll-load">
 
                 {% for product in products %}
@@ -89,7 +89,7 @@
 
             </div>
         </div>
-        {% include "custome_temps/shop_content/shop_slidebar.html" %}
+        {% include "custom_temps/shop_content/shop_slidebar.html" %}
     </div>
     {% else %}
         <p class="nonefound">{% trans "No products found." %}</p>
@@ -131,8 +131,8 @@
 {% endblock content %}
 {% block scripts %}
     {{ block.super }}
-    {% include 'custome_temps/Plugin_JS.html'%}
-    {% include 'custome_temps/homepage_detail/quick_view.html'%}
+    {% include 'custom_temps/plugin_js.html'%}
+    {% include 'custom_temps/homepage_detail/quick_view.html'%}
 {% endblock %}
 
 {% block onbodyload %}

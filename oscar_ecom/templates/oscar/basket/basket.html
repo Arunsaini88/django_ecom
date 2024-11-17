@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block layout %}
-    {% include "custome_temps/homepage_detail/home_header.html"%}
+    {% include "custom_temps/homepage_detail/home_header.html"%}
 
  <main class=" main cart">
     {% block content_wrapper %}
@@ -16,7 +16,6 @@
             <ul class="breadcrumb shop-breadcrumb bb-no">
                 <li class="active"><a href="{% url 'basket:summary' %}">{% trans "Shoping Cart" %}</a></li>
                 <li><a href="{% url 'checkout:index' %}">{% trans "Checkout" %}</a></li>
-                <li><a href="#">{% trans "Order Complete" %}</a></li>
             </ul>
         </div>
     </nav>

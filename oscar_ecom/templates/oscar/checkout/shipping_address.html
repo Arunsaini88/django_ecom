@@ -15,20 +15,21 @@
 {% block order_contents %}{% endblock %}
 
 {% block login_coupon %}
-    {% include "custome_temps/checkout/login.html"%}
+    {% include "custom_temps/checkout/login.html"%}
 {% endblock %}
 
 {% block shipping_address %}
 <div class="row mb-9 justify-content-center">
     {% if user.is_authenticated and addresses %}
         <!-- Existing addresses block on the right -->
+        {% if addresses %}
         <div class="col-lg-6 order-lg-2">
             <h3>{% trans "An address from your address book?" %}</h3>
             <div class="choose-block">
                 <div class="row">
                     {% for address in addresses %}
-                        <div class="col-sm-6 d-flex">
-                            <div class="card card-body bg-light">
+                        <div class="col-12 d-flex mb-4">
+                            <div class="card card-body bg-light w-100">
                                 <address class="mb-4">
                                     <table class="address-table">
                                         <tbody>
@@ -54,90 +55,28 @@
                                         </button>
                                     {% endif %}
                                 </form>
-
                                 <!-- Address controls including Edit and Delete -->
-                                <div class="btn-group-address justify-content-between mt-3">
-                                    <a href="{% url 'checkout:user-address-update' pk=address.id %}" class="btn btn-quickview btn-outline btn-default btn-rounded btn-sm mb-2 mb-lg-0">{% trans "Edit address" %}</a>
-                                    <!-- <div class="dropdown"> -->
-                                        <!-- <button class="dropbtn btn btn-secondary dropdown-toggle" data-toggle="dropdown">▼</button> -->
-                                        <!-- <div class="dropdown-content"> -->
-                                                <a href="{% url 'checkout:user-address-delete' pk=address.id %}" class="btn btn-quickview btn-outline btn-default btn-rounded btn-sm mb-2 mb-lg-0">{% trans "Delete" %}</a>
-                                        <!-- </div> -->
-                                    <!-- </div> -->
+                                <div class="btn-group-address mt-3">
+                                    <a href="{% url 'checkout:user-address-update' pk=address.id %}" class="btn btn-quickview btn-outline btn-default btn-rounded btn-sm mb-2">{% trans "Edit address" %}</a>
+                                    <a href="{% url 'checkout:user-address-delete' pk=address.id %}" class="btn btn-quickview btn-outline btn-default btn-rounded btn-sm mb-2">{% trans "Delete" %}</a>
                                 </div>
                             </div>
                         </div>
-                        {% if forloop.counter|divisibleby:2 %}
-                            </div><div class="row">
-                        {% endif %}
                     {% endfor %}
-                </div>
+                </div> 
             </div>
         </div>
-        <!-- New address block on the left -->
+        {% endif %}
+    {% endif %}
+        <!-- Center the new address block if no addresses exist -->
+        {% block new_address_form %}
+        {% if addresses %}
         <div class="col-lg-6 order-lg-1">
             <h3 class="title billing-title text-uppercase ls-10 pt-1 pb-3 mb-0">{% trans "Or a new address?" %}</h3>
-            <div class="card card-body bg-light">
-                <form action="{% url 'checkout:shipping-address' %}" method="post" id="new_shipping_address">
-                    {% csrf_token %}
-                    <div class="row gutter-sm">
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                {% include "oscar/partials/form_field.html" with field=form.first_name %}
-                            </div>
-                        </div>
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                {% include "oscar/partials/form_field.html" with field=form.last_name %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Company name (optional)</label>
-                        <input type="text" class="form-control form-control-md" name="company-name">
-                    </div>
-                    <div class="form-group">
-                        {% include "oscar/partials/form_field.html" with field=form.country %}
-                    </div>
-                    <div class="form-group">
-                        {% include "oscar/partials/form_field.html" with field=form.line1 %}
-                        {% include "oscar/partials/form_field.html" with field=form.line2 %}
-                        {% include "oscar/partials/form_field.html" with field=form.line3 %}
-                    </div>
-                    <div class="row gutter-sm">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {% include "oscar/partials/form_field.html" with field=form.line4 %}
-                            </div>
-                            <div class="form-group">
-                                {% include "oscar/partials/form_field.html" with field=form.postcode %}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {% include "oscar/partials/form_field.html" with field=form.state %}
-                            </div>
-                            <div class="form-group">
-                                {% include "oscar/partials/form_field.html" with field=form.phone_number %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group mt-3">
-                        {% include "oscar/partials/form_field.html" with field=form.notes %}
-                    </div>
-                    <div class="form-group row">
-                        <div class="offset-sm-4 col-sm-8">
-                            <button type="submit" class="btn btn-lg btn-primary" data-loading-text="{% trans 'Continuing...' %}">{% trans "Continue" %}</button>
-                            {% trans "or" %} <a href="{% url 'basket:summary' %}">{% trans "return to basket" %}</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    {% else %}
-        <!-- Center the new address block if no addresses exist -->
+        {% else %}
         <div class="col-lg-8">
             <h3 class="title billing-title text-uppercase ls-10 pt-1 pb-3 mb-0">{% trans "Where should we ship to?" %}</h3>
+        {% endif %}
             <div class="card card-body bg-light">
                 <form action="{% url 'checkout:shipping-address' %}" method="post" id="new_shipping_address">
                     {% csrf_token %}
@@ -195,7 +134,7 @@
                 </form>
             </div>
         </div>
-    {% endif %}
+        {% endblock %}
 </div>
 {% endblock shipping_address %}
 
