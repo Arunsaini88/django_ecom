@@ -1,3 +1,4 @@
+
 <div class="login-popup">
     <div class="tab tab-nav-boxed tab-nav-center tab-nav-underline">
         <ul class="nav nav-tabs text-uppercase" role="tablist">
@@ -11,29 +12,50 @@
         <div class="tab-content">
             <div class="tab-pane active" id="sign-in">
                 <form id="login_form" action="{{ request.get_full_path }}" method="post" class="card card-body bg-light" >
-                    <h2>{% trans 'Log In' %}</h2>
-                    {% csrf_token %}
-                    {% include "oscar/partials/form_fields.html" with form=login_form %}
-                    <p><a href="{% url 'password-reset' %}">{% trans "I've forgotten my password" %}</a></p>
-                    <button name="login_submit" type="submit" value="Log In" class="btn  btn-primary" data-loading-text="{% trans "Logging in..." %}">{% trans 'Log In' %}</button>
+                    <div class="form-group">
+                        <label>Username or email address *</label>
+                        <input type="email" class="form-control" name="login-username" id="id_login-username" required>
+                    </div>
+                    <div class="form-group mb-0">
+                        <label>Password *</label>
+                        <input type="password" class="form-control" name="login-password" id="id_login_password" required>
+                    </div>
+                    <div class="form-checkbox d-flex align-items-center justify-content-between">
+                        <input type="checkbox" class="custom-checkbox" id="remember" name="remember" required="">
+                        <label for="remember">Remember me</label>
+                        <a href="#">Last your password?</a>
+                    </div>
+                    <button href="#" name="login_submit" type="submit" value="Log In" class="btn btn-primary">Log In</button>
+                    <!-- <a href="#" type="submit " class="btn btn-primary">Sign In</a> -->
                 </form>
             </div>
             <div class="tab-pane" id="sign-up">
                 <form id="register_form" action="{{ request.get_full_path }}" method="post" class="card card-body bg-light">
-                    <h2>{% trans 'Register' %}</h2>
-                    {% csrf_token %}
-                    {% include "oscar/partials/form_fields.html" with form=registration_form %}
-                    <button name="registration_submit" type="submit" value="Register" class="btn btn-primary" data-loading-text="{% trans 'Registering...' %}">{% trans 'Register' %}</button>
-                </form>
-                <p>Your personal data will be used to support your experience 
-                    throughout this website, to manage access to your account, 
-                    and for other purposes described in our <a href="#" class="text-primary">privacy policy</a>.</p>
-                <a href="#" class="d-block mb-5 text-primary">Signup as a vendor?</a>
-                <div class="form-checkbox d-flex align-items-center justify-content-between mb-5">
-                    <input type="checkbox" class="custom-checkbox" id="agree" name="agree" required="">
-                    <label for="agree" class="font-size-md">I agree to the <a  href="#" class="text-primary font-size-md">privacy policy</a></label>
+                    
+                    <div class="form-group">
+                        <label>Your Email address *</label>
+                        <input type="email" class="form-control" name="registration-username" id="id_registration-username" required>
+                    </div>
+                    <div class="form-group mb-5">
+                        <label>Password *</label>
+                        <input type="password" class="form-control" name="registration-password1" id="id_registration-password1" required>
+                    </div>
+                    <div class="form-group mb-5">
+                        <label>Confirm Password *</label>
+                        <input type="password" class="form-control" name="registration-password2" id="id_registration-password2" required>
+                    </div>
+
+                    <p>Your personal data will be used to support your experience 
+                        throughout this website, to manage access to your account, 
+                        and for other purposes described in our <a href="#" class="text-primary">privacy policy</a>.</p>
+                    <a href="#" class="d-block mb-5 text-primary">Signup as a vendor?</a>
+                    <div class="form-checkbox d-flex align-items-center justify-content-between mb-5">
+                        <input type="checkbox" class="custom-checkbox" id="agree" name="agree" required="">
+                        <label for="agree" class="font-size-md">I agree to the <a  href="#" class="text-primary font-size-md">privacy policy</a></label>
+                    </div>
+                    <button href="#" type="submit" class="btn btn-primary">Sign Up</button>
                 </div>
-            </div>
+            </form>
         </div>
         <p class="text-center">Sign in with social account</p>
         <div class="social-icons social-icon-border-color d-flex justify-content-center">

@@ -2706,7 +2706,7 @@ window.Wolmart = {};
         return new Popup(options, preset);
     }
 })(jQuery);
-
+          
 /**
  * Wolmart Plugin - Product Single
  * 

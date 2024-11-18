@@ -1,8 +1,10 @@
 {% load static %}
 {% load i18n %}
 
-{% load product_tags %}
 {% load brand_tags %}
+{% load product_tags %}
+
+
 
 <!-- End of Banner Product Wrapper -->
 
@@ -22,18 +24,18 @@
         </div>
     </div> 
     <div class="col-xl-5col4 col-md-8 mb-4">
-        <div class="banner br-sm mb-4 pt-9" style="background-image: url({% static 'assets/images/demos/demo2/banners/2.jpg' %});
+        <div class="banner br-sm mb-4 pt-9" style="background-image: url({% if site_info.brand_basnr_image %}{{ site_info.brand_baner_image.url }}{% else %} {% static 'assets/Image Place Holder/3070 x 615 .jpg' %}{% endif %});
             background-color: #E0E1E5;">
             <div class="banner-content">
                 <h5 class="banner-subtitle font-weight-normal text-capitalize texyt-dark ls-25 mb-0">
-                    From Onlin Store
+                    <!-- From Onlin Store -->
                 </h5>
                 <h3 class="banner-title text-capitalize ls-25 mb-4">
-                    Xbox One's <span class="text-primary">Limited</span> Edition
+                    <span class="text-primary"></span>
                 </h3>
                 <a href="shop-boxed-banner.html"
                     class="btn btn-dark btn-link btn-underline btn-icon-right">
-                    View Detail<i class="w-icon-long-arrow-right"></i>
+                    <!-- <i class="w-icon-long-arrow-right"></i> -->
                 </a>
             </div>
         </div>

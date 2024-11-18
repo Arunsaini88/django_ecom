@@ -69,16 +69,16 @@
 
                     {% include "custom_temps/homepage_detail/product_wrapper_2.html" %}
 
-                    <div class="banner br-sm banner-electronics appear-animate" style="background-image: url({% static 'assets/images/demos/demo2/banners/3.jpg' %});
+                    <div class="banner br-sm banner-electronics appear-animate" style="background-image: url({% if site_info.brand_basnr_image %}{{ site_info.brand_baner_image.url }}{% else %} {% static 'assets/Image Place Holder/3070 x 615 .jpg' %}{% endif %});
                         background-color: #333;">
                         <div class="banner-content mr-10 pr-1">
                             <div class="banner-price-info text-white font-weight-normal ls-25">
-                                Save Big on <span class="font-weight-bolder text-secondary text-uppercase">50% Off</span>
+                                 <span class="font-weight-bolder text-secondary text-uppercase"></span>
                             </div>
-                            <h3 class="banner-title text-white mb-0 ls-25">Cameras and Leans Sale</h3>
+                            <h3 class="banner-title text-white mb-0 ls-25"></h3>
                         </div>
-                        <a href="shop-banner-sidebar.html" class="btn btn-white btn-rounded btn-icon-right mt-1">Shop Now<i
-                                class="w-icon-long-arrow-right"></i></a>
+                        <!-- <a href="shop-banner-sidebar.html" class="btn btn-white btn-rounded btn-icon-right mt-1">
+                            Shop Now<i class="w-icon-long-arrow-right"></i></a> -->
                     </div>
                     <!-- End of Banner -->
 
@@ -88,7 +88,7 @@
 
                     {% include "custom_temps/homepage_detail/our_client.html"%}
 
-                    {% include "custom_temps/homepage_detail/home_blog.html"%}
+                    <!-- {% include "custom_temps/homepage_detail/home_blog.html"%} -->
 
                 {% endblock %}
             </div>

@@ -992,7 +992,7 @@ blockquote {
   max-width: 1820px;
 }
 .container {
-  max-width: 1400px;
+  max-width: 1280px;
 }
 .row {
   display: flex;
@@ -4791,7 +4791,7 @@ blockquote {
 @font-face {
   font-family: "wolmart";
   src: url("../fonts/wolmart.eot?png09e");
-  src: url("../fonts/wolmart.woff?png09e") format("woff"),
+  src: url("../fonts/wolmart.woff") format("woff"),
     url("../fonts/wolmart.eot?png09e#iefix") format("embedded-opentype"),
     url("../fonts/wolmart.ttf?png09e") format("truetype"),
     url("../fonts/wolmart.svg?png09e#wolmart") format("svg");
@@ -11040,12 +11040,18 @@ body .product-popup {
   background: #fff;
   color: #333;
 }
+
 .header .container,
 .header .container-fluid,
 .header .inner-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
 .header .inner-wrap {
   width: 100%;
 }
@@ -11345,7 +11351,7 @@ body .product-popup {
   flex: 1;
   margin: 0 auto;
   min-width: auto;
-  max-width: none;
+  max-width: 55.6rem;
 }
 .header-search.hs-expanded .select-box {
   width: 14.6rem;

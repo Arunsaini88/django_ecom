@@ -24,7 +24,11 @@
 <div class="header-top">
     <div class="container">
         <div class="header-left">
+            {% if site_info.welcome_message %}
             <p class="welcome-msg">{{ site_info.welcome_message }}</p>
+            {% else %}
+            <p class="welcome-msg">Welcome to our store</p>
+            {% endif %}
         </div>
         <div class="header-right">
             <div class="dropdown">
@@ -56,7 +60,7 @@
         
             <span class="divider d-lg-show"></span>
             <a href="#" class="d-lg-show">Blog</a>
-            <a href="#" class="d-lg-show">Contact Us</a>
+            <a href="#" class="d-lg-show">trans 'Contact Us</a>
         
             {% if user.is_authenticated %}
             {% block nav_account_navbar_authenticated %}
@@ -85,7 +89,7 @@
                     </a>
             {% endblock %}
             {% else %}
-                <a id="login_link" href="static/assets/ajax/login.html" class="d-lg-show login register">
+                <a id="login_link" href="{% static 'assets/ajax/login.html' %}" class="d-lg-show login register">
                 <a id="login_link" href="{% url 'customer:login' %}" class=" ml-0 d-lg-show login register">
                     <i class="fas fa-sign-in-alt mr-2"></i>
                     {% trans "Login or register" %}

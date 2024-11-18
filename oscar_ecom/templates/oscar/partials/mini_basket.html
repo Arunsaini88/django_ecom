@@ -5,12 +5,14 @@
 
 <div class="header-right ml-4">
     <div class="header-call d-xs-show d-lg-flex align-items-center">
+        {% if site_info.site_phone %}
         <a href="tel:#" class="w-icon-call"></a>
         <div class="call-info d-lg-show">
             <h4 class="chat font-weight-normal font-size-md text-normal ls-normal text-light mb-0">
-                <a href="mailto:#" class="text-capitalize">Live Chat</a> or :</h4>
-            <a href="tel:#" class="phone-number font-weight-bolder ls-50">{{ site_info.site_phone }}</a>
+                <a href="https://wa.me/{{ site_info.whatsapp_number }}" class="text-capitalize">WhatsApp</a> or :</h4>
+                <a href="tel:#" class="phone-number font-weight-bolder ls-50">{{ site_info.site_phone }}</a>
         </div>
+        {% endif %}
     </div>
     
     <a class="wishlist label-down link d-xs-show" href="{% url 'customer:wishlists-list' %}">

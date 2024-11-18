@@ -2,7 +2,7 @@
 
 {% load static %}
 {% load product_tags %}
-{% load category_tags %}
+{% load custom_category_tags %}
 
 
 <div class="banner-product-wrapper appear-animate row mb-8">
@@ -23,20 +23,20 @@
         </div>
     </div>
     <div class="col-xl-5col4 col-md-8 mb-4">
-        <div class="banner br-sm mb-4" style="background-image: url({% static 'assets/images/demos/demo2/banners/1.jpg' %});
+        <div class="banner br-sm mb-4" style="background-image: url({% if site_info.category_baner_image %}{{ site_info.category_baner_image.url }}{% else %} {% static 'assets/Image Place Holder/3070 x 615 .jpg' %}{% endif %});
             background-color: #EEF0EF;">
             <div class="banner-content d-block d-lg-flex align-items-center">
                 <div class="content-left mr-auto">
                     <h5 class="banner-subtitle font-weight-normal text-capitalize text-dark ls-25 mb-0">
-                        {% trans "Flash Sale" %} <strong class="text-uppercase text-secondary">50% Off</strong>
+                         <strong class="text-uppercase text-secondary"></strong>
                     </h5>
-                    <h3 class="banner-title text-capitalize ls-25">{% trans 'Fashion Figure Skate Sale' %}</h3>
-                    <p class="text-dark">Only until the end of this week.</p>
+                    <h3 class="banner-title text-capitalize ls-25"></h3>
+                    <p class="text-dark"></p>
                 </div>
-                <a href="{{ product.get_absolute_url }}" class="content-left btn btn-dark btn btn-outline 
+                <!-- <a href="{{ product.get_absolute_url }}" class="content-left btn btn-dark btn btn-outline 
                     btn-rounded btn-icon-right mt-4 mt-lg-0">{% trans "Shop Now" %}<i
                         class="w-icon-long-arrow-right"></i>
-                </a>
+                </a> -->
             </div>
         </div>
         <!-- End of Banner -->

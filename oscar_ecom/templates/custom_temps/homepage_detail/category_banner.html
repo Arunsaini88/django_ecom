@@ -6,10 +6,15 @@
     <div class="col-md-6 mb-4">
         <div class="banner banner-fixed br-sm">
             <figure>
-                <img src="{% static 'assets/images/demos/demo2/categories/1-1.jpg' %}" alt="Category Banner"
+                {% if site_info.baner1_image %}
+                <img src="{{ site_info.banner2_image.url }}" alt="Category Banner"
                     width="640" height="200" style="background-color: #25282D;" />
+                {% else %}
+                <img src="{% static 'assets/Image Place Holder/1340x420.jpg' %}" alt="Category Banner"
+                    width="640" height="200" style="background-color: #25282D;" />
+                {% endif %}
             </figure>
-            <div class="banner-content y-50">
+            <!-- <div class="banner-content y-50">
                 <h3 class="banner-title text-white ls-25 mb-0">Electronics</h3>
                 <div class="banner-price-info text-white font-weight-bold text-uppercase mb-1">Starting
                     At
@@ -19,16 +24,21 @@
                 <a href="shop-banner-sidebar.html"
                     class="btn btn-white btn-link btn-underline btn-icon-right">
                     Shop Now<i class="w-icon-long-arrow-right"></i></a>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="col-md-6 mb-4">
         <div class="banner banner-fixed br-sm">
             <figure>
-                <img src="{% static 'assets/images/demos/demo2/categories/1-2.jpg' %}" alt="Category Banner"
+                {% if site_info.baner2_image %}
+                <img src="{{ site_info.baner2_image.url }}" alt="Category Banner"
                     width="640" height="200" style="background-color: #eeedec;" />
+                {% else %}
+                <img src="{% static 'assets/Image Place Holder/1340x420.jpg' %}" alt="Category Banner"
+                    width="640" height="200" style="background-color: #eeedec;" />
+                {% endif %}
             </figure>
-            <div class="banner-content y-50">
+            <!-- <div class="banner-content y-50">
                 <h3 class="banner-title ls-25 text-capitalize mb-0">Cosmetics Sets</h3>
                 <div class="banner-price-info font-weight-bold text-uppercase mb-1">Sale Up To
                     <strong class="text-secondary">30% Off</strong>
@@ -37,7 +47,7 @@
                 <a href="shop-banner-sidebar.html"
                     class="btn btn-dark btn-link btn-underline btn-icon-right">
                     Shop Now<i class="w-icon-long-arrow-right"></i></a>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

@@ -4791,7 +4791,7 @@ blockquote {
 @font-face {
   font-family: "wolmart";
   src: url("../fonts/wolmart.eot?png09e");
-  src: url("../fonts/wolmart.woff?png09e") format("woff"),
+  src: url("../fonts/wolmart.woff") format("woff"),
     url("../fonts/wolmart.eot?png09e#iefix") format("embedded-opentype"),
     url("../fonts/wolmart.ttf?png09e") format("truetype"),
     url("../fonts/wolmart.svg?png09e#wolmart") format("svg");

@@ -5,37 +5,8 @@ from django.db.models import Sum, Q
 from django.db.models import Count
 from oscar.apps.analytics.models import UserProductView
 from apps.catalogue.models import Product
-from django.core.cache import cache
 
 register = template.Library()
-
-
-@register.simple_tag(takes_context=True)
-def render_product(context, product):
-    """
-    Render a product snippet as you would see in a browsing display.
-
-    This templatetag looks for different templates depending on the UPC and
-    product class of the passed product.  This allows alternative templates to
-    be used for different product classes.
-    """
-    if not product:
-        # Search index is returning products that don't exist in the
-        # database...
-        return ""
-
-    names = [
-        "oscar/catalogue/partials/product/upc-%s.html" % product.upc,
-        "oscar/catalogue/partials/product/class-%s.html"
-        % product.get_product_class().slug,
-        "oscar/catalogue/partials/product.html",
-    ]
-    template_ = select_template(names)
-    context = context.flatten()
-
-    # Ensure the passed product is in the context as 'product'
-    context["product"] = product
-    return template_.render(context)
 
 
 # your_project/templatetags/product_tags.py
@@ -80,7 +51,7 @@ def all_products(limit=10):
 
 
 
-@register.inclusion_tag('custome_temps/product_detail/related_product.html', takes_context=True)
+@register.inclusion_tag('custom_temps/product_detail/related_product.html', takes_context=True)
 def related_products(context, product):
     # Fetch products from the same category (or any other criteria)
     request = context["request"]
