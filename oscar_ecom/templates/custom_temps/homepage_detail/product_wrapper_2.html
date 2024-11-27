@@ -24,8 +24,16 @@
         </div>
     </div> 
     <div class="col-xl-5col4 col-md-8 mb-4">
-        <div class="banner br-sm mb-4 pt-9" style="background-image: url({% if site_info.brand_basnr_image %}{{ site_info.brand_baner_image.url }}{% else %} {% static 'assets/Image Place Holder/3070 x 615 .jpg' %}{% endif %});
-            background-color: #E0E1E5;">
+        <div class="banner br-sm mb-4 pt-9">
+             <figure>
+                {% if site_info.brand_basnr_image %}
+                <img src="{{ site_info.brand_baner_image.url }}" alt="Category Banner"
+                    style="background-color: #25282D;" />
+                {% else %}
+                <img src="{% static 'assets/Image Place Holder/3070 x 615 .jpg' %}" alt="Category Banner"
+                    style="background-color: #25282D;" />
+                {% endif %}
+            </figure>
             <div class="banner-content">
                 <h5 class="banner-subtitle font-weight-normal text-capitalize texyt-dark ls-25 mb-0">
                     <!-- From Onlin Store -->

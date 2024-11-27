@@ -8,6 +8,7 @@
 {% endblock %}
 
     {% block layout %}
+
     <header class="header header-border">
         {# Top-horizontal bar with account, notifictions, dashboard links #}
         {% block nav_account %} {% include "oscar/partials/nav_accounts.html" %} {% endblock %}
@@ -28,7 +29,6 @@
             </div>
         </div>
     </header>
-
         {# Main content of page - other layout templates may override this block #}
     <main class="main mb-10 pb-1 login-page wishlist-page order">
         {% block content_wrapper %}

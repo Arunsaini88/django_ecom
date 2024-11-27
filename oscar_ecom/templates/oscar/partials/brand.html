@@ -6,15 +6,10 @@
     {% if site_info.site_logo %}
     <a href="{{ homepage_url }}" class="logo ml-lg-0">{% block brand_title %} <img src="{{ site_info.site_logo.url }}" alt="Site Logo" width="144" height="45" >{% endblock %}</a>
     {% else %}
-    <a href="{{ homepage_url }}" class="logo ml-lg-0"><img src="{% static 'assets/images/default_logo.jpg' %}" alt="default_logo"></a>
+    <a href="{{ homepage_url }}" class="logo ml-lg-0"><img src="{% static 'assets/images/default_logo.jpg' %}" alt="default_logo" width="144" height="45" ></a>
     {% endif %}
     <small> {{ shop_tagline }}</small>
     {% block nav_extra %}
         {% include "oscar/partials/search.html" %}
     {% endblock %}
 </div>
-
-
-  
-
-

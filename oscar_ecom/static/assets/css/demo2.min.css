@@ -13367,9 +13367,9 @@ body .product-popup {
 .categories a:not(.btn):hover {
   color: #0088cc;
 }
-.banner-product-wrapper .banner {
-  padding: 4.3rem 5.1rem 4rem;
-}
+/* .banner-product-wrapper .banner { */
+  /* padding: 4.3rem 5.1rem 4rem; */
+/* } */
 .banner-product-wrapper .banner-subtitle {
   font-size: 2em;
 }
@@ -13433,7 +13433,7 @@ body .product-popup {
   margin-bottom: 4.7rem;
 }
 .banner-electronics .banner-content {
-  margin-right: 5.5rem;
+  /* margin-right: 5.5rem; */
 }
 .banner-electronics .banner-price-info {
   margin-bottom: 0.2rem;

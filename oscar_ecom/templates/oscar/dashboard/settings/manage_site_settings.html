@@ -1,7 +1,3 @@
-
-
-
-
 {% extends 'oscar/dashboard/layout.html' %}
 <!-- {% load category_tags %} -->
 {% load i18n %}
@@ -73,17 +69,50 @@
                                     {% endfor %}
                                     <hr>
                                     <!-- Block for Formset (SocialMediaLinkFormSet) -->
-                                    <h2>Social Media Links</h2>
+                                    <!-- <h2>Social Media Links</h2>
                                     {{ formset.management_form }}
                                     {% for form in formset %}
                                         <div class="form-group">
-                                            <!-- Render each field in the formset with the same styling logic -->
+                                            {% for field in form %}
+                                                {% include 'oscar/dashboard/partials/form_field.html' with field=field %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %} -->
+            
+                                    <h3>Social Media Links</h3>
+                                    {{ formsets.social_links.management_form }}
+                                    {% for form in formsets.social_links %}
+                                        <div class="form-group">
                                             {% for field in form %}
                                                 {% include 'oscar/dashboard/partials/form_field.html' with field=field %}
                                             {% endfor %}
                                         </div>
                                     {% endfor %}
+                                    <hr>
                                     
+                                    <h3>Menu Names</h3>
+
+                                    {{ formsets.menu_names.management_form }}
+                                    {% for form in formsets.menu_names %}
+                                        <div class="form-group">
+                                            {% for field in form %}
+                                                {% include 'oscar/dashboard/partials/form_field.html' with field=field %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                    <hr>
+                                    
+                                    <h3>Tags</h3>
+                                    {{ formsets.tags.management_form }}
+                                    {% for form in formsets.tags %}
+                                    <div class="form-group">
+                                        {% for field in form %}
+                                            {% include 'oscar/dashboard/partials/form_field.html' with field=field %}
+                                        {% endfor %}
+                                    </div>
+                                    {% endfor %}
+                                <!-- Block for Formsets (SocialMediaLinkFormSet and MenuNameFormSet) -->
+
                                     {% endblock setting_details_content %}
                                 </div>
                             </div>

@@ -60,7 +60,7 @@
         
             <span class="divider d-lg-show"></span>
             <a href="#" class="d-lg-show">Blog</a>
-            <a href="#" class="d-lg-show">trans 'Contact Us</a>
+            <a href="#" class="d-lg-show">{% trans 'Contact Us' %}</a>
         
             {% if user.is_authenticated %}
             {% block nav_account_navbar_authenticated %}
@@ -90,7 +90,7 @@
             {% endblock %}
             {% else %}
                 <a id="login_link" href="{% static 'assets/ajax/login.html' %}" class="d-lg-show login register">
-                <a id="login_link" href="{% url 'customer:login' %}" class=" ml-0 d-lg-show login register">
+                <a id="login_link" href="{% url 'customer:login' %}?popup=true" class=" ml-0 d-lg-show login register">
                     <i class="fas fa-sign-in-alt mr-2"></i>
                     {% trans "Login or register" %}
                 </a>

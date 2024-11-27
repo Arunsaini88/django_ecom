@@ -1,5 +1,9 @@
 {% extends "oscar/checkout/checkout.html" %}
+{% load purchase_info_tags %}
+{% load currency_filters %}
+{% load static %}
 {% load i18n %}
+
 
 {% block title %}
     {% trans "Payment details" %} | {{ block.super }}
@@ -11,7 +15,74 @@
 
 {% block checkout_title %}{% trans "Enter payment details" %}{% endblock %}
 
-{% block order_contents %}{% endblock %}
+{% block order_contents %}
+<h4 class="title text-uppercase ls-25 mb-5">{% trans "Order Details" %}</h4>
+<table class="order-table">
+    <thead>
+        <tr>
+            <th class="text-dark">{% trans 'Product' %}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for line in basket.all_lines %}
+             {% purchase_info_for_line request line as session %}
+            <tr>
+                <td> 
+                    <a href="{{ line.product.get_absolute_url }}">{{ line.description|slice:":10" }}</a>&nbsp;<strong>x {{ line.quantity }}</strong><br>
+                    {% trans "Vendor" %} : <a href="#">{{ line.product.partner.name }}</a>
+                </td>
+                <td>
+                    {% if not show_tax_separately and line.is_tax_known %}
+                        {{ line.line_price_incl_tax|currency:basket.currency }}
+                    {% else %}
+                        {{ line.line_price_excl_tax|currency:basket.currency }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>{% trans "Subtotal:" %}</th>
+            <td>{{ request.basket.total_incl_tax|currency:request.basket.currency }}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Shipping:" %}</th>
+            <td>
+                {% if not shipping_method.is_discounted %}
+                    {% if not show_tax_separately and shipping_charge.is_tax_known %}
+                        {{ shipping_charge.incl_tax|currency:basket.currency }}
+                    {% else %}
+                        {{ shipping_charge.excl_tax|currency:basket.currency }}
+                    {% endif %}
+                {% else %}
+                    {% if not show_tax_separately and shipping_charge_excl_discount.is_tax_known %}
+                        {{ shipping_charge_excl_discount.incl_tax|currency:basket.currency }}
+                    {% else %}
+                        {{ shipping_charge_excl_discount.excl_tax|currency:basket.currency }}
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>{% trans "Payment method:" %}</th>
+            <td>{% trans 'No publish' %}</td>
+        </tr>
+        <tr class="total">
+            <th class="border-no">{% trans "Total:" %}</th>
+            <td class="border-no">
+                {% if order_total.is_tax_known %}
+                    {{ order_total.incl_tax|currency:basket.currency }}
+                {% else %}
+                    {{ order_total.excl_tax|currency:basket.currency }}
+                {% endif %}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}
+
 {% block shipping_address %}{% endblock %}
 {% block shipping_method %}{% endblock %}
 {% block payment_method %}{% endblock %}
@@ -19,112 +90,83 @@
 {% block payment_details %}
     {% block payment_details_content %}
     <div class="container">
-        <p>{% trans "This page needs implementing within your project.  You may want to use one of Oscar's payment gateway libraries:" %}</p>
-        <!-- <form id="payment-form">
-            <script
-              src="https://checkout.razorpay.com/v1/checkout.js"
-              data-key="rzp_test_dHwP3rUEWuG97o" 
-              data-amount="{{ razorpay_order.amount }}" 
-              data-currency="{{ razorpay_order.currency }}"
-              data-order_id="{{ razorpay_order.id }}" 
-              data-buttontext="Pay with Razorpay"
-              data-name="Your Store Name"
-              data-description="Order #{{ razorpay_order.id }}"
-              data-prefill.name="{{ user.username }}"
-              data-prefill.email="{{ user.email }}"
-              data-theme.color="#F37254"
-            ></script>
-            <input type="hidden" custom="Hidden Element" name="hidden">
-        </form> -->
+            <!-- <h3>{% trans "Pay with Razorpay" %}</h3> -->
+           
+
+            <!-- <form id="razorpay-payment-form" action="{% url 'checkout:preview' %}" method="POST">
+                {% csrf_token %}
+                <script
+                    src="https://checkout.razorpay.com/v1/checkout.js"
+                    data-key="{{razorpay_publishable_key}}"
+                    data-amount="{{ order_total_incl_tax_cents }}"
+                    data-name="Daft Punk"
+                    data-description="Purchase Description"
+                    data-image="vk.jpg"
+                    data-netbanking="true"
+                    data-description="Tron Legacy"
+                    data-prefill.name="{{ request.user.get_full_name }}"
+                    data-prefill.email="{{ request.user.email }}"
+                    data-prefill.contact="{{ user_profile.phone }}"
+                    data-notes.shopping_order_id="21">
+                </script>
+                <input type="hidden" name="shopping_order_id" value="21">
+            </form> -->
 
 
-            <button id="rzp-button1">Pay</button>
+            <!-- <form id="razorpay-payment-form" method="POST" action="{% url 'checkout:preview' %}">
+                {% csrf_token %}
+                <script
+                    src="https://checkout.razorpay.com/v1/checkout.js"
+                    data-key="{{razorpay_publishable_key}}"
+                    data-amount="{{ order_total_incl_tax_cents }}"
+                    data-currency="INR"
+                    data-buttontext="Pay with Razorpay"
+                    data-order_id="{{ razorpay_order_id }}"
+                    data-name="Your Store Name"
+                    data-description="Order Payment"
+                    data-image="{% static 'assets/images/default_logo.jpg' %}"
+                    data-prefill.name="{{ request.user.get_full_name }}"
+                    data-prefill.email="{{ request.user.email }}"
+                    data-prefill.contact="{{ user_profile.phone }}"
+                    data-theme.color="#F37254"
+                ></script>
+                <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
+                <input type="hidden" name="razorpay_signature" id="razorpay_signature">
+            </form> -->
 
-            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-            <script>
-            var options = {
-                "key": "rzp_test_6bIJl2FhugXCH6", // Enter the Key ID generated from the Dashboard
-                "name": "Acme Corp", //your business name
-                "amount":"{{amount}}",
-                "description": "Test Transaction",
-                "image": "https://example.com/your_logo",
-                "order_id": "{{order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-                "handler": function (response){
-                    alert(response.razorpay_payment_id);
-                    alert(response.razorpay_order_id);
-                    alert(response.razorpay_signature)
-                },
-                "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-                    "name": "{{ user.username }}", //your customer's name
-                    "email": "{{ guest_email }}", 
-                    "contact": "{{shipping_address.phone_number}}"  //Provide the customer's phone number for better conversion rates 
-                },
-                "notes": {
-                    "address": "Razorpay Corporate Office"
-                },
-                "theme": {
-                    "color": "#3399cc"
+            <!-- <button class="btn btn-primary btn-lg" id="rzp-button1">Pay with Razorpay</button>
+                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+                <script>
+                var options = {
+                    "key": "{{razorpay_publishable_key}}", // Enter the Key ID generated from the Dashboard
+                    "amount": "{{ order_total_incl_tax_cents }}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                    "currency": "INR",
+                    "name": "Acme Corp",
+                    "description": "{{ basket.num_items }} items ({{ order_total.incl_tax|currency }}",
+                    "image": "https://example.com/your_logo",
+                    "order_id": "{{ razorpay_order_id }}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                    "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+                    "prefill": {
+                        "name": "{{ user.full_name }}",
+                        "email": "{{ user.email }}",
+                        "contact": "{{ shipping_address.phone_number }}"
+                    },
+                    "notes": {
+                        "address": "Razorpay Corporate Office"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                document.getElementById('rzp-button1').onclick = function(e){
+                    rzp1.open();
+                    e.preventDefault();
                 }
-            };
-            var rzp1 = new Razorpay(options);
-            rzp1.on('payment.failed', function (response){
-                    alert(response.error.code);
-                    alert(response.error.description);
-                    alert(response.error.source);
-                    alert(response.error.step);
-                    alert(response.error.reason);
-                    alert(response.error.metadata.order_id);
-                    alert(response.error.metadata.payment_id);
-            });
-            document.getElementById('rzp-button1').onclick = function(e){
-                rzp1.open();
-                e.preventDefault();
-            }
-            </script>
-
-        <!-- <button id="rzp-button1">Pay</button>
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-        <script>
-        var options = {
-            "key": "rzp_test_6bIJl2FhugXCH6",  // Pass your API key here
-            "amount": "522200", // Amount in paise
-            "currency": "INR",
-            "name": "Your Store Name",
-            "description": "Order Payment",
-            "order_id": "{{ order_id }}", // Order ID from Razorpay
-            "handler": function (response){
-                // Handle payment success
-                var form = document.createElement('form');
-                form.method = 'POST';
-                form.action = '{% url "checkout:payment-details" %}';
-                form.innerHTML = `
-                    <input type="hidden" name="razorpay_payment_id" value="${response.razorpay_payment_id}">
-                    <input type="hidden" name="razorpay_order_id" value="${response.razorpay_order_id}">
-                    <input type="hidden" name="razorpay_signature" value="${response.razorpay_signature}">
-                `;
-                document.body.appendChild(form);
-                form.submit();
-            },
-            "prefill": {
-                "name": "{{ user.username }}",
-                "email": "{{ user.email }}",
-                "contact": "{{shipping_address.phone_number}}"  // Optional: Add contact details if available
-            },
-            "theme": {
-                "color": "#3399cc"
-            }
-        };
-        var rzp1 = new Razorpay(options);
-        document.getElementById('rzp-button1').onclick = function(e){
-            rzp1.open();
-            e.preventDefault();
-        }
-        </script> -->
-        
-
-
-        <a id="view_preview" href="{% url 'checkout:preview' %}" class="btn btn-primary btn-lg">{% trans "Continue" %}</a>
+                </script> -->
+    
+            <a href="{% url 'checkout:preview' %}" class="btn btn-primary btn-lg">{% trans "Continue" %}</a>
+    
     </div>
     {% endblock payment_details_content %}
 {% endblock payment_details %}

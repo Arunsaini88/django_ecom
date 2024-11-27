@@ -49,7 +49,10 @@
 
     <body id="{% block body_id %}default{% endblock %}" class="{% block body_class %}default{% endblock %} Home">
         {# Main content goes in this 'layout' block #}
+        
+        {% if request.GET.popup != 'true' %}
         <div class="page-wrapper">
+        {% endif %}
         {% block layout %}{% endblock %}
         </div>
         

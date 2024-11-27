@@ -40,26 +40,28 @@
 
 
                     <div class="sale-banner banner br-sm appear-animate">
+                        {% for tag in site_info.tags.all %}
                         <div class="banner-content">
                             <h4
                                 class="content-left banner-subtitle text-uppercase mb-8 mb-md-0 mr-0 mr-md-4 text-secondary ls-25">
                                 <span class="text-dark font-weight-bold lh-1 ls-normal">Up
-                                    <br>To</span>70% Sale!</h4>
+                                    <br>To</span>{{ tag.tag_percentage }}% Sale!</h4>
                             <div class="content-right">
                                 <h3 class="banner-title text-uppercase font-weight-normal mb-4 mb-md-0 ls-25 text-white">
                                     <span>Pay Only For
-                                        <strong class="mr-10 pr-lg-10">Your Lovling Electronics</strong>
+                                        <strong class="mr-10 pr-lg-10">{{tag.tag_line}}</strong>
                                         Pay Only For
                                         <strong class="mr-10 pr-lg-10">Your Lovling Electronics</strong>
                                         Pay Only For
                                         <strong class="mr-10 pr-lg-10">Your Lovling Electronics</strong>
                                     </span>
                                 </h3>
-                                <a href="#" class="btn btn-white btn-rounded">Shop Now
+                                <a href="{{site_info.tags.tag_line}}" class="btn btn-white btn-rounded">Shop Now
                                     <i class="w-icon-long-arrow-right"></i>
                                 </a>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                     <!-- End of Sale Banner -->
 
@@ -69,9 +71,18 @@
 
                     {% include "custom_temps/homepage_detail/product_wrapper_2.html" %}
 
-                    <div class="banner br-sm banner-electronics appear-animate" style="background-image: url({% if site_info.brand_basnr_image %}{{ site_info.brand_baner_image.url }}{% else %} {% static 'assets/Image Place Holder/3070 x 615 .jpg' %}{% endif %});
-                        background-color: #333;">
-                        <div class="banner-content mr-10 pr-1">
+                    <div class="banner br-sm banner-electronics appear-animate">
+                       
+                        <div class="banner-content">
+                            <figure>
+                                {% if site_info.brand_basnr_image %}
+                                <img src="{{ site_info.brand_baner_image.url }}" alt="Category Banner"
+                                    style="background-color: #25282D;" />
+                                {% else %}
+                                <img src="{% static 'assets/Image Place Holder/3070 x 615 .jpg' %}" alt="Category Banner"
+                                    style="background-color: #25282D;" />
+                                {% endif %}
+                            </figure>
                             <div class="banner-price-info text-white font-weight-normal ls-25">
                                  <span class="font-weight-bolder text-secondary text-uppercase"></span>
                             </div>

@@ -23,8 +23,16 @@
         </div>
     </div>
     <div class="col-xl-5col4 col-md-8 mb-4">
-        <div class="banner br-sm mb-4" style="background-image: url({% if site_info.category_baner_image %}{{ site_info.category_baner_image.url }}{% else %} {% static 'assets/Image Place Holder/3070 x 615 .jpg' %}{% endif %});
-            background-color: #EEF0EF;">
+        <div class="banner br-sm mb-4">
+            <figure>
+                {% if ite_info.category_baner_image %}
+                <img src="{{ ite_info.category_baner_image.url }}" alt="Category Banner"
+                    width="640" height="200" style="background-color: #25282D;" />
+                {% else %}
+                <img src="{% static 'assets/Image Place Holder/3070 x 615 .jpg' %}" alt="Category Banner"
+                    width="640" height="200" style="background-color: #25282D;" />
+                {% endif %}
+            </figure>
             <div class="banner-content d-block d-lg-flex align-items-center">
                 <div class="content-left mr-auto">
                     <h5 class="banner-subtitle font-weight-normal text-capitalize text-dark ls-25 mb-0">

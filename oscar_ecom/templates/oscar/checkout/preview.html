@@ -1,5 +1,6 @@
 {% extends "oscar/checkout/checkout.html" %}
 {% load i18n %}
+{% load currency_filters %}
 
 {% block title %}
     {% trans "Order preview" %} | {{ block.super }}
@@ -25,9 +26,11 @@
             get re-submitted when the user confirms the order.
         {% endcomment %}
         <div style="display:none">
-            {% block hiddenforms %}{% endblock %}
+            {% block hiddenforms %}
+                {{ razorpay_token_form }}
+            {% endblock %}
         </div>
-
+     
         <div class="form-group clearfix">
             <div class="row">
                 <div class="col-sm-3 offset-sm-9">
