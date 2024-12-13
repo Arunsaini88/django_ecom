@@ -16,6 +16,7 @@ import os
 
 from oscar.defaults import *
 
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +31,7 @@ SECRET_KEY = 'django-insecure-y6@1n=-dass$8h8r2v0%^@y8hye=6lk7#p8%z8k*1!zf4cp#y_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -50,7 +51,7 @@ INSTALLED_APPS = [
 
     'oscar.config.Shop',
     'oscar.apps.analytics.apps.AnalyticsConfig',
-    'oscar.apps.checkout.apps.CheckoutConfig',
+    'apps.checkout.apps.CheckoutConfig',
     'oscar.apps.address.apps.AddressConfig',
     'apps.shipping.apps.ShippingConfig',
 
@@ -224,6 +225,7 @@ OSCAR_FROM_EMAIL = "oscar@example.com"
 
 OSCAR_HOMEPAGE = reverse_lazy("Home")
 
+OSCAR_ALLOW_ANON_CHECKOUT = False
 
 # Menu structure of the dashboard navigation
 from django.utils.translation import gettext_lazy as _
@@ -359,7 +361,17 @@ OSCAR_DASHBOARD_NAVIGATION = [
                 "access_fn": lambda user, url_name, url_args, url_kwargs: user.is_staff,
             },
         ],
-    }
+    },
+    # {
+    #     'label': _('Fulfilment'),
+    #     'icon': 'icon-shopping-cart',
+    #     'children': [
+    #         {
+    #             'label': _('COD transactions'),
+    #             'url_name': 'cashondelivery-transaction-list',
+    #         },
+    #     ],
+    # },
 ]
 
 RAZORPAY_PUBLISHABLE_KEY = "rzp_test_6bIJl2FhugXCH6"

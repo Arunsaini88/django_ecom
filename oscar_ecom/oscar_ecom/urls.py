@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 # from oscar.app import application
-
+# from cashondelivery.dashboard.app import application as cod_app
 from . import views
 
 urlpatterns = [
@@ -17,6 +17,7 @@ urlpatterns = [
     path('brand/', views.Brand, name="brand"), # Brand view
     path('admin/', admin.site.urls),
     path('dashboard/setting/', include('settings.urls')),
+    # path('dashboard/cod/', include((cod_app.urls, 'cashondelivery.dashboard'))),
     path('', include(apps.get_app_config('oscar').urls[0])),
 
     

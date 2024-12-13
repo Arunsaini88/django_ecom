@@ -1,0 +1,36 @@
+{% extends "oscar/checkout/checkout.html" %}
+
+{% load currency_filters %}
+{% load i18n %}
+<!-- {% load shipping_tags %} -->
+
+{% block title %}
+    {% trans "Payment method" %} | {{ block.super }}
+{% endblock %}
+
+{% block checkout_nav %}
+    {% include 'oscar/checkout/nav.html' with step=3 %}
+{% endblock %}
+
+{% block checkout_title %}{% trans "Payment method" %}{% endblock %}
+
+{% block order_contents %}{% endblock %}
+{% block shipping_address %}{% endblock %}
+{% block shipping_method %}{% endblock %}
+
+{% block payment_method %}
+
+    <form method="post">
+        {% csrf_token %}
+        <label>
+            <input type="radio" name="payment_method" value="Razorpay" required>
+            Razorpay
+        </label><br>
+        <label>
+            <input type="radio" name="payment_method" value="Cash on Delivery" required>
+            Cash on Delivery
+        </label><br>
+        <button type="submit">Continue</button>
+    </form>
+
+{% endblock payment_method %}

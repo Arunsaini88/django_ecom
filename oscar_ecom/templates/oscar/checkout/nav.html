@@ -5,9 +5,8 @@
         <ul class="breadcrumb shop-breadcrumb bb-no">
         {% spaceless %}
             <li class="nav-item step1 {% if step == 1 %}active{% else %}{% if step == 2 %}previous{% else %}{% if step > 1 %}visited{% else %}disabled{% endif %}{% endif %}{% endif %} ">
-                {% if step == 2 or step == 3 or step == 4 %}
+                {% if step == 2 or step == 3 or step == 4 or step == 5 or step == 6 %}
                     <a href="{% url 'checkout:shipping-address' %}" >
-                        <!-- <i class="fas fa-chevron-right"></i> -->
                         <span>
                             {% trans "Shipping address" %}
                         </span>
@@ -22,12 +21,9 @@
             </li>
 
             <li class="nav-item step2 {% if step == 2 %}active{% else %}{% if step == 3 %}previous{% else %}{% if step > 2 %}visited{% else %}disabled{% endif %}{% endif %}{% endif %} ">
-                {% if step == 3 or step == 4 %}
+                {% if step == 3 or step == 4 or step == 5 or step == 6 %}
                     <a href="{% url 'checkout:shipping-method' %}" >
-                        <!-- <i class="fas fa-chevron-right"></i> -->
-                        <!-- <span> -->
                             {% trans "Shipping method" %}
-                        <!-- </span> -->
                     </a>
                 {% else %}
                 <a href="#">
@@ -39,9 +35,22 @@
             </li>
 
             <li class="nav-item step3 {% if step == 3 %}active{% else %}{% if step == 4 %}previous{% else %}{% if step > 3 %}visited{% else %}disabled{% endif %}{% endif %}{% endif %} ">
-                {% if step == 4 %}
+                {% if step == 4 or step == 5 or step == 6 %}
+                    <a href="{% url 'checkout:payment-method' %}" >
+                            {% trans "Payment method" %}
+                    </a>
+                {% else %}
+                <a href="#">
+                    <span class="navbar-text">
+                        {%  trans "Payment method" %}
+                    </span>
+                </a>
+                {% endif %}
+            </li>
+
+            <li class="nav-item step4 {% if step == 4 %}active{% else %}{% if step == 5 %}previous{% else %}{% if step > 4 %}visited{% else %}disabled{% endif %}{% endif %}{% endif %} ">
+                {% if step == 5 or step == 6 %}
                     <a href="{% url 'checkout:payment-details' %}" >
-                        <!-- <i class="fas fa-chevron-right"></i> -->
                         <span>
                             {% trans "Payment" %}
                         </span>
@@ -55,18 +64,18 @@
                 {% endif %}
             </li>
 
-            <li class="nav-item step4 {% if step == 4 %}active{% else %}disabled{% endif %} ">
+            <li class="nav-item step5 {% if step == 5 %}active{% else %}disabled{% endif %} ">
                 <span class="navbar-text">
                     {% trans "Preview" %}
                 </span>
             </li>
 
-            <li class="nav-item step5 {% if step == 5 %}active{% else %}disabled{% endif %} ">
+            <li class="nav-item step6 {% if step == 6 %}active{% else %}disabled{% endif %} ">
                 <span class="navbar-text">
                     {% trans "Confirmation" %}
                 </span>
             </li>
         {% endspaceless %}
     </ul>
-  </div><!-- /navbar-inner -->
-</nav><!-- /navbar -->
+  </div>
+</nav>

@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block layout %}
-        {% if not request.GET.popup %}
+        {% if not request.GET.popup or login_form.errors or registration_form.errors %}
             <header class="header header-border">
                 {# Top-horizontal bar with account, notifictions, dashboard links #}
                 {% block nav_account %} {% include "oscar/partials/nav_accounts.html" %} {% endblock %}
@@ -55,7 +55,7 @@
                 {% block header %}{% endblock %}
                 <div class="page-content mb-10 pb-2">
                     <div class="container">
-                {% endif %}
+        {% endif %}
                     {% block content %}
                         <div class="login-popup">
                             <div class="tab tab-nav-boxed tab-nav-center tab-nav-underline">
@@ -73,30 +73,15 @@
                                             {% csrf_token %}
                                             {% include "oscar/partials/form_fields.html" with form=login_form %}
                                             <p><a href="{% url 'password-reset' %}">{% trans "I've forgotten my password" %}</a></p>
-                                            <button name="login_submit" type="submit" value="Log In" class="btn btn-primary" data-loading-text="{% trans "Logging in..." %}">{% trans 'Log In' %}</button>
+                                            <button name="login_submit" type="submit" value="Log In" class="btn btn-primary btn-lg btn-block" data-loading-text="{% trans "Logging in..." %}">{% trans 'Log In' %}</button>
                                         </form>
                                     </div>
                                     <div class="tab-pane" id="sign-up">
                                         <form id="register_form" action="{{ request.get_full_path }}" method="post" class="card card-body bg-light">
                                             {% csrf_token %}
                                             {% include "oscar/partials/form_fields.html" with form=registration_form %}
-                                        <div class="form-checkbox user-checkbox mt-0">
-                                            <input type="checkbox" class="custom-checkbox checkbox-round active" id="check-customer" name="check-customer" required="">
-                                            <label for="check-customer" class="check-customer mb-1">I am a customer</label>
-                                            <br>
-                                            <input type="checkbox" class="custom-checkbox checkbox-round" id="check-seller" name="check-seller" required="">
-                                            <label for="check-seller" class="check-seller">I am a vendor</label>
-                                        </div>
-                                        <p>Your personal data will be used to support your experience 
-                                            throughout this website, to manage access to your account, 
-                                            and for other purposes described in our <a href="#" class="text-primary">privacy policy</a>.</p>
-                                        <a href="#" class="d-block mb-5 text-primary">Signup as a vendor?</a>
-                                        <div class="form-checkbox d-flex align-items-center justify-content-between mb-5">
-                                            <input type="checkbox" class="custom-checkbox" id="remember" name="remember" required="">
-                                            <label for="remember" class="font-size-md">I agree to the <a  href="#" class="text-primary font-size-md">privacy policy</a></label>
-                                        </div>
                                         
-                                        <button name="registration_submit" type="submit" value="Register" class="btn btn-primary" data-loading-text="{% trans 'Registering...' %}">{% trans 'Register' %}</button>                            </form>
+                                        <button name="registration_submit" type="submit" value="Register" class="btn btn-primary btn-lg btn-block" data-loading-text="{% trans 'Registering...' %}">{% trans 'Register' %}</button>                            </form>
                                     </div>
                                 </div>
                                 <p class="text-center">Sign in with social account</p>
