@@ -38,6 +38,7 @@ ENV/
 *.code-workspace
 
 # Project specific
+staticfiles/
 .env
 *.bak
 *.swp
