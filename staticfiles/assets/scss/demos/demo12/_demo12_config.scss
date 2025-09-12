@@ -1,0 +1,106 @@
+@include set (
+    (
+        base: (
+            _container-width: 1400px,
+            title-link: (
+                link: (
+                    margin-bottom: .6rem,
+                    font-weight: 600,
+                    letter-spacing: -.025em,
+                    color: $dark-color
+                ),
+                icon: (
+                    display: inline-block,
+                    margin-bottom: .1rem,
+                    margin-left:.3rem
+                )
+            )
+        ),
+        header: (
+            top:(
+                text-transform:none
+            ),
+            search: (
+                _border-color: #fff,
+                expanded: (
+                    width: 66.2rem
+                ),
+                btn: (
+                    width:2.5rem
+                )
+            ),
+            wishlist: (
+                margin:.2rem 2.2rem 0 .1rem
+            ),
+            compare: (
+                margin-top:-.3rem
+            ),
+            call: (
+                margin-right:5.9rem,
+                chat: (
+                    font-weight:500
+                ),
+                num: (
+                    letter-spacing:-.8px
+                )
+            ),
+            cart: (
+                count: (
+                    background: $primary-color
+                )
+            ),
+            category: (
+                toggle: (
+                    padding: 1.8rem 1.8rem 1.8rem 2rem
+                )
+            )
+        ),
+        menu: (
+            ancestor: (
+                padding: 1.8rem 0
+            )
+        ),
+        category-menu: (
+            padding: 1rem 0 0.8rem,
+            ancestor: (
+                _split-line: 1px solid #e1e1e1
+            )
+        ),
+        product: (
+            price: (
+                new: (
+                    _space:.6rem
+                )
+            ),
+            rating: (
+                margin-bottom:.3rem
+            )
+        ),
+        product-single: (
+            ratings: (
+                margin-bottom: 1.8rem,
+                font-size: 1.3rem
+            ),
+            old-price: (
+                margin-right: 1rem,
+                font-size: 1.8rem,
+                color: $light-color
+            )
+        ),
+        footer: (
+            background: #f8f8f8,
+            middle: (
+                padding: 2.5rem 0 1.7rem,
+                color: $body-color
+            ),
+            about: (
+                call: (
+                    margin-bottom: .8rem
+                ),
+                logo: (
+                    margin-bottom: 2rem
+                )
+            )
+        )
+    )
+)
