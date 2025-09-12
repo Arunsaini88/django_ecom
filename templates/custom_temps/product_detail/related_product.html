@@ -1,0 +1,34 @@
+{% load i18n %}
+
+{% load product_tags %}
+
+{% if products %}
+<div class="title-link-wrapper mb-4">
+    <h4 class="title">{% trans "Related Products" %}</h4>
+    <a href="{% url 'catalogue:index' %}" class="btn btn-dark btn-link btn-slide-right btn-icon-right">{% trans "More Products" %}<i class="w-icon-long-arrow-right"></i></a>
+</div>
+{% endif %}
+<div class="swiper-container swiper-theme" data-swiper-options="{
+    'spaceBetween': 20,
+    'slidesPerView': 2,
+    'breakpoints': {
+        '576': {
+            'slidesPerView': 3
+        },
+        '768': {
+            'slidesPerView': 4
+        },
+        '992': {
+            'slidesPerView': 3
+        }
+    }
+}">
+    <div class="swiper-wrapper row cols-lg-3 cols-md-4 cols-sm-3 cols-2">   
+        {% for product in products %}
+        <div class="swiper-slide product">
+            {% render_product product %}
+        </div>
+        {% endfor %}
+        
+    </div>
+</div>
