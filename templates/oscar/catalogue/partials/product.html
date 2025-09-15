@@ -13,10 +13,16 @@
             {% block product_image %}
             <figure class="product-media">
                 {% with image=product.primary_image %}
-                    {% oscar_thumbnail image.original "x155" upscale=False as thumb %}
-                    <a href="{{ product.get_absolute_url }}">
-                        <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
-                    </a>
+                    {% if image %}
+                        {% oscar_thumbnail image.original "x155" upscale=False as thumb %}
+                        <a href="{{ product.get_absolute_url }}">
+                            <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
+                        </a>
+                    {% else %}
+                        <a href="{{ product.get_absolute_url }}">
+                            <img src="{% static 'assets/images/vendor/wcfm/avatar.png' %}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
+                        </a>
+                    {% endif %}
                 {% endwith %}
                 <div class="product-action-horizontal">
                     

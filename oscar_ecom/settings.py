@@ -223,6 +223,22 @@ OSCAR_DEFAULT_CURRENCY = "INR"
 OSCAR_SEND_REGISTRATION_EMAIL = False
 OSCAR_FROM_EMAIL = "oscar@example.com"
 
+# Email configuration for development
+# Use console backend to print emails to console instead of sending them
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Alternative: Use file backend to save emails to files
+# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+# EMAIL_FILE_PATH = '/tmp/app-messages'
+
+# For production, use SMTP:
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'your-email@gmail.com'
+# EMAIL_HOST_PASSWORD = 'your-app-password'
+
 OSCAR_HOMEPAGE = reverse_lazy("Home")
 
 OSCAR_ALLOW_ANON_CHECKOUT = False
@@ -376,4 +392,23 @@ OSCAR_DASHBOARD_NAVIGATION = [
 
 RAZORPAY_PUBLISHABLE_KEY = "rzp_test_6bIJl2FhugXCH6"
 RAZORPAY_API_SECRET = "KFyKNO9yoUxkxTtdzz1BV3aj"
+
+# Oscar Order Status Configuration
+OSCAR_INITIAL_ORDER_STATUS = 'Pending'
+OSCAR_INITIAL_LINE_STATUS = 'Pending'
+OSCAR_ORDER_STATUS_PIPELINE = {
+    'Pending': ('Being processed', 'Cancelled',),
+    'Being processed': ('Dispatched', 'Cancelled',),
+    'Dispatched': ('Delivered',),
+    'Delivered': (),
+    'Cancelled': (),
+}
+
+# Order status choices - these will be available in the admin
+OSCAR_ORDER_STATUS_CASCADE = {
+    'Being processed': 'Being processed',
+    'Cancelled': 'Cancelled',
+    'Dispatched': 'Dispatched', 
+    'Delivered': 'Delivered',
+}
 

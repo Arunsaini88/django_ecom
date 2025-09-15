@@ -160,8 +160,8 @@
                                 <li><a href="error-404.html">Error 404</a></li>
                                 <li><a href="coming-soon.html">Coming Soon</a></li>
                                 <li><a href="wishlist.html">Wishlist</a></li>
-                                <li><a href="cart.html">Cart</a></li>
-                                <li><a href="checkout.html">Checkout</a></li>
+                                <li><a href="{% url 'basket:summary' %}">Cart</a></li>
+                                <li><a href="{% url 'checkout:index' %}">Checkout</a></li>
                                 <li><a href="my-account.html">My Account</a></li>
                             </ul>
                         </li>

@@ -1,5 +1,6 @@
 {% extends "oscar/layout.html" %}
 
+{% load static %}
 {% load history_tags %}
 {% load currency_filters %}
 {% load reviews_tags %}
@@ -8,8 +9,6 @@
 {% load custom_product_tags %}
 {% load i18n %}
 {% load purchase_info_tags %}
-
-{% load static %}
 
 {% block title %}
     {{ product.get_meta_title }} | {{ block.super }}
@@ -84,9 +83,14 @@
                                             <figure class="brand">
                                                 {% if product.brands.exists %}
                                                     {% for brand in product.brands.all %}
-                                                    <img src="{{brand.logo.url }}" alt="{{ brands.name }}"
-                                                        width="100" height="40" />
-                                                        {% endfor %}
+                                                        {% if brand.logo %}
+                                                            <img src="{{brand.logo.url }}" alt="{{ brand.name }}"
+                                                                width="100" height="40" />
+                                                        {% else %}
+                                                            <img src="{% static 'assets/images/default_logo.jpg' %}" alt="{{ brand.name }}"
+                                                                width="100" height="40" />
+                                                        {% endif %}
+                                                    {% endfor %}
                                                 {% else %}
                                                     <span>No image available</span>
                                                 {% endif %}
@@ -290,7 +294,7 @@
                                     <div class="product-button">
                                         <div class="bought-price font-weight-bolder text-primary ls-50">$1,874.00</div>
                                         <div class="bought-count">For 3 items</div>
-                                        <a href="cart.html" class="btn btn-dark btn-rounded">Add All To Cart</a>
+                                        <a href="{% url 'basket:summary' %}" class="btn btn-dark btn-rounded">Add All To Cart</a>
                                     </div>
                                 </div>
                             </div>

@@ -61,8 +61,13 @@
                             class="swiper-slide category category-classic category-absolute overlay-zoom br-xs">
                             <a href="{{ brand.get_absolute_url }}">
                                 <figure class="category-media">
-                                    <img src="{{ brand.logo.url }}" alt="{{ brand.name }}"
-                                        width="190" height="184" />
+                                    {% if brand.logo %}
+                                        <img src="{{ brand.logo.url }}" alt="{{ brand.name }}"
+                                            width="190" height="184" />
+                                    {% else %}
+                                        <img src="{% static 'assets/images/default_logo.jpg' %}" alt="{{ brand.name }}"
+                                            width="190" height="184" />
+                                    {% endif %}
                                 </figure>
                             </a>
                             <div class="category-content">

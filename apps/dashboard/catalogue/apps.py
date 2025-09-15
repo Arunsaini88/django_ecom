@@ -9,12 +9,16 @@ class CatalogueDashboardConfig(apps.CatalogueDashboardConfig):
 
     def ready(self):
         super().ready()
-        from .views import BrandListView, BrandCreateView, BrandUpdateView, BrandDeleteView
+        from .views import BrandListView, BrandCreateView, BrandUpdateView, BrandDeleteView, CustomProductCreateUpdateView
 
+        # Brand views
         self.brand_list_view = BrandListView
         self.brand_create_view = BrandCreateView
         self.brand_update_view = BrandUpdateView
         self.brand_delete_view = BrandDeleteView
+        
+        # Override the main product create/update view to include brand support
+        self.product_createupdate_view = CustomProductCreateUpdateView
 
 
     def get_urls(self):

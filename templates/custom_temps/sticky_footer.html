@@ -14,7 +14,7 @@
         <p>Account</p>
     </a>
     <div class="cart-dropdown dir-up">
-        <a href="cart.html" class="sticky-link">
+        <a href="{% url 'basket:summary' %}" class="sticky-link">
             <i class="w-icon-cart"></i>
             <p>Cart</p>
         </a>
@@ -69,8 +69,8 @@
             </div>
 
             <div class="cart-action">
-                <a href="cart.html" class="btn btn-dark btn-outline btn-rounded">View Cart</a>
-                <a href="checkout.html" class="btn btn-primary  btn-rounded">Checkout</a>
+                <a href="{% url 'basket:summary' %}" class="btn btn-dark btn-outline btn-rounded">View Cart</a>
+                <a href="{% url 'checkout:index' %}" class="btn btn-primary  btn-rounded">Checkout</a>
             </div>
         </div>
         <!-- End of Dropdown Box -->
