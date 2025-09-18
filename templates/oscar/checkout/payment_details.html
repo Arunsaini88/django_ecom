@@ -91,44 +91,184 @@
     {% block payment_details_content %}
     <div class="container">
         
-        <form id="razorpay-form" action="{% url 'checkout:preview' %}" method="POST">
+        <!-- Payment Method Selection -->
+        <h4 class="title text-uppercase ls-25 mb-5">{% trans "Select Payment Method" %}</h4>
+        <form method="POST" class="mb-4">
             {% csrf_token %}
-            <input type="hidden" name="razorpay_payment_id" id="razorpay-payment-id">
-            <button type="button" id="rzp-button1">Pay Now</button>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" name="payment_method" id="razorpay" value="razorpay" 
+                               {% if payment_method == 'razorpay' %}checked{% endif %} onchange="this.form.submit()">
+                        <label class="form-check-label" for="razorpay">
+                            <strong>{% trans "Online Payment (Razorpay)" %}</strong><br>
+                            <small class="text-muted">{% trans "Pay securely using credit/debit card, UPI, net banking" %}</small>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" name="payment_method" id="cod" value="cod"
+                               {% if payment_method == 'cod' %}checked{% endif %} onchange="this.form.submit()">
+                        <label class="form-check-label" for="cod">
+                            <strong>{% trans "Cash on Delivery (COD)" %}</strong><br>
+                            <small class="text-muted">{% trans "Pay when your order is delivered" %}</small>
+                        </label>
+                    </div>
+                </div>
+            </div>
         </form>
-        <!-- <button id="rzp-button1">Pay</button> -->
 
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-        <script>
-        var options = {
-            "key": "{{ razorpay_key }}", // Enter the Key ID generated from the Dashboard
-            "amount": "{{ basket_total }}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-            "currency": "INR",
-            "name": "Acme Corp", //your business name
-            "description": "Order #{{ order_number }}",
-            "image": "https://example.com/your_logo",
-            "order_id": "{{razorpay_order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            "callback_url": "http://{{ request.get_host }}{% url 'checkout:preview' %}",
-            "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
-                "name": "{{ user.get_full_name }}", //your customer's name
-                "email": "{{ user_email }}",
-                "contact": "{{ shipping_address.phone_number }}" //Provide the customer's phone number for better conversion rates 
-            },
-            "notes": {
-                "address": "Razorpay Corporate Office"
-            },
-            "theme": {
-                "color": "#3399cc"
-            }
-        };
-        var rzp1 = new Razorpay(options);
-        document.getElementById('rzp-button1').onclick = function(e){
-            rzp1.open();
-            e.preventDefault();
-        }
-        </script>
-        
-        <a href="{% url 'checkout:preview' %}" class="btn btn-primary btn-lg">{% trans "Continue" %}</a>
+        <!-- Razorpay Payment Section -->
+        {% if payment_method == 'razorpay' %}
+        <div id="razorpay-section">
+            <h5 class="mb-3">{% trans "Complete Your Payment" %}</h5>
+            <form id="razorpay-form" action="{% url 'checkout:payment-details' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="place_order">
+                <input type="hidden" name="payment_method" value="razorpay">
+                <input type="hidden" name="razorpay_payment_id" id="razorpay-payment-id">
+                <input type="hidden" name="razorpay_order_id" id="razorpay-order-id" value="{{ razorpay_order_id }}">
+                <input type="hidden" name="razorpay_signature" id="razorpay-signature">
+                <button type="button" class="btn btn-success btn-lg" id="rzp-button1">
+                    <i class="fas fa-credit-card"></i> {% trans "Pay Now" %} - {{ order_total.incl_tax|currency:basket.currency }}
+                </button>
+            </form>
+
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var options = {
+                    "key": "{{ razorpay_key }}",
+                    "amount": {{ basket_total }},
+                    "currency": "INR",
+                    "name": "Oscar E-commerce",
+                    "description": "Order #{{ order_number }}",
+                    "order_id": "{{ razorpay_order_id }}",
+                    "handler": function (response){
+                        document.getElementById('razorpay-payment-id').value = response.razorpay_payment_id;
+                        document.getElementById('razorpay-order-id').value = response.razorpay_order_id;
+                        document.getElementById('razorpay-signature').value = response.razorpay_signature;
+                        document.getElementById('razorpay-form').submit();
+                    },
+                    "prefill": {
+                        "name": "{{ user.get_full_name|default:'' }}",
+                        "email": "{{ user_email|default:'' }}",
+                        "contact": "{{ shipping_address.phone_number|default:'' }}"
+                    },
+                    "modal": {
+                        "ondismiss": function(){
+                        }
+                    },
+                    "theme": {
+                        "color": "#3399cc"
+                    }
+                };
+                
+                
+                // Check if Razorpay is loaded
+                if (typeof Razorpay === 'undefined') {
+                    console.error('Razorpay library not loaded!');
+                    alert('Razorpay library not loaded. Please refresh the page.');
+                    return;
+                }
+                
+                // Validate required fields
+                if (!options.key || !options.amount || !options.order_id) {
+                    console.error('Missing required payment data:', {
+                        key: !!options.key,
+                        amount: !!options.amount,
+                        order_id: !!options.order_id
+                    });
+                    alert('Payment configuration error. Please refresh and try again.');
+                    return;
+                }
+                
+                if (options.amount <= 0) {
+                    console.error('Invalid amount:', options.amount);
+                    alert('Invalid payment amount. Please refresh and try again.');
+                    return;
+                }
+                
+                var rzp1;
+                try {
+                    rzp1 = new Razorpay(options);
+                } catch (error) {
+                    console.error('Error creating Razorpay instance:', error);
+                    alert('Error initializing payment gateway. Please try again.');
+                    return;
+                }
+                
+                rzp1.on('payment.failed', function (response){
+                    console.error('Payment failed:', response.error);
+                    console.error('Error code:', response.error.code);
+                    console.error('Error description:', response.error.description);
+                    console.error('Error reason:', response.error.reason);
+                    console.error('Full error object:', response.error);
+                    
+                    var errorMsg = 'Payment failed: ' + response.error.description;
+                    
+                    // Handle specific Razorpay errors
+                    if (response.error.description === 'Please use another method') {
+                        errorMsg += '\n\nThis may be due to:\n' +
+                                   '• Payment method not enabled in test mode\n' +
+                                   '• Try different card details\n' +
+                                   '• Use Cash on Delivery instead\n\n' +
+                                   'Test cards that usually work:\n' +
+                                   '• 4111111111111111 (Visa)\n' +
+                                   '• 5555555555554444 (Mastercard)';
+                    }
+                    
+                    if (response.error.reason) {
+                        errorMsg += '\nReason: ' + response.error.reason;
+                    }
+                    if (response.error.code) {
+                        errorMsg += '\nCode: ' + response.error.code;
+                    }
+                    
+                    alert(errorMsg);
+                });
+                
+                var payButton = document.getElementById('rzp-button1');
+                if (payButton) {
+                    payButton.onclick = function(e){
+                        e.preventDefault();
+                        rzp1.open();
+                    };
+                } else {
+                    console.error('Pay button not found!');
+                }
+            });
+            </script>
+            
+            <div class="alert alert-info mt-3">
+                <i class="fas fa-info-circle"></i> {% trans "Click 'Pay Now' to complete your payment securely through Razorpay" %}
+            </div>
+            
+        </div>
+        {% endif %}
+
+        <!-- COD Section -->
+        {% if payment_method == 'cod' %}
+        <div id="cod-section">
+            <h5 class="mb-3">{% trans "Cash on Delivery" %}</h5>
+            <div class="alert alert-warning">
+                <i class="fas fa-money-bill-wave"></i> 
+                {% trans "You have selected Cash on Delivery. You will pay" %} 
+                <strong>{{ order_total.incl_tax|currency:basket.currency }}</strong> 
+                {% trans "when your order is delivered." %}
+            </div>
+            
+            <form action="{% url 'checkout:payment-details' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="place_order">
+                <input type="hidden" name="payment_method" value="cod">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-arrow-right"></i> {% trans "Place Order" %}
+                </button>
+            </form>
+        </div>
+        {% endif %}
     
     </div>
     {% endblock payment_details_content %}

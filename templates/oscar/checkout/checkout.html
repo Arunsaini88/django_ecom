@@ -102,7 +102,13 @@
                     </tr>
                     <tr>
                         <th>{% trans "Payment method:" %}</th>
-                        <td>{% trans 'No publish' %}</td>
+                        <td>
+                            {% if request.session.payment_method == 'cod' %}
+                                {% trans "Cash on Delivery (COD)" %}
+                            {% else %}
+                                {% trans "Online Payment (Razorpay)" %}
+                            {% endif %}
+                        </td>
                     </tr>
                     <tr class="total">
                         <th class="border-no">{% trans "Total:" %}</th>

@@ -25,6 +25,7 @@
     <div class="swiper-wrapper row cols-lg-4 cols-md-3 cols-sm-2 cols-1">
         {% get_brands_with_products as brands %}
         {% for brand in brands %}
+        {% if brand.products.count > 0 %}
         <div class="swiper-slide vendor-widget vendor-widget-1">
             <div class="vendor-products grid-type">
                 {% for product in brand.products.all|slice:":3" %}
@@ -35,10 +36,16 @@
                     {% endif %}
                             <figure class="product-media">
                                 {% with image=product.primary_image %}
-                                    {% oscar_thumbnail image.original "x180" upscale=False as thumb %}
-                                    <a href="{{ product.get_absolute_url }}">
-                                        <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
-                                    </a>
+                                    {% if image %}
+                                        {% oscar_thumbnail image.original "x180" upscale=False as thumb %}
+                                        <a href="{{ product.get_absolute_url }}">
+                                            <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
+                                        </a>
+                                    {% else %}
+                                        <a href="{{ product.get_absolute_url }}">
+                                            <img src="{% static 'assets/image_not_found.jpg' %}" alt="{{ product.get_title }}" class="img-thumbnail w-auto mx-auto my-0" width="300" height="338">
+                                        </a>
+                                    {% endif %}
                                 {% endwith %}
                             </figure>
                         </div>
@@ -77,6 +84,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
         {% endfor %}
     </div>
     <div class="swiper-pagination"></div>

@@ -1,12 +1,24 @@
+from django import forms
 from django.forms import inlineformset_factory
+from django.utils.translation import gettext_lazy as _
 from apps.catalogue.models import Brand, Product, ProductBrand
 
 from .forms import BrandForm, ProductForm
 
 
+class ProductBrandForm(forms.ModelForm):
+    class Meta:
+        model = ProductBrand
+        fields = ['brand']
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['brand'].queryset = Brand.objects.filter(is_public=True)
+        self.fields['brand'].empty_label = "Select a brand"
+
 
 BaseProductBrandFormSet = inlineformset_factory(
-    Product, ProductBrand, form=BrandForm, extra=1, can_delete=True
+    Product, ProductBrand, form=ProductBrandForm, extra=1, can_delete=True
 )
 
 
@@ -17,12 +29,13 @@ class ProductBrandFormSet(BaseProductBrandFormSet):
         super().__init__(*args, **kwargs)
 
     def clean(self):
-        if not self.instance.is_child and self.get_num_brands() == 0:
-            raise forms.ValidationError(
-                _("Stand-alone and parent products must have at least one brand")
-            )
+        # Allow products without brands for now - remove strict validation
+        # if not self.instance.is_child and self.get_num_brands() == 0:
+        #     raise forms.ValidationError(
+        #         _("Stand-alone and parent products must have at least one brand")
+        #     )
         if self.instance.is_child and self.get_num_brands() > 0:
-            raise forms.ValidationError(_("A child product should not have brnads"))
+            raise forms.ValidationError(_("A child product should not have brands"))
 
     def get_num_brands(self):
         num_brands = 0

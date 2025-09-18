@@ -6,7 +6,7 @@ register = template.Library()
 
 @register.simple_tag
 def get_brands_with_products(limit=10):
-    brands = Brand.objects.annotate(num_products=Count('products'),average_rating=Avg('products__reviews__score')).order_by('-num_products')[:limit]
+    brands = Brand.objects.annotate(num_products=Count('products'),average_rating=Avg('products__reviews__score')).filter(num_products__gt=0).order_by('-num_products')[:limit]
     # brands = Brand.objects.prefetch_related('products').all()
     return brands
 
@@ -20,5 +20,5 @@ def get_same_brand_products(product, limit=10):
 
 @register.simple_tag
 def get_brand_logos(limit=10):
-    brands = Brand.objects.filter(logo__isnull=False).distinct().order_by('name')[:limit]
+    brands = Brand.objects.annotate(num_products=Count('products')).filter(logo__isnull=False, num_products__gt=0).distinct().order_by('name')[:limit]
     return brands

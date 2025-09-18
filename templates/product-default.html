@@ -210,8 +210,8 @@
                                 </div>
 
                                 <div class="cart-action">
-                                    <a href="cart.html" class="btn btn-dark btn-outline btn-rounded">View Cart</a>
-                                    <a href="checkout.html" class="btn btn-primary  btn-rounded">Checkout</a>
+                                    <a href="{% url 'basket:summary' %}" class="btn btn-dark btn-outline btn-rounded">View Cart</a>
+                                    <a href="{% url 'checkout:index' %}" class="btn btn-primary  btn-rounded">Checkout</a>
                                 </div>
                             </div>
                             <!-- End of Dropdown Box -->
@@ -765,8 +765,8 @@
                                             <li><a href="error-404.html">Error 404</a></li>
                                             <li><a href="coming-soon.html">Coming Soon</a></li>
                                             <li><a href="wishlist.html">Wishlist</a></li>
-                                            <li><a href="cart.html">Cart</a></li>
-                                            <li><a href="checkout.html">Checkout</a></li>
+                                            <li><a href="{% url 'basket:summary' %}">Cart</a></li>
+                                            <li><a href="{% url 'checkout:index' %}">Checkout</a></li>
                                             <li><a href="my-account.html">My Account</a></li>
                                             <li><a href="compare.html">Compare</a></li>
                                         </ul>
@@ -1102,7 +1102,7 @@
                                     <div class="product-button">
                                         <div class="bought-price font-weight-bolder text-primary ls-50">$1,874.00</div>
                                         <div class="bought-count">For 3 items</div>
-                                        <a href="cart.html" class="btn btn-dark btn-rounded">Add All To Cart</a>
+                                        <a href="{% url 'basket:summary' %}" class="btn btn-dark btn-rounded">Add All To Cart</a>
                                     </div>
                                 </div>
                             </div>
@@ -2482,7 +2482,7 @@
                                 <h4 class="widget-title">My Account</h4>
                                 <ul class="widget-body">
                                     <li><a href="#">Track My Order</a></li>
-                                    <li><a href="cart.html">View Cart</a></li>
+                                    <li><a href="{% url 'basket:summary' %}">View Cart</a></li>
                                     <li><a href="login.html">Sign In</a></li>
                                     <li><a href="#">Help</a></li>
                                     <li><a href="wishlist.html">My Wishlist</a></li>
@@ -2613,7 +2613,7 @@
             <p>Account</p>
         </a>
         <div class="cart-dropdown dir-up">
-            <a href="cart.html" class="sticky-link">
+            <a href="{% url 'basket:summary' %}" class="sticky-link">
                 <i class="w-icon-cart"></i>
                 <p>Cart</p>
             </a>
@@ -2668,8 +2668,8 @@
                 </div>
 
                 <div class="cart-action">
-                    <a href="cart.html" class="btn btn-dark btn-outline btn-rounded">View Cart</a>
-                    <a href="checkout.html" class="btn btn-primary  btn-rounded">Checkout</a>
+                    <a href="{% url 'basket:summary' %}" class="btn btn-dark btn-outline btn-rounded">View Cart</a>
+                    <a href="{% url 'checkout:index' %}" class="btn btn-primary  btn-rounded">Checkout</a>
                 </div>
             </div>
             <!-- End of Dropdown Box -->
@@ -2857,8 +2857,8 @@
                                 <li><a href="error-404.html">Error 404</a></li>
                                 <li><a href="coming-soon.html">Coming Soon</a></li>
                                 <li><a href="wishlist.html">Wishlist</a></li>
-                                <li><a href="cart.html">Cart</a></li>
-                                <li><a href="checkout.html">Checkout</a></li>
+                                <li><a href="{% url 'basket:summary' %}">Cart</a></li>
+                                <li><a href="{% url 'checkout:index' %}">Checkout</a></li>
                                 <li><a href="my-account.html">My Account</a></li>
                             </ul>
                         </li>

@@ -34,11 +34,13 @@
             <div class="swiper-slide">
                 <figure>
                     {% with image=brand.logo %}
-                    {% oscar_thumbnail image "x125" upscale=False as thumb %}
-                
-                        <img src="{{ thumb.url }}" alt="" class="img-thumbnail w-auto mx-auto my-0" height="125">
-                
-                {% endwith %}
+                        {% if image %}
+                            {% oscar_thumbnail image "x125" upscale=False as thumb %}
+                            <img src="{{ thumb.url }}" alt="" class="img-thumbnail w-auto mx-auto my-0" height="125">
+                        {% else %}
+                            <img src="{% static 'assets/images/default_logo.jpg' %}" alt="" class="img-thumbnail w-auto mx-auto my-0" height="125">
+                        {% endif %}
+                    {% endwith %}
                 </figure>
             </div>
             {% endfor %}

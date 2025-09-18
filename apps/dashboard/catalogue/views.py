@@ -34,15 +34,11 @@ class BrandDeleteView(DeleteView):
 
 
 class CustomProductCreateUpdateView(CoreProductCreateUpdateView):
-   
+    
     brand_formset = ProductBrandFormSet
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.formsets = {
-            "category_formset": self.category_formset,
-            "brand_formset": self.brand_formset,
-            "image_formset": self.image_formset,
-            "recommended_formset": self.recommendations_formset,
-            "stockrecord_formset": self.stockrecord_formset,
-        }
+        # Add brand_formset to the existing formsets dictionary
+        self.formsets["brand_formset"] = self.brand_formset
+
